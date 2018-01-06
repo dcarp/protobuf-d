@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dcarp/protobuf.png)](https://travis-ci.org/dcarp/protobuf)
+
 Protocol Buffers D Support Library
 ==================================
 
