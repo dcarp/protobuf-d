@@ -11,7 +11,11 @@
             "name": "library"
         },
         {
-            "name": "protoc-gen-d"
+            "name": "protoc-gen-d",
+            "targetType": "executable",
+            "targetName": "protoc-gen-d",
+            "sourcePaths": ["protoc-gen-d"],
+            "mainSourceFile": "protoc-gen-d/protoc-gen-d.d"
         },
         {
             "name": "unittest",

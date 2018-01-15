@@ -5,58 +5,58 @@ import google.protobuf;
 
 class Foo
 {
-    @Proto(1) Bar bar = defaultValue!Bar;
-    @Proto(2) Baz baz = defaultValue!Baz;
+    @Proto(1) Bar bar = protoDefaultValue!Bar;
+    @Proto(2) Baz baz = protoDefaultValue!Baz;
 }
 
 class Bar
 {
-    @Proto(1) string msg = defaultValue!string;
+    @Proto(1) string msg = protoDefaultValue!string;
 }
 
 class Baz
 {
-    @Proto(1) string msg = defaultValue!string;
+    @Proto(1) string msg = protoDefaultValue!string;
 }
 
 class TestMessage
 {
-    @Proto(1) int optionalInt32 = defaultValue!int;
-    @Proto(2) long optionalInt64 = defaultValue!long;
-    @Proto(3) uint optionalUint32 = defaultValue!uint;
-    @Proto(4) ulong optionalUint64 = defaultValue!ulong;
-    @Proto(5) bool optionalBool = defaultValue!bool;
-    @Proto(6) float optionalFloat = defaultValue!float;
-    @Proto(7) double optionalDouble = defaultValue!double;
-    @Proto(8) string optionalString = defaultValue!string;
-    @Proto(9) bytes optionalBytes = defaultValue!bytes;
-    @Proto(10) TestMessage2 optionalMsg = defaultValue!TestMessage2;
-    @Proto(11) TestEnum optionalEnum = defaultValue!TestEnum;
+    @Proto(1) int optionalInt32 = protoDefaultValue!int;
+    @Proto(2) long optionalInt64 = protoDefaultValue!long;
+    @Proto(3) uint optionalUint32 = protoDefaultValue!uint;
+    @Proto(4) ulong optionalUint64 = protoDefaultValue!ulong;
+    @Proto(5) bool optionalBool = protoDefaultValue!bool;
+    @Proto(6) float optionalFloat = protoDefaultValue!float;
+    @Proto(7) double optionalDouble = protoDefaultValue!double;
+    @Proto(8) string optionalString = protoDefaultValue!string;
+    @Proto(9) bytes optionalBytes = protoDefaultValue!bytes;
+    @Proto(10) TestMessage2 optionalMsg = protoDefaultValue!TestMessage2;
+    @Proto(11) TestEnum optionalEnum = protoDefaultValue!TestEnum;
 
-    @Proto(12) int[] repeatedInt32 = defaultValue!(int[]);
-    @Proto(13) long[] repeatedInt64 = defaultValue!(long[]);
-    @Proto(14) uint[] repeatedUint32 = defaultValue!(uint[]);
-    @Proto(15) ulong[] repeatedUint64 = defaultValue!(ulong[]);
-    @Proto(16) bool[] repeatedBool = defaultValue!(bool[]);
-    @Proto(17) float[] repeatedFloat = defaultValue!(float[]);
-    @Proto(18) double[] repeatedDouble = defaultValue!(double[]);
-    @Proto(19) string[] repeatedString = defaultValue!(string[]);
-    @Proto(20) bytes[] repeatedBytes = defaultValue!(bytes[]);
-    @Proto(21) TestMessage2[] repeatedMsg = defaultValue!(TestMessage2[]);
-    @Proto(22) TestEnum[] repeatedEnum = defaultValue!(TestEnum[]);
+    @Proto(12) int[] repeatedInt32 = protoDefaultValue!(int[]);
+    @Proto(13) long[] repeatedInt64 = protoDefaultValue!(long[]);
+    @Proto(14) uint[] repeatedUint32 = protoDefaultValue!(uint[]);
+    @Proto(15) ulong[] repeatedUint64 = protoDefaultValue!(ulong[]);
+    @Proto(16) bool[] repeatedBool = protoDefaultValue!(bool[]);
+    @Proto(17) float[] repeatedFloat = protoDefaultValue!(float[]);
+    @Proto(18) double[] repeatedDouble = protoDefaultValue!(double[]);
+    @Proto(19) string[] repeatedString = protoDefaultValue!(string[]);
+    @Proto(20) bytes[] repeatedBytes = protoDefaultValue!(bytes[]);
+    @Proto(21) TestMessage2[] repeatedMsg = protoDefaultValue!(TestMessage2[]);
+    @Proto(22) TestEnum[] repeatedEnum = protoDefaultValue!(TestEnum[]);
 }
 class TestMessage2
 {
-    @Proto(1) int foo = defaultValue!int;
+    @Proto(1) int foo = protoDefaultValue!int;
 }
 
 class Recursive1
 {
-    @Proto(1) Recursive2 foo = defaultValue!Recursive2;
+    @Proto(1) Recursive2 foo = protoDefaultValue!Recursive2;
 }
 class Recursive2
 {
-    @Proto(1) Recursive1 foo = defaultValue!Recursive1;
+    @Proto(1) Recursive1 foo = protoDefaultValue!Recursive1;
 }
 
 enum TestEnum
@@ -69,23 +69,23 @@ enum TestEnum
 
 class MapMessage
 {
-    @Proto(1) int[string] mapStringInt32 = defaultValue!(int[string]);
-    @Proto(2) TestMessage2[string] mapStringMsg = defaultValue!(TestMessage2[string]);
+    @Proto(1) int[string] mapStringInt32 = protoDefaultValue!(int[string]);
+    @Proto(2) TestMessage2[string] mapStringMsg = protoDefaultValue!(TestMessage2[string]);
 }
 class MapMessageWireEquiv
 {
-    @Proto(1) MapMessageWireEquivEntry1[] mapStringInt32 = defaultValue!(MapMessageWireEquivEntry1[]);
-    @Proto(2) MapMessageWireEquivEntry2[] mapStringMsg = defaultValue!(MapMessageWireEquivEntry2[]);
+    @Proto(1) MapMessageWireEquivEntry1[] mapStringInt32 = protoDefaultValue!(MapMessageWireEquivEntry1[]);
+    @Proto(2) MapMessageWireEquivEntry2[] mapStringMsg = protoDefaultValue!(MapMessageWireEquivEntry2[]);
 }
 class MapMessageWireEquivEntry1
 {
-    @Proto(1) string key = defaultValue!string;
-    @Proto(2) int value = defaultValue!int;
+    @Proto(1) string key = protoDefaultValue!string;
+    @Proto(2) int value = protoDefaultValue!int;
 }
 class MapMessageWireEquivEntry2
 {
-    @Proto(1) string key = defaultValue!string;
-    @Proto(2) TestMessage2 value = defaultValue!TestMessage2;
+    @Proto(1) string key = protoDefaultValue!string;
+    @Proto(2) TestMessage2 value = protoDefaultValue!TestMessage2;
 }
 
 class OneofMessage
@@ -103,7 +103,7 @@ class OneofMessage
     void clearMyOneof() { _myOneofCase = MyOneofCase.myOneofNotSet; }
     @Oneof("_myOneofCase") union
     {
-        @Proto(1) string _a = defaultValue!string; mixin(oneofAccessors!_a);
+        @Proto(1) string _a = protoDefaultValue!string; mixin(oneofAccessors!_a);
         @Proto(2) int _b; mixin(oneofAccessors!_b);
         @Proto(3) TestMessage2 _c; mixin(oneofAccessors!_c);
         @Proto(4) TestEnum _d; mixin(oneofAccessors!_d);
@@ -204,39 +204,39 @@ unittest
 unittest
 {
     auto d = new OneofMessage;
-    assert(d.a == defaultValue!(string));
-    assert(d.b == defaultValue!(int));
-    assert(d.c == defaultValue!(TestMessage2));
-    assert(d.d == defaultValue!(TestEnum));
+    assert(d.a == protoDefaultValue!(string));
+    assert(d.b == protoDefaultValue!(int));
+    assert(d.c == protoDefaultValue!(TestMessage2));
+    assert(d.d == protoDefaultValue!(TestEnum));
     assert(d.myOneofCase == OneofMessage.MyOneofCase.myOneofNotSet);
 
     d.a = "foo";
     assert(d.a == "foo");
-    assert(d.b == defaultValue!(int));
-    assert(d.c == defaultValue!(TestMessage2));
-    assert(d.d == defaultValue!(TestEnum));
+    assert(d.b == protoDefaultValue!(int));
+    assert(d.c == protoDefaultValue!(TestMessage2));
+    assert(d.d == protoDefaultValue!(TestEnum));
     assert(d.myOneofCase == OneofMessage.MyOneofCase.a);
 
     d.b = 42;
-    assert(d.a == defaultValue!(string));
+    assert(d.a == protoDefaultValue!(string));
     assert(d.b == 42);
-    assert(d.c == defaultValue!(TestMessage2));
-    assert(d.d == defaultValue!(TestEnum));
+    assert(d.c == protoDefaultValue!(TestMessage2));
+    assert(d.d == protoDefaultValue!(TestEnum));
     assert(d.myOneofCase == OneofMessage.MyOneofCase.b);
 
     auto m = new TestMessage2;
     m.foo = 42;
     d.c = m;
-    assert(d.a == defaultValue!(string));
-    assert(d.b == defaultValue!(int));
+    assert(d.a == protoDefaultValue!(string));
+    assert(d.b == protoDefaultValue!(int));
     assert(d.c.foo == 42);
-    assert(d.d == defaultValue!(TestEnum));
+    assert(d.d == protoDefaultValue!(TestEnum));
     assert(d.myOneofCase == OneofMessage.MyOneofCase.c);
 
     d.d = TestEnum.B;
-    assert(d.a == defaultValue!(string));
-    assert(d.b == defaultValue!(int));
-    assert(d.c == defaultValue!(TestMessage2));
+    assert(d.a == protoDefaultValue!(string));
+    assert(d.b == protoDefaultValue!(int));
+    assert(d.c == protoDefaultValue!(TestMessage2));
     assert(d.d == TestEnum.B);
     assert(d.myOneofCase == OneofMessage.MyOneofCase.d);
 }
