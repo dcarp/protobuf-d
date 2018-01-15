@@ -246,7 +246,7 @@ enum messageTypeFullName(T) = {
     {
         enum splitName = fullyQualifiedName!T.split(".");
 
-        return (splitName[0..$-2] ~ splitName[$-1]).join(".");
+        return (splitName[0 .. $ - 2] ~ splitName[$ - 1]).join(".");
     }
 }();
 

@@ -134,7 +134,7 @@ if (isInputRange!R && isArray!T && !is(T == string) && !is(T == bytes))
     R fieldRange = inputRange.takeLengthPrefixed;
 
     Appender!T result;
-    static if (wire = Wire.none)
+    static if (wire == Wire.none)
     {
         while (!fieldRange.empty)
             result ~= fieldRange.fromProtobuf!(ElementType!T);
@@ -153,6 +153,7 @@ if (isInputRange!R && isArray!T && !is(T == string) && !is(T == bytes))
 T fromProtobuf(T, R)(ref R inputRange, T result = defaultValue!T)
 if (isInputRange!R && (is(T == class) || is(T == struct)))
 {
+    import std.format : format;
     import std.traits : hasMember;
 
     static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
@@ -184,7 +185,9 @@ if (isInputRange!R && (is(T == class) || is(T == struct)))
                     enum proto = protoByField!(mixin("T." ~ fieldName));
                     enum wireTypeExpected = wireType!(proto, typeof(mixin("T." ~ fieldName)));
 
-                    enforce!ProtobufException(tagWire.wireType == wireTypeExpected, "Wrong wire format");
+                    enforce!ProtobufException(tagWire.wireType == wireTypeExpected,
+                        "Wrong wire format '%s' of field %s, expected '%s' "
+                            .format(tagWire.wireType, T.stringof ~ "." ~ fieldName, wireTypeExpected));
                     inputRange.fromProtobufByField!(mixin("T." ~ fieldName))(result);
                     break chooseFieldDecoder;
                 }

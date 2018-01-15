@@ -118,7 +118,7 @@ enum string oneofAccessorName(alias field) = {
     enum fieldName = __traits(identifier, field);
     static assert(fieldName[0] == '_', "Oneof field (union member) name should start with '_'");
 
-    return fieldName[1..$];
+    return fieldName[1 .. $];
 }();
 
 enum string oneofAccessors(alias field) = {
