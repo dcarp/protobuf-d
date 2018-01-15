@@ -10,7 +10,7 @@ if (isBoolean!T)
     switch (value.type)
     {
     case JSON_TYPE.NULL:
-        return defaultValue!T;
+        return protoDefaultValue!T;
     case JSON_TYPE.TRUE:
         return true;
     case JSON_TYPE.FALSE:
@@ -32,7 +32,7 @@ if (isIntegral!T)
         switch (value.type)
         {
         case JSON_TYPE.NULL:
-            return defaultValue!T;
+            return protoDefaultValue!T;
         case JSON_TYPE.STRING:
             return value.str.to!T;
         case JSON_TYPE.INTEGER:
@@ -72,7 +72,7 @@ if (isFloatingPoint!T)
         switch (value.type)
         {
         case JSON_TYPE.NULL:
-            return defaultValue!T;
+            return protoDefaultValue!T;
         case JSON_TYPE.STRING:
             switch (value.str)
             {
@@ -107,7 +107,7 @@ if (is(T == string))
     import std.exception : enforce;
 
     if (value.isNull)
-        return defaultValue!T;
+        return protoDefaultValue!T;
 
     enforce!ProtobufException(value.type == JSON_TYPE.STRING, "JSON string expected");
     return value.str;
@@ -121,7 +121,7 @@ if (is(T == bytes))
     import std.json : JSON_TYPE;
 
     if (value.isNull)
-        return defaultValue!T;
+        return protoDefaultValue!T;
 
     enforce!ProtobufException(value.type == JSON_TYPE.STRING, "JSON base64 encoded binary expected");
     return Base64.decode(value.str);
@@ -136,7 +136,7 @@ if (isArray!T && !is(T == string) && !is(T == bytes))
     import std.range : ElementType;
 
     if (value.isNull)
-        return defaultValue!T;
+        return protoDefaultValue!T;
 
     enforce!ProtobufException(value.type == JSON_TYPE.ARRAY, "JSON array expected");
     return value.array.map!(a => a.fromJSONValue!(ElementType!T)).array;
@@ -150,7 +150,7 @@ if (isAssociativeArray!T)
     import std.traits : KeyType, ValueType;
 
     if (value.isNull)
-        return defaultValue!T;
+        return protoDefaultValue!T;
 
     enforce!ProtobufException(value.type == JSON_TYPE.OBJECT, "JSON object expected");
     foreach (k, v; value.object)
@@ -204,7 +204,7 @@ unittest
     assertThrown!ProtobufException(fromJSONValue!(bool[int])(parseJSON(`{"foo": false, "2": true}`)));
 }
 
-T fromJSONValue(T)(JSONValue value, T result = defaultValue!T)
+T fromJSONValue(T)(JSONValue value, T result = protoDefaultValue!T)
 if (is(T == class) || is(T == struct))
 {
     import std.algorithm : findAmong;
@@ -240,7 +240,7 @@ if (is(T == class) || is(T == struct))
         }();
 
         if (value.isNull)
-            return defaultValue!T;
+            return protoDefaultValue!T;
 
         enforce!ProtobufException(value.type == JSON_TYPE.OBJECT, "JSON object expected");
 

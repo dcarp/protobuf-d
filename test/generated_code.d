@@ -9,64 +9,64 @@ enum protocVersion = 3005000;
 
 class TestAllTypes
 {
-    @Proto(1) int optionalInt32 = defaultValue!int;
-    @Proto(2) long optionalInt64 = defaultValue!long;
-    @Proto(3) uint optionalUint32 = defaultValue!uint;
-    @Proto(4) ulong optionalUint64 = defaultValue!ulong;
-    @Proto(5, Wire.zigzag) int optionalSint32 = defaultValue!int;
-    @Proto(6, Wire.zigzag) long optionalSint64 = defaultValue!long;
-    @Proto(7, Wire.fixed) uint optionalFixed32 = defaultValue!uint;
-    @Proto(8, Wire.fixed) ulong optionalFixed64 = defaultValue!ulong;
-    @Proto(9, Wire.fixed) int optionalSfixed32 = defaultValue!int;
-    @Proto(10, Wire.fixed) long optionalSfixed64 = defaultValue!long;
-    @Proto(11) float optionalFloat = defaultValue!float;
-    @Proto(12) double optionalDouble = defaultValue!double;
-    @Proto(13) bool optionalBool = defaultValue!bool;
-    @Proto(14) string optionalString = defaultValue!string;
-    @Proto(15) bytes optionalBytes = defaultValue!bytes;
-    @Proto(18) NestedMessage optionalNestedMessage = defaultValue!NestedMessage;
-    @Proto(19) ForeignMessage optionalForeignMessage = defaultValue!ForeignMessage;
-    @Proto(21) NestedEnum optionalNestedEnum = defaultValue!NestedEnum;
-    @Proto(22) ForeignEnum optionalForeignEnum = defaultValue!ForeignEnum;
-    @Proto(27) TestAllTypes recursiveMessage = defaultValue!TestAllTypes;
-    @Proto(31) int[] repeatedInt32 = defaultValue!(int[]);
-    @Proto(32) long[] repeatedInt64 = defaultValue!(long[]);
-    @Proto(33) uint[] repeatedUint32 = defaultValue!(uint[]);
-    @Proto(34) ulong[] repeatedUint64 = defaultValue!(ulong[]);
-    @Proto(35, Wire.zigzag) int[] repeatedSint32 = defaultValue!(int[]);
-    @Proto(36, Wire.zigzag) long[] repeatedSint64 = defaultValue!(long[]);
-    @Proto(37, Wire.fixed) uint[] repeatedFixed32 = defaultValue!(uint[]);
-    @Proto(38, Wire.fixed) ulong[] repeatedFixed64 = defaultValue!(ulong[]);
-    @Proto(39, Wire.fixed) int[] repeatedSfixed32 = defaultValue!(int[]);
-    @Proto(40, Wire.fixed) long[] repeatedSfixed64 = defaultValue!(long[]);
-    @Proto(41) float[] repeatedFloat = defaultValue!(float[]);
-    @Proto(42) double[] repeatedDouble = defaultValue!(double[]);
-    @Proto(43) bool[] repeatedBool = defaultValue!(bool[]);
-    @Proto(44) string[] repeatedString = defaultValue!(string[]);
-    @Proto(45) bytes[] repeatedBytes = defaultValue!(bytes[]);
-    @Proto(48) NestedMessage[] repeatedNestedMessage = defaultValue!(NestedMessage[]);
-    @Proto(49) ForeignMessage[] repeatedForeignMessage = defaultValue!(ForeignMessage[]);
-    @Proto(51) NestedEnum[] repeatedNestedEnum = defaultValue!(NestedEnum[]);
-    @Proto(52) ForeignEnum[] repeatedForeignEnum = defaultValue!(ForeignEnum[]);
-    @Proto(56) int[int] mapInt32Int32 = defaultValue!(int[int]);
-    @Proto(57) long[long] mapInt64Int64 = defaultValue!(long[long]);
-    @Proto(58) uint[uint] mapUint32Uint32 = defaultValue!(uint[uint]);
-    @Proto(59) ulong[ulong] mapUint64Uint64 = defaultValue!(ulong[ulong]);
-    @Proto(60, Wire.zigzagKeyZigzagValue) int[int] mapSint32Sint32 = defaultValue!(int[int]);
-    @Proto(61, Wire.zigzagKeyZigzagValue) long[long] mapSint64Sint64 = defaultValue!(long[long]);
-    @Proto(62, Wire.fixedKeyFixedValue) uint[uint] mapFixed32Fixed32 = defaultValue!(uint[uint]);
-    @Proto(63, Wire.fixedKeyFixedValue) ulong[ulong] mapFixed64Fixed64 = defaultValue!(ulong[ulong]);
-    @Proto(64, Wire.fixedKeyFixedValue) int[int] mapSfixed32Sfixed32 = defaultValue!(int[int]);
-    @Proto(65, Wire.fixedKeyFixedValue) long[long] mapSfixed64Sfixed64 = defaultValue!(long[long]);
-    @Proto(66) float[int] mapInt32Float = defaultValue!(float[int]);
-    @Proto(67) double[int] mapInt32Double = defaultValue!(double[int]);
-    @Proto(68) bool[bool] mapBoolBool = defaultValue!(bool[bool]);
-    @Proto(69) string[string] mapStringString = defaultValue!(string[string]);
-    @Proto(70) bytes[string] mapStringBytes = defaultValue!(bytes[string]);
-    @Proto(71) NestedMessage[string] mapStringNestedMessage = defaultValue!(NestedMessage[string]);
-    @Proto(72) ForeignMessage[string] mapStringForeignMessage = defaultValue!(ForeignMessage[string]);
-    @Proto(73) NestedEnum[string] mapStringNestedEnum = defaultValue!(NestedEnum[string]);
-    @Proto(74) ForeignEnum[string] mapStringForeignEnum = defaultValue!(ForeignEnum[string]);
+    @Proto(1) int optionalInt32 = protoDefaultValue!int;
+    @Proto(2) long optionalInt64 = protoDefaultValue!long;
+    @Proto(3) uint optionalUint32 = protoDefaultValue!uint;
+    @Proto(4) ulong optionalUint64 = protoDefaultValue!ulong;
+    @Proto(5, Wire.zigzag) int optionalSint32 = protoDefaultValue!int;
+    @Proto(6, Wire.zigzag) long optionalSint64 = protoDefaultValue!long;
+    @Proto(7, Wire.fixed) uint optionalFixed32 = protoDefaultValue!uint;
+    @Proto(8, Wire.fixed) ulong optionalFixed64 = protoDefaultValue!ulong;
+    @Proto(9, Wire.fixed) int optionalSfixed32 = protoDefaultValue!int;
+    @Proto(10, Wire.fixed) long optionalSfixed64 = protoDefaultValue!long;
+    @Proto(11) float optionalFloat = protoDefaultValue!float;
+    @Proto(12) double optionalDouble = protoDefaultValue!double;
+    @Proto(13) bool optionalBool = protoDefaultValue!bool;
+    @Proto(14) string optionalString = protoDefaultValue!string;
+    @Proto(15) bytes optionalBytes = protoDefaultValue!bytes;
+    @Proto(18) NestedMessage optionalNestedMessage = protoDefaultValue!NestedMessage;
+    @Proto(19) ForeignMessage optionalForeignMessage = protoDefaultValue!ForeignMessage;
+    @Proto(21) NestedEnum optionalNestedEnum = protoDefaultValue!NestedEnum;
+    @Proto(22) ForeignEnum optionalForeignEnum = protoDefaultValue!ForeignEnum;
+    @Proto(27) TestAllTypes recursiveMessage = protoDefaultValue!TestAllTypes;
+    @Proto(31) int[] repeatedInt32 = protoDefaultValue!(int[]);
+    @Proto(32) long[] repeatedInt64 = protoDefaultValue!(long[]);
+    @Proto(33) uint[] repeatedUint32 = protoDefaultValue!(uint[]);
+    @Proto(34) ulong[] repeatedUint64 = protoDefaultValue!(ulong[]);
+    @Proto(35, Wire.zigzag) int[] repeatedSint32 = protoDefaultValue!(int[]);
+    @Proto(36, Wire.zigzag) long[] repeatedSint64 = protoDefaultValue!(long[]);
+    @Proto(37, Wire.fixed) uint[] repeatedFixed32 = protoDefaultValue!(uint[]);
+    @Proto(38, Wire.fixed) ulong[] repeatedFixed64 = protoDefaultValue!(ulong[]);
+    @Proto(39, Wire.fixed) int[] repeatedSfixed32 = protoDefaultValue!(int[]);
+    @Proto(40, Wire.fixed) long[] repeatedSfixed64 = protoDefaultValue!(long[]);
+    @Proto(41) float[] repeatedFloat = protoDefaultValue!(float[]);
+    @Proto(42) double[] repeatedDouble = protoDefaultValue!(double[]);
+    @Proto(43) bool[] repeatedBool = protoDefaultValue!(bool[]);
+    @Proto(44) string[] repeatedString = protoDefaultValue!(string[]);
+    @Proto(45) bytes[] repeatedBytes = protoDefaultValue!(bytes[]);
+    @Proto(48) NestedMessage[] repeatedNestedMessage = protoDefaultValue!(NestedMessage[]);
+    @Proto(49) ForeignMessage[] repeatedForeignMessage = protoDefaultValue!(ForeignMessage[]);
+    @Proto(51) NestedEnum[] repeatedNestedEnum = protoDefaultValue!(NestedEnum[]);
+    @Proto(52) ForeignEnum[] repeatedForeignEnum = protoDefaultValue!(ForeignEnum[]);
+    @Proto(56) int[int] mapInt32Int32 = protoDefaultValue!(int[int]);
+    @Proto(57) long[long] mapInt64Int64 = protoDefaultValue!(long[long]);
+    @Proto(58) uint[uint] mapUint32Uint32 = protoDefaultValue!(uint[uint]);
+    @Proto(59) ulong[ulong] mapUint64Uint64 = protoDefaultValue!(ulong[ulong]);
+    @Proto(60, Wire.zigzagKeyZigzagValue) int[int] mapSint32Sint32 = protoDefaultValue!(int[int]);
+    @Proto(61, Wire.zigzagKeyZigzagValue) long[long] mapSint64Sint64 = protoDefaultValue!(long[long]);
+    @Proto(62, Wire.fixedKeyFixedValue) uint[uint] mapFixed32Fixed32 = protoDefaultValue!(uint[uint]);
+    @Proto(63, Wire.fixedKeyFixedValue) ulong[ulong] mapFixed64Fixed64 = protoDefaultValue!(ulong[ulong]);
+    @Proto(64, Wire.fixedKeyFixedValue) int[int] mapSfixed32Sfixed32 = protoDefaultValue!(int[int]);
+    @Proto(65, Wire.fixedKeyFixedValue) long[long] mapSfixed64Sfixed64 = protoDefaultValue!(long[long]);
+    @Proto(66) float[int] mapInt32Float = protoDefaultValue!(float[int]);
+    @Proto(67) double[int] mapInt32Double = protoDefaultValue!(double[int]);
+    @Proto(68) bool[bool] mapBoolBool = protoDefaultValue!(bool[bool]);
+    @Proto(69) string[string] mapStringString = protoDefaultValue!(string[string]);
+    @Proto(70) bytes[string] mapStringBytes = protoDefaultValue!(bytes[string]);
+    @Proto(71) NestedMessage[string] mapStringNestedMessage = protoDefaultValue!(NestedMessage[string]);
+    @Proto(72) ForeignMessage[string] mapStringForeignMessage = protoDefaultValue!(ForeignMessage[string]);
+    @Proto(73) NestedEnum[string] mapStringNestedEnum = protoDefaultValue!(NestedEnum[string]);
+    @Proto(74) ForeignEnum[string] mapStringForeignEnum = protoDefaultValue!(ForeignEnum[string]);
     enum OneofFieldCase
     {
         oneofFieldNotSet = 0,
@@ -85,7 +85,7 @@ class TestAllTypes
     void clearOneofField() { _oneofFieldCase = OneofFieldCase.oneofFieldNotSet; }
     @Oneof("_oneofFieldCase") union
     {
-        @Proto(111) uint _oneofUint32 = defaultValue!uint; mixin(oneofAccessors!_oneofUint32);
+        @Proto(111) uint _oneofUint32 = protoDefaultValue!uint; mixin(oneofAccessors!_oneofUint32);
         @Proto(112) NestedMessage _oneofNestedMessage; mixin(oneofAccessors!_oneofNestedMessage);
         @Proto(113) string _oneofString; mixin(oneofAccessors!_oneofString);
         @Proto(114) bytes _oneofBytes; mixin(oneofAccessors!_oneofBytes);
@@ -95,29 +95,29 @@ class TestAllTypes
         @Proto(118) double _oneofDouble; mixin(oneofAccessors!_oneofDouble);
         @Proto(119) NestedEnum _oneofEnum; mixin(oneofAccessors!_oneofEnum);
     }
-    @Proto(401) int fieldname1 = defaultValue!int;
-    @Proto(402) int fieldName2 = defaultValue!int;
-    @Proto(403) int FieldName3 = defaultValue!int;
-    @Proto(404) int fieldName4 = defaultValue!int;
-    @Proto(405) int field0name5 = defaultValue!int;
-    @Proto(406) int field0Name6 = defaultValue!int;
-    @Proto(407) int fieldName7 = defaultValue!int;
-    @Proto(408) int FieldName8 = defaultValue!int;
-    @Proto(409) int fieldName9 = defaultValue!int;
-    @Proto(410) int FieldName10 = defaultValue!int;
-    @Proto(411) int FIELDNAME11 = defaultValue!int;
-    @Proto(412) int FIELDName12 = defaultValue!int;
-    @Proto(413) int FieldName13 = defaultValue!int;
-    @Proto(414) int FieldName14 = defaultValue!int;
-    @Proto(415) int fieldName15 = defaultValue!int;
-    @Proto(416) int fieldName16 = defaultValue!int;
-    @Proto(417) int fieldName17 = defaultValue!int;
-    @Proto(418) int FieldName18 = defaultValue!int;
+    @Proto(401) int fieldname1 = protoDefaultValue!int;
+    @Proto(402) int fieldName2 = protoDefaultValue!int;
+    @Proto(403) int FieldName3 = protoDefaultValue!int;
+    @Proto(404) int fieldName4 = protoDefaultValue!int;
+    @Proto(405) int field0name5 = protoDefaultValue!int;
+    @Proto(406) int field0Name6 = protoDefaultValue!int;
+    @Proto(407) int fieldName7 = protoDefaultValue!int;
+    @Proto(408) int FieldName8 = protoDefaultValue!int;
+    @Proto(409) int fieldName9 = protoDefaultValue!int;
+    @Proto(410) int FieldName10 = protoDefaultValue!int;
+    @Proto(411) int FIELDNAME11 = protoDefaultValue!int;
+    @Proto(412) int FIELDName12 = protoDefaultValue!int;
+    @Proto(413) int FieldName13 = protoDefaultValue!int;
+    @Proto(414) int FieldName14 = protoDefaultValue!int;
+    @Proto(415) int fieldName15 = protoDefaultValue!int;
+    @Proto(416) int fieldName16 = protoDefaultValue!int;
+    @Proto(417) int fieldName17 = protoDefaultValue!int;
+    @Proto(418) int FieldName18 = protoDefaultValue!int;
 
     static class NestedMessage
     {
-        @Proto(1) int a = defaultValue!int;
-        @Proto(2) TestAllTypes corecursive = defaultValue!TestAllTypes;
+        @Proto(1) int a = protoDefaultValue!int;
+        @Proto(2) TestAllTypes corecursive = protoDefaultValue!TestAllTypes;
     }
 
     enum NestedEnum
@@ -131,7 +131,7 @@ class TestAllTypes
 
 class ForeignMessage
 {
-    @Proto(1) int c = defaultValue!int;
+    @Proto(1) int c = protoDefaultValue!int;
 }
 
 enum ForeignEnum

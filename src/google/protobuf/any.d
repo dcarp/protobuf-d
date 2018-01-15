@@ -10,8 +10,8 @@ struct Any
 {
     private struct _Message
     {
-        @Proto(1) string typeUrl = defaultValue!string;
-        @Proto(2) bytes value = defaultValue!bytes;
+        @Proto(1) string typeUrl = protoDefaultValue!string;
+        @Proto(2) bytes value = protoDefaultValue!bytes;
     }
 
     string typeUrl;
@@ -216,8 +216,8 @@ unittest
     {
         enum messageTypeFullName = "Foo";
 
-        @Proto(1) int intField = defaultValue!int;
-        @Proto(2) string stringField = defaultValue!string;
+        @Proto(1) int intField = protoDefaultValue!int;
+        @Proto(2) string stringField = protoDefaultValue!string;
     }
     auto foo1 = Foo(42, "abc");
     Any anyFoo;

@@ -5,29 +5,29 @@ import google.protobuf.descriptor;
 
 class Version
 {
-    @Proto(1) int major = defaultValue!int;
-    @Proto(2) int minor = defaultValue!int;
-    @Proto(3) int patch = defaultValue!int;
-    @Proto(4) string suffix = defaultValue!string;
+    @Proto(1) int major = protoDefaultValue!int;
+    @Proto(2) int minor = protoDefaultValue!int;
+    @Proto(3) int patch = protoDefaultValue!int;
+    @Proto(4) string suffix = protoDefaultValue!string;
 }
 
 class CodeGeneratorRequest
 {
-    @Proto(1) string[] filesToGenerate = defaultValue!(string[]);
-    @Proto(2) string parameter = defaultValue!string;
-    @Proto(3) Version compilerVersion = defaultValue!Version;
-    @Proto(15) FileDescriptorProto[] protoFiles = defaultValue!(FileDescriptorProto[]);
+    @Proto(1) string[] filesToGenerate = protoDefaultValue!(string[]);
+    @Proto(2) string parameter = protoDefaultValue!string;
+    @Proto(3) Version compilerVersion = protoDefaultValue!Version;
+    @Proto(15) FileDescriptorProto[] protoFiles = protoDefaultValue!(FileDescriptorProto[]);
 }
 
 class CodeGeneratorResponse
 {
-    @Proto(1) string error = defaultValue!string;
-    @Proto(15) File[] files = defaultValue!(File[]);
+    @Proto(1) string error = protoDefaultValue!string;
+    @Proto(15) File[] files = protoDefaultValue!(File[]);
 
     static class File
     {
-        @Proto(1) string name = defaultValue!string;
-        @Proto(2) string insertionPoint = defaultValue!string;
-        @Proto(15) string content = defaultValue!string;
+        @Proto(1) string name = protoDefaultValue!string;
+        @Proto(2) string insertionPoint = protoDefaultValue!string;
+        @Proto(15) string content = protoDefaultValue!string;
     }
 }

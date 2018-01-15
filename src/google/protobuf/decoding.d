@@ -150,7 +150,7 @@ if (isInputRange!R && isArray!T && !is(T == string) && !is(T == bytes))
     return result.data;
 }
 
-T fromProtobuf(T, R)(ref R inputRange, T result = defaultValue!T)
+T fromProtobuf(T, R)(ref R inputRange, T result = protoDefaultValue!T)
 if (isInputRange!R && (is(T == class) || is(T == struct)))
 {
     import std.format : format;
@@ -270,7 +270,7 @@ if (isInputRange!R && isArray!T && !is(T == string) && !is(T == bytes) && !proto
     static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
     static assert(validateProto!(proto, T));
 
-    auto newElement = defaultValue!(ElementType!T);
+    auto newElement = protoDefaultValue!(ElementType!T);
     inputRange.fromProtobufByProto!proto(newElement);
     field ~= newElement;
 }

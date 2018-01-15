@@ -170,12 +170,12 @@ unittest
 
     class Foo
     {
-        @Proto(1) int bar = defaultValue!int;
-        @Proto(3) bool qux = defaultValue!bool;
-        @Proto(2, Wire.fixed) long baz = defaultValue!long;
-        @Proto(4) string quux = defaultValue!string;
+        @Proto(1) int bar = protoDefaultValue!int;
+        @Proto(3) bool qux = protoDefaultValue!bool;
+        @Proto(2, Wire.fixed) long baz = protoDefaultValue!long;
+        @Proto(4) string quux = protoDefaultValue!string;
 
-        @Proto(5) Foo recursion = defaultValue!Foo;
+        @Proto(5) Foo recursion = protoDefaultValue!Foo;
     }
 
     Foo foo;
@@ -192,7 +192,7 @@ unittest
 {
     struct Foo
     {
-        @Proto(1) int bar = defaultValue!int;
+        @Proto(1) int bar = protoDefaultValue!int;
 
         auto toProtobuf()
         {
@@ -224,7 +224,7 @@ private static auto toProtobufByField(alias field, T)(T message)
     }
     else
     {
-        if (mixin(fieldInstanceName) == defaultValue!(typeof(field)))
+        if (mixin(fieldInstanceName) == protoDefaultValue!(typeof(field)))
             return emptySizedRange!(typeof(mixin(fieldInstanceName).toProtobufByProto!proto));
     }
 

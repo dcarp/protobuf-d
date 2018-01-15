@@ -112,7 +112,7 @@ if (is(T == class) || is(T == struct))
             }
             else
             {
-                if (mixin("value." ~ fieldName) != defaultValue!(typeof(mixin("T." ~ fieldName))))
+                if (mixin("value." ~ fieldName) != protoDefaultValue!(typeof(mixin("T." ~ fieldName))))
                     members[fieldName] = mixin("value." ~ fieldName).toJSONValue;
             }
         }
@@ -156,7 +156,7 @@ unittest
         void clearMeterOrInchCase() { _meterOrInchCase = MeterOrInchCase.meterOrInchNotSet; }
         @Oneof("_meterOrInchCase") union
         {
-            @Proto(3) int _meter = defaultValue!int; mixin(oneofAccessors!_meter);
+            @Proto(3) int _meter = protoDefaultValue!int; mixin(oneofAccessors!_meter);
             @Proto(5) int _inch; mixin(oneofAccessors!_inch);
         }
     }

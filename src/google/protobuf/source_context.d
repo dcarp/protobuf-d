@@ -7,5 +7,5 @@ import google.protobuf;
 
 class SourceContext
 {
-    @Proto(1) string fileName = defaultValue!string;
+    @Proto(1) string fileName = protoDefaultValue!string;
 }

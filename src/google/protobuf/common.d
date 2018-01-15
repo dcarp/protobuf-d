@@ -2,12 +2,14 @@ module google.protobuf.common;
 
 alias bytes = ubyte[];
 
-auto defaultValue(T)()
+auto protoDefaultValue(T)()
 {
-    import std.traits : isFloatingPoint;
+    import std.traits : hasMember, isFloatingPoint;
 
     static if (isFloatingPoint!T)
         return cast(T) 0.0;
+    else static if ((is(T == class) || is(T == struct)) && hasMember!(T, "protoDefaultValue"))
+        return T.protoDefaultValue;
     else
         return T.init;
 }
@@ -127,7 +129,7 @@ enum string oneofAccessors(alias field) = {
     enum accessorName = oneofAccessorName!field;
 
     return "
-        @property %1$s %2$s() { return %3$s == typeof(%3$s).%2$s ? _%2$s : defaultValue!(%1$s); }
+        @property %1$s %2$s() { return %3$s == typeof(%3$s).%2$s ? _%2$s : protoDefaultValue!(%1$s); }
         @property void %2$s(%1$s _) { _%2$s = _; %3$s = typeof(%3$s).%2$s; }
         ".format(typeof(field).stringof, accessorName, oneofCaseFieldName!field);
 }();

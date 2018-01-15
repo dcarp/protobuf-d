@@ -10,8 +10,8 @@ struct Duration
 {
     private struct _Message
     {
-        @Proto(1) long seconds = defaultValue!long;
-        @Proto(2) int nanos = defaultValue!int;
+        @Proto(1) long seconds = protoDefaultValue!long;
+        @Proto(2) int nanos = protoDefaultValue!int;
     }
 
     StdDuration duration;

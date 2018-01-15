@@ -7,7 +7,7 @@ import google.protobuf;
 
 class Struct
 {
-    @Proto(1) Value[string] fields = defaultValue!(Value[string]);
+    @Proto(1) Value[string] fields = protoDefaultValue!(Value[string]);
 
     this()
     {
@@ -37,7 +37,7 @@ class Struct
 
         if (value.type == JSON_TYPE.NULL)
         {
-            fields = defaultValue!(Value[string]);
+            fields = protoDefaultValue!(Value[string]);
             return this;
         }
 
@@ -65,7 +65,7 @@ class Value
     void clearKind() { _kindCase = KindCase.kindNotSet; }
     @Oneof("_kindCase") union
     {
-        @Proto(1) NullValue _nullValue = defaultValue!NullValue; mixin(oneofAccessors!_nullValue);
+        @Proto(1) NullValue _nullValue = protoDefaultValue!NullValue; mixin(oneofAccessors!_nullValue);
         @Proto(2) double _numberValue; mixin(oneofAccessors!_numberValue);
         @Proto(3) string _stringValue; mixin(oneofAccessors!_stringValue);
         @Proto(4) bool _boolValue; mixin(oneofAccessors!_boolValue);
@@ -190,7 +190,7 @@ enum NullValue
 
 class ListValue
 {
-    @Proto(1) Value[] values = defaultValue!(Value[]);
+    @Proto(1) Value[] values = protoDefaultValue!(Value[]);
 
     this()
     {
@@ -218,7 +218,7 @@ class ListValue
 
         if (value.type == JSON_TYPE.NULL)
         {
-            values = defaultValue!(Value[]);
+            values = protoDefaultValue!(Value[]);
             return this;
         }
 

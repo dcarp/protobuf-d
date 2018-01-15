@@ -369,9 +369,9 @@ class CodeGenerator
 
         auto fieldTypeName = typeName(field);
         if (fieldTypeName.endsWith("]"))
-            return " = defaultValue!(%s)".format(fieldTypeName);
+            return " = protoDefaultValue!(%s)".format(fieldTypeName);
         else
-            return " = defaultValue!%s".format(fieldTypeName);
+            return " = protoDefaultValue!%s".format(fieldTypeName);
     }
 
     private string protocVersion;

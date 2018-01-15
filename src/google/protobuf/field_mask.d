@@ -5,7 +5,7 @@ import google.protobuf;
 
 struct FieldMask
 {
-    @Proto(1) string[] paths = defaultValue!(string[]);
+    @Proto(1) string[] paths = protoDefaultValue!(string[]);
 
     JSONValue toJSONValue()()
     {
@@ -25,7 +25,7 @@ struct FieldMask
 
         if (value.type == JSON_TYPE.NULL)
         {
-            paths = defaultValue!(string[]);
+            paths = protoDefaultValue!(string[]);
             return this;
         }
 

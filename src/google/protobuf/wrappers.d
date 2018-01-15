@@ -12,7 +12,7 @@ struct WrappedValue(T, string messageTypeFullName_)
 
     private struct _Message
     {
-        @Proto(1) T value = defaultValue!T;
+        @Proto(1) T value = protoDefaultValue!T;
     }
 
     Nullable!T value;
@@ -78,7 +78,7 @@ unittest
     foreach (WrappedValue; AliasSeq!(DoubleValue, FloatValue, Int64Value, UInt64Value, Int32Value, UInt32Value,
             BoolValue, StringValue, BytesValue))
     {
-        static assert(defaultValue!WrappedValue.isNull);
-        assert(buffer.fromProtobuf!WrappedValue == defaultValue!(typeof(WrappedValue.value.get)));
+        static assert(protoDefaultValue!WrappedValue.isNull);
+        assert(buffer.fromProtobuf!WrappedValue == protoDefaultValue!(typeof(WrappedValue.value.get)));
     }
 }

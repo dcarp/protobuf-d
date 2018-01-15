@@ -9,28 +9,28 @@ import google.protobuf.type;
 
 class Api
 {
-    @Proto(1) string name = defaultValue!string;
-    @Proto(2) Method[] methods = defaultValue!(Method[]);
-    @Proto(3) Option[] options = defaultValue!(Option[]);
-    @Proto(4) string version_ = defaultValue!string;
-    @Proto(5) SourceContext sourceContext = defaultValue!SourceContext;
-    @Proto(6) Mixin[] mixins = defaultValue!(Mixin[]);
-    @Proto(7) Syntax syntax = defaultValue!Syntax;
+    @Proto(1) string name = protoDefaultValue!string;
+    @Proto(2) Method[] methods = protoDefaultValue!(Method[]);
+    @Proto(3) Option[] options = protoDefaultValue!(Option[]);
+    @Proto(4) string version_ = protoDefaultValue!string;
+    @Proto(5) SourceContext sourceContext = protoDefaultValue!SourceContext;
+    @Proto(6) Mixin[] mixins = protoDefaultValue!(Mixin[]);
+    @Proto(7) Syntax syntax = protoDefaultValue!Syntax;
 }
 
 class Method
 {
-    @Proto(1) string name = defaultValue!string;
-    @Proto(2) string requestTypeUrl = defaultValue!string;
-    @Proto(3) bool requestStreaming = defaultValue!bool;
-    @Proto(4) string responseTypeUrl = defaultValue!string;
-    @Proto(5) bool responseStreaming = defaultValue!bool;
-    @Proto(6) Option[] options = defaultValue!(Option[]);
-    @Proto(7) Syntax syntax = defaultValue!Syntax;
+    @Proto(1) string name = protoDefaultValue!string;
+    @Proto(2) string requestTypeUrl = protoDefaultValue!string;
+    @Proto(3) bool requestStreaming = protoDefaultValue!bool;
+    @Proto(4) string responseTypeUrl = protoDefaultValue!string;
+    @Proto(5) bool responseStreaming = protoDefaultValue!bool;
+    @Proto(6) Option[] options = protoDefaultValue!(Option[]);
+    @Proto(7) Syntax syntax = protoDefaultValue!Syntax;
 }
 
 class Mixin
 {
-    @Proto(1) string name = defaultValue!string;
-    @Proto(2) string root = defaultValue!string;
+    @Proto(1) string name = protoDefaultValue!string;
+    @Proto(2) string root = protoDefaultValue!string;
 }

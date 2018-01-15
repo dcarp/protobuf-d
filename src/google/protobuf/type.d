@@ -9,26 +9,26 @@ import google.protobuf.source_context;
 
 class Type
 {
-    @Proto(1) string name = defaultValue!string;
-    @Proto(2) Field[] fields = defaultValue!(Field[]);
-    @Proto(3) string[] oneofs = defaultValue!(string[]);
-    @Proto(4) Option[] options = defaultValue!(Option[]);
-    @Proto(5) SourceContext sourceContext = defaultValue!SourceContext;
-    @Proto(6) Syntax syntax = defaultValue!Syntax;
+    @Proto(1) string name = protoDefaultValue!string;
+    @Proto(2) Field[] fields = protoDefaultValue!(Field[]);
+    @Proto(3) string[] oneofs = protoDefaultValue!(string[]);
+    @Proto(4) Option[] options = protoDefaultValue!(Option[]);
+    @Proto(5) SourceContext sourceContext = protoDefaultValue!SourceContext;
+    @Proto(6) Syntax syntax = protoDefaultValue!Syntax;
 }
 
 class Field
 {
-    @Proto(1) Kind kind = defaultValue!Kind;
-    @Proto(2) Cardinality cardinality = defaultValue!Cardinality;
-    @Proto(3) int number = defaultValue!int;
-    @Proto(4) string name = defaultValue!string;
-    @Proto(6) string typeUrl = defaultValue!string;
-    @Proto(7) int oneofIndex = defaultValue!int;
-    @Proto(8) bool packed = defaultValue!bool;
-    @Proto(9) Option[] options = defaultValue!(Option[]);
-    @Proto(10) string jsonName = defaultValue!string;
-    @Proto(11) string defaultValue = defaultValue!string;
+    @Proto(1) Kind kind = protoDefaultValue!Kind;
+    @Proto(2) Cardinality cardinality = protoDefaultValue!Cardinality;
+    @Proto(3) int number = protoDefaultValue!int;
+    @Proto(4) string name = protoDefaultValue!string;
+    @Proto(6) string typeUrl = protoDefaultValue!string;
+    @Proto(7) int oneofIndex = protoDefaultValue!int;
+    @Proto(8) bool packed = protoDefaultValue!bool;
+    @Proto(9) Option[] options = protoDefaultValue!(Option[]);
+    @Proto(10) string jsonName = protoDefaultValue!string;
+    @Proto(11) string defaultValue = protoDefaultValue!string;
 
     enum Kind
     {
@@ -64,24 +64,24 @@ class Field
 
 class Enum
 {
-    @Proto(1) string name = defaultValue!string;
-    @Proto(2) EnumValue[] enumvalue = defaultValue!(EnumValue[]);
-    @Proto(3) Option[] options = defaultValue!(Option[]);
-    @Proto(4) SourceContext sourceContext = defaultValue!SourceContext;
-    @Proto(5) Syntax syntax = defaultValue!Syntax;
+    @Proto(1) string name = protoDefaultValue!string;
+    @Proto(2) EnumValue[] enumvalue = protoDefaultValue!(EnumValue[]);
+    @Proto(3) Option[] options = protoDefaultValue!(Option[]);
+    @Proto(4) SourceContext sourceContext = protoDefaultValue!SourceContext;
+    @Proto(5) Syntax syntax = protoDefaultValue!Syntax;
 }
 
 class EnumValue
 {
-    @Proto(1) string name = defaultValue!string;
-    @Proto(2) int number = defaultValue!int;
-    @Proto(3) Option[] options = defaultValue!(Option[]);
+    @Proto(1) string name = protoDefaultValue!string;
+    @Proto(2) int number = protoDefaultValue!int;
+    @Proto(3) Option[] options = protoDefaultValue!(Option[]);
 }
 
 class Option
 {
-    @Proto(1) string name = defaultValue!string;
-    @Proto(2) Any value = defaultValue!Any;
+    @Proto(1) string name = protoDefaultValue!string;
+    @Proto(2) Any value = protoDefaultValue!Any;
 }
 
 enum Syntax

@@ -9,8 +9,8 @@ struct Timestamp
 {
     private struct _Message
     {
-      @Proto(1) long seconds = defaultValue!long;
-      @Proto(2) int nanos = defaultValue!int;
+      @Proto(1) long seconds = protoDefaultValue!long;
+      @Proto(2) int nanos = protoDefaultValue!int;
     }
 
     private static immutable defaultTimestampValue = SysTime(DateTime(1970, 1, 1, 0, 0, 0), UTC());
@@ -174,7 +174,7 @@ unittest
 
     static const epoch = SysTime(DateTime(1970, 1, 1), UTC());
 
-    assert(defaultValue!Timestamp == epoch);
+    assert(protoDefaultValue!Timestamp == epoch);
 
     assert(Timestamp(epoch).toJSONValue == JSONValue("1970-01-01T00:00:00Z"));
     assert(Timestamp(epoch + 5.seconds).toJSONValue == JSONValue("1970-01-01T00:00:05Z"));
