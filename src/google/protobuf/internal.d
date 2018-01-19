@@ -145,11 +145,9 @@ import std.traits: Signed, Unsigned, isIntegral, isSigned, isUnsigned;
 Unsigned!T zigZag(T)(in T src) pure nothrow @safe @nogc
 if(isIntegral!T && isSigned!T)
 {
-	return cast(Unsigned!T)(
-			src >= 0 ?
-				src * 2 :
-				-src * 2 - 1
-		);
+    T ret = (src << 1) ^ (src >> (T.sizeof * 8 - 1));
+
+    return cast(Unsigned!T) ret;
 }
 
 unittest
