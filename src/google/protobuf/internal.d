@@ -135,7 +135,7 @@ unittest
 
 import std.traits: Signed, Unsigned, isIntegral, isSigned, isUnsigned;
 
-/*******************************************************************************
+/**
  * Encodes a number into its zigzag encoding
  *
  * Params:
@@ -166,7 +166,7 @@ unittest
     assert(zigZag(long.min) == 0xffff_ffff_ffff_ffff);
 }
 
-/*******************************************************************************
+/**
  * Decodes a number from its zigzag encoding
  *
  * Params:
@@ -176,9 +176,7 @@ unittest
 Signed!T zagZig(T)(in T src) pure nothrow @safe @nogc
 if(isIntegral!T && isUnsigned!T)
 {
-	return (src & 1) ?
-		-(src >> 1) - 1 :
-		src >> 1;
+    return (src >>> 1) ^ -(src & 1);
 }
 unittest
 {
