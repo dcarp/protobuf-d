@@ -293,7 +293,6 @@ class CodeGenerator
     private string baseTypeName(FieldDescriptorProto field)
     {
         import std.exception : enforce;
-        import std.conv: to;
 
         final switch (field.type) with (FieldDescriptorProto.Type)
         {
