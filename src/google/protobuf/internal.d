@@ -258,9 +258,9 @@ WireType wireType(Proto proto, T)()
 
 template CollectTypes(M, T...)
 {
-    import std.meta : AliasSeq, Filter, NoDuplicates, staticIndexOf, staticMap, Unqual;
+    import std.meta : AliasSeq, Filter, NoDuplicates, staticIndexOf, staticMap;
     import std.range : ElementType;
-    import std.traits : getSymbolsByUDA, hasMember, isArray, isAssociativeArray, KeyType, ValueType;
+    import std.traits : getSymbolsByUDA, hasMember, isArray, isAssociativeArray, KeyType, ValueType, Unqual;
 
     static if (is(M == class) || is(M == struct))
     {

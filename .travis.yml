@@ -1,2 +1,7 @@
 language: d
 sudo: false
+
+script:
+  - dub build
+  - dub test
+  - dub build :protoc-gen-d

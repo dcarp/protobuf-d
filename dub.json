@@ -8,14 +8,8 @@
     "workingDirectory": "build",
     "configurations": [
         {
-            "name": "library"
-        },
-        {
-            "name": "protoc-gen-d",
-            "targetType": "executable",
-            "targetName": "protoc-gen-d",
-            "sourcePaths": ["protoc-gen-d"],
-            "mainSourceFile": "protoc-gen-d/protoc-gen-d.d"
+            "name": "protobuf",
+            "targetType": "library"
         },
         {
             "name": "unittest",
@@ -24,5 +18,17 @@
             "sourcePaths": ["test"],
             "mainSourceFile": "test/basic.d"
         }
+    ],
+    "subPackages": [
+        {
+            "name": "protoc-gen-d",
+            "targetType": "executable",
+            "targetName": "protoc-gen-d",
+            "sourcePaths": ["protoc_gen_d"],
+            "mainSourceFile": "protoc_gen_d/protoc-gen-d.d",
+            "dependencies": {
+                "protobuf": "*"
+            }
+         }
     ]
 }

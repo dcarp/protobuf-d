@@ -1,2 +1,4 @@
 .dub
 build
+dub.selections.json
+protoc-gen-d
