@@ -317,13 +317,13 @@ class CodeGenerator
         case TYPE_MESSAGE:
         {
             auto fieldMessageType = messageType(field);
-            enforce!CodeGeneratorException(fieldMessageType !is null, "Field '"~field.name~"': unknown message type");
+            enforce!CodeGeneratorException(fieldMessageType !is null, "Field '" ~ field.name ~ "': unknown message type");
             return fieldMessageType.name;
         }
         case TYPE_ENUM:
         {
             auto fieldEnumType = enumType(field);
-            enforce!CodeGeneratorException(fieldEnumType !is null, "Field '"~field.name~"': unknown enum type");
+            enforce!CodeGeneratorException(fieldEnumType !is null, "Field '" ~ field.name ~ "': unknown enum type");
             return fieldEnumType.name;
         }
         case TYPE_GROUP: case TYPE_ERROR:
