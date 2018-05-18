@@ -133,10 +133,21 @@ unittest
     assert(foo.empty);
 }
 
-T zigZag(T)(T value)
-if (is(T == int) || is(T == long))
+import std.traits: Signed, Unsigned, isIntegral, isSigned, isUnsigned;
+
+/**
+ * Encodes a number into its zigzag encoding
+ *
+ * Params:
+ *  	src = The raw integer to encode
+ * Returns: The zigzag-encoded value
+ */
+Unsigned!T zigZag(T)(in T src) pure nothrow @safe @nogc
+if(isIntegral!T && isSigned!T)
 {
-    return (value << 1) ^ (value >> (T.sizeof * 8 - 1));
+    T ret = (src << 1) ^ (src >> (T.sizeof * 8 - 1));
+
+    return cast(Unsigned!T) ret;
 }
 
 unittest
@@ -144,20 +155,35 @@ unittest
     assert(zigZag(0) == 0);
     assert(zigZag(-1) == 1);
     assert(zigZag(1L) == 2L);
+    assert(zigZag(-2) == 3);
+    assert(zigZag(2147483647) == 4294967294);
+    assert(zigZag(-2147483648) == 4294967295);
     assert(zigZag(int.max) == 0xffff_fffe);
     assert(zigZag(int.min) == 0xffff_ffff);
     assert(zigZag(long.max) == 0xffff_ffff_ffff_fffe);
     assert(zigZag(long.min) == 0xffff_ffff_ffff_ffff);
 }
 
-T zagZig(T)(T value)
-if (is(T == int) || is(T == long))
+/**
+ * Decodes a number from its zigzag encoding
+ *
+ * Params:
+ *  	src = The zigzag-encoded value to decode
+ * Returns: The raw integer
+ */
+Signed!T zagZig(T)(in T src) pure nothrow @safe @nogc
+if(isIntegral!T && isUnsigned!T)
 {
-    return (value >>> 1) ^ -(value & 1);
+    return (src >>> 1) ^ -(src & 1);
 }
-
 unittest
 {
+    assert(0U.zagZig == 0);
+    assert(1U.zagZig == -1);
+    assert(2U.zagZig == 1);
+    assert(3U.zagZig == -2);
+    assert(4294967294U.zagZig == 2147483647);
+    assert(4294967295U.zagZig == -2147483648);
     assert(zagZig(zigZag(0)) == 0);
     assert(zagZig(zigZag(-1)) == -1);
     assert(zagZig(zigZag(1L)) == 1L);
