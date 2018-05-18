@@ -10,6 +10,9 @@ generated D code that defines the messages and enum types.
 Together with this library D generation support was added to `protoc`. The
 generated code is very simple and easy to read.
 
+:warning: `protoc-gen-d` plugin generates D code for **proto3** `.proto`
+files only.
+
 Installation
 ------------
 
