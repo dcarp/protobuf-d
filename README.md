@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/dcarp/protobuf-d.png)](https://travis-ci.org/dcarp/protobuf-d)
 
-Protocol Buffers D Support Library
-==================================
+D Support for Protocol Buffers
+==============================
 
 This D package implements the Protocol Buffers encoding and decoding
 operations for both binary and JSON formats. The support library uses the
@@ -26,7 +26,16 @@ plugin. In order to have the D code generation available (`--d_out` option)
 option. Please see the Protocol Buffers README about installing `protoc` on
 your system.
 
-Example
--------
+Examples
+--------
 
-See `examples` directory.
+Run following commands:
+```shell
+dub build :protoc-gen-d
+cd examples
+dub build :add_person
+dub build :list_people
+```
+Prerequisites:
+ - `protoc` version 3.0 or newer
+ - Protobuf well known types `.proto` files installed or accessible for `protoc`
