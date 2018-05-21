@@ -144,6 +144,7 @@ unittest
     assert(zigZag(0) == 0);
     assert(zigZag(-1) == 1);
     assert(zigZag(1L) == 2L);
+    assert(zigZag(2147483647) == 4294967294U);
     assert(zigZag(int.max) == 0xffff_fffe);
     assert(zigZag(int.min) == 0xffff_ffff);
     assert(zigZag(long.max) == 0xffff_ffff_ffff_fffe);

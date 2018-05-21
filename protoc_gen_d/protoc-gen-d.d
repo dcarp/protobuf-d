@@ -10,7 +10,7 @@ int main()
     import std.algorithm : map;
     import std.array : array;
     import std.range : isInputRange, take, walkLength;
-    import std.stdio : stderr, stdin, stdout;
+    import std.stdio : stdin, stdout;
 
     foreach (inputRange; stdin.byChunk(1024 * 1024))
     {
@@ -38,7 +38,7 @@ class CodeGenerator
 
     CodeGeneratorResponse handle(CodeGeneratorRequest request)
     {
-        import std.algorithm : map;
+        import std.algorithm : filter, map;
         import std.array : array;
         import std.conv : to;
         import std.format : format;
@@ -51,7 +51,9 @@ class CodeGenerator
         try
         {
             collectMessageAndEnumTypes(request);
-            response.files = request.protoFiles.map!(a => generate(a)).array;
+            response.files = request.protoFiles
+                .filter!(a => a.package_ != "google.protobuf") // don't generate the well known types
+                .map!(a => generate(a)).array;
         }
         catch (CodeGeneratorException generatorException)
         {
@@ -82,7 +84,7 @@ class CodeGenerator
         foreach (file; request.protoFiles)
         {
             foreach (messageType; file.messageTypes)
-                collect(messageType, "");
+                collect(messageType, file.package_ ? "." ~ file.package_ : "");
 
             foreach (enumType; file.enumTypes)
                 collectedEnumTypes["." ~ enumType.name] = enumType;
@@ -317,13 +319,15 @@ class CodeGenerator
         case TYPE_MESSAGE:
         {
             auto fieldMessageType = messageType(field);
-            enforce!CodeGeneratorException(fieldMessageType !is null, "Field '" ~ field.name ~ "': unknown message type");
+            enforce!CodeGeneratorException(fieldMessageType !is null, "Field '" ~ field.name ~
+                "' has unknown message type " ~ field.typeName ~ "`");
             return fieldMessageType.name;
         }
         case TYPE_ENUM:
         {
             auto fieldEnumType = enumType(field);
-            enforce!CodeGeneratorException(fieldEnumType !is null, "Field '" ~ field.name ~ "': unknown enum type");
+            enforce!CodeGeneratorException(fieldEnumType !is null, "Field '" ~ field.name ~
+                "' has unknown enum type ' " ~field.typeName ~ "`");
             return fieldEnumType.name;
         }
         case TYPE_GROUP: case TYPE_ERROR:

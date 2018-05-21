@@ -20,15 +20,6 @@
         }
     ],
     "subPackages": [
-        {
-            "name": "protoc-gen-d",
-            "targetType": "executable",
-            "targetName": "protoc-gen-d",
-            "sourcePaths": ["protoc_gen_d"],
-            "mainSourceFile": "protoc_gen_d/protoc-gen-d.d",
-            "dependencies": {
-                "protobuf": "*"
-            }
-         }
+        "./protoc_gen_d/"
     ]
 }

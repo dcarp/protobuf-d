@@ -1,0 +1,12 @@
+{
+    "name": "protoc-gen-d",
+    "targetType": "executable",
+    "targetName": "protoc-gen-d",
+    "sourcePaths": ["."],
+    "mainSourceFile": "protoc-gen-d.d",
+    "targetPath": "../build",
+    "workingDirectory": "../build",
+    "dependencies": {
+        "protobuf": "*"
+    }
+}
