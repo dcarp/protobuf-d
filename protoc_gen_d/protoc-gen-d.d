@@ -473,7 +473,7 @@ private string moduleName(string fileName)
     import std.array : replace;
     import std.string : chomp;
 
-    return fileName.chomp(".proto").replace("/", ".");
+    return fileName.chomp(".proto").replace("/", ".").escapeKeywords;
 }
 
 private string underscoresToCamelCase(string input, bool capitalizeNextLetter)
