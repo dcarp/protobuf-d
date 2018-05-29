@@ -1,0 +1,2 @@
+#! /bin/sh
+rdmd -I../src conformance_d.d
