@@ -83,11 +83,13 @@ class CodeGenerator
 
         foreach (file; request.protoFiles)
         {
+            auto packagePrefix = file.package_ ? "." ~ file.package_ : "";
+
             foreach (messageType; file.messageTypes)
-                collect(messageType, file.package_ ? "." ~ file.package_ : "");
+                collect(messageType, packagePrefix);
 
             foreach (enumType; file.enumTypes)
-                collectedEnumTypes["." ~ enumType.name] = enumType;
+                collectedEnumTypes[packagePrefix ~ "." ~ enumType.name] = enumType;
         }
     }
 
