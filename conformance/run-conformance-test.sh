@@ -8,7 +8,9 @@ fi
 git checkout tags/v3.5.2 --detach
 
 git submodule update --init --recursive
-./autogen.sh && ./configure && make
+
+# due to a bug run autogen.sh twice
+./autogen.sh || ./autogen.sh && ./configure && make
 
 cd conformance
 make

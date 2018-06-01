@@ -1,18 +1,6 @@
 language: d
 sudo: false
 
-addons:
-  apt:
-    update: true
-    packages:
-      - autoconf
-      - automake
-      - curl
-      - g++
-      - libtool
-      - make
-      - unzip
-
 script:
   - dub build
   - dub test
