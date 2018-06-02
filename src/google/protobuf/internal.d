@@ -1,6 +1,7 @@
 module google.protobuf.internal;
 
 import std.range : ElementType, hasLength, InputRange, InputRangeObject, isInputRange;
+import std.traits : Signed, Unsigned;
 import google.protobuf.common;
 
 struct Varint
@@ -133,7 +134,7 @@ unittest
     assert(foo.empty);
 }
 
-T zigZag(T)(T value)
+Unsigned!T zigZag(T)(T value)
 if (is(T == int) || is(T == long))
 {
     return (value << 1) ^ (value >> (T.sizeof * 8 - 1));
@@ -144,27 +145,33 @@ unittest
     assert(zigZag(0) == 0);
     assert(zigZag(-1) == 1);
     assert(zigZag(1L) == 2L);
-    assert(zigZag(2147483647) == 4294967294U);
+    assert(zigZag(-2) == 3);
+    assert(zigZag(2147483647) == 4294967294);
+    assert(zigZag(-2147483648) == 4294967295);
     assert(zigZag(int.max) == 0xffff_fffe);
     assert(zigZag(int.min) == 0xffff_ffff);
     assert(zigZag(long.max) == 0xffff_ffff_ffff_fffe);
     assert(zigZag(long.min) == 0xffff_ffff_ffff_ffff);
 }
 
-T zagZig(T)(T value)
-if (is(T == int) || is(T == long))
+Signed!T zagZig(T)(T value)
+if (is(T == uint) || is(T == ulong))
 {
     return (value >>> 1) ^ -(value & 1);
 }
 
 unittest
 {
-    assert(zagZig(zigZag(0)) == 0);
-    assert(zagZig(zigZag(-1)) == -1);
-    assert(zagZig(zigZag(1L)) == 1L);
-    assert(zagZig(zigZag(int.max)) == int.max);
-    assert(zagZig(zigZag(int.min)) == int.min);
-    assert(zagZig(zigZag(long.min)) == long.min);
+    assert(zagZig(0U) == 0);
+    assert(zagZig(1U) == -1);
+    assert(zagZig(2U) == 1);
+    assert(zagZig(3U) == -2);
+    assert(zagZig(4294967294U) == 2147483647);
+    assert(zagZig(4294967295U) == -2147483648);
+    assert(zagZig(uint.max - 1) == int.max);
+    assert(zagZig(uint.max) == int.min);
+    assert(zagZig(ulong.max - 1) == long.max);
+    assert(zagZig(ulong.max) == long.min);
 }
 
 auto encodeTag(Proto proto, T)()

@@ -39,7 +39,7 @@ if (isInputRange!R && isIntegral!T)
     }
     else static if (wire == Wire.zigzag)
     {
-        return cast(T) zagZig(fromVarint(inputRange));
+        return cast(T) zagZig(cast(ulong) fromVarint(inputRange));
     }
     else
     {
