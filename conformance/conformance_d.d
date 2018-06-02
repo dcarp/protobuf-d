@@ -115,6 +115,9 @@ bool doTestIo()
 
 void main()
 {
+    import google.protobuf.any : Any;
+    Any.registerMessageType!TestAllTypesProto3;
+
     while (doTestIo)
     {
     }
