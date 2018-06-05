@@ -23,12 +23,16 @@ Required.Proto3.JsonInput.TimestampWithPositiveOffset.ProtobufOutput
 Required.Proto2.ProtobufInput.UnknownVarint.ProtobufOutput
 Required.Proto3.ProtobufInput.UnknownVarint.ProtobufOutput
 
-# To be analysed
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED32.ProtobufOutput
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.ProtobufOutput
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.UINT64.ProtobufOutput
+# std.json parser is more forgiving "rounding" to +-Infinity
 Required.Proto3.JsonInput.DoubleFieldTooSmall
 Required.Proto3.JsonInput.FloatFieldTooLarge
 Required.Proto3.JsonInput.FloatFieldTooSmall
+
+# std.json parser is more forgiving removing the leading zeros
 Required.Proto3.JsonInput.Int32FieldLeadingZero
 Required.Proto3.JsonInput.Int32FieldNegativeWithLeadingZero
+
+# Last test value is 0; that being the default value is not sent
+Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED32.ProtobufOutput
+Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.ProtobufOutput
+Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.UINT64.ProtobufOutput
