@@ -17,8 +17,8 @@ Installation
 ------------
 
 The Protocol Buffers D support library is distributed as
-[DUB package](https://code.dlang.org/package-format?lang=json). Use the
-instructions there about how to integrate it in your project.
+[DUB package](https://code.dlang.org/packages/protobuf). Use the instructions
+there about how to integrate it in your project.
 
 The DUB package contains the support library and the `protoc-gen-d` `protoc`
 plugin. In order to have the D code generation available (`--d_out` option)
