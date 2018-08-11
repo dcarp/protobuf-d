@@ -43,7 +43,7 @@ class CodeGenerator
         import std.conv : to;
         import std.format : format;
 
-        with (request.compilerVersion)
+        if (request.compilerVersion) with (request.compilerVersion)
             protocVersion = format!"%d%03d%03d"(major, minor, patch);
 
         collectedMessageTypes.clear;
