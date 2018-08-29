@@ -6,7 +6,8 @@
             "name": "add_person",
             "targetType": "executable",
             "targetName": "add_person",
-            "sourcePaths": ["../src", "tutorial"],
+            "sourceFiles": ["tutorial/addressbook.d"],
+            "sourcePaths": ["../src"],
             "mainSourceFile": "add_person.d",
             "preBuildCommands": ["protoc --plugin=../build/protoc-gen-d --d_out=. addressbook.proto"]
         },
@@ -14,7 +15,8 @@
             "name": "list_people",
             "targetType": "executable",
             "targetName": "list_people",
-            "sourcePaths": ["../src", "tutorial"],
+            "sourceFiles": ["tutorial/addressbook.d"],
+            "sourcePaths": ["../src"],
             "mainSourceFile": "list_people.d",
             "preBuildCommands": ["protoc --plugin=../build/protoc-gen-d --d_out=. addressbook.proto"]
         },
