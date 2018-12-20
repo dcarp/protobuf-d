@@ -124,11 +124,16 @@ unittest
 auto toProtobuf(T)(T value)
 if (is(T == class) || is(T == struct))
 {
+    import std.meta : AliasSeq;
     import std.traits : hasMember;
 
     static if (hasMember!(T, "toProtobuf"))
     {
         return value.toProtobuf;
+    }
+    else static if (is(Message!T.fields == AliasSeq!()))
+    {
+        return cast(ubyte[]) null;
     }
     else
     {
@@ -186,6 +191,18 @@ unittest
     foo.baz = 1;
     foo.qux = true;
     assert(foo.toProtobuf.array == [0x08, 0x05, 0x11, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 0x01]);
+}
+
+unittest
+{
+    import std.array : array;
+
+    struct EmptyMessage
+    {
+    }
+
+    EmptyMessage emptyMessage;
+    assert(emptyMessage.toProtobuf.empty);
 }
 
 unittest

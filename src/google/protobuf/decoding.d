@@ -218,6 +218,17 @@ unittest
     assert(foo.qux);
 }
 
+unittest
+{
+    static class EmptyMessage
+    {
+    }
+
+    ubyte[] buff = [];
+    auto emptyMessage = buff.fromProtobuf!EmptyMessage;
+    assert(buff.empty);
+}
+
 private static void fromProtobufByField(alias field, T, R)(ref R inputRange, ref T message)
 if (isInputRange!R)
 {

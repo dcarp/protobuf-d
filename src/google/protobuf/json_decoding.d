@@ -294,6 +294,18 @@ unittest
     assertThrown!ProtobufException(fromJSONValue!Foo(parseJSON(`{"d":10, "e":"abc"}`)));
 }
 
+unittest
+{
+    import std.json : parseJSON;
+
+    struct EmptyMessage
+    {
+    }
+
+    assert(fromJSONValue!EmptyMessage(parseJSON(`{}`)) == EmptyMessage());
+    assert(fromJSONValue!EmptyMessage(parseJSON(`{"a":10, "b":"abc"}`)) == EmptyMessage());
+}
+
 private template oneofs(T)
 {
     import std.meta : NoDuplicates, staticMap;

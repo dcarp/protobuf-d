@@ -144,7 +144,6 @@ template Message(T)
 
     alias fieldNames = staticMap!(fieldName, fields);
 
-    static assert(fields.length > 0, "Definition of '" ~ T.stringof ~ "' has no Proto field");
     static assert(allSatisfy!(validateField, fields), "'" ~ T.stringof ~ "' has invalid fields");
 
     private alias unsortedFields = getSymbolsByUDA!(T, Proto);
@@ -165,6 +164,13 @@ unittest
 
     static assert(Message!Test.fieldNames == AliasSeq!("bar", "foo"));
     static assert(Message!Test.protos == AliasSeq!(Proto(2, Wire.fixed, No.packed), Proto(3, Wire.none, No.packed)));
+
+    static class EmptyMessage
+    {
+    }
+
+    static assert(is(Message!EmptyMessage.fieldNames == AliasSeq!()));
+    static assert(is(Message!EmptyMessage.protos == AliasSeq!()));
 }
 
 template validateField(alias field)

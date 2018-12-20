@@ -141,6 +141,19 @@ unittest
 {
     import std.json : parseJSON;
 
+    struct EmptyMessage
+    {
+    }
+
+    EmptyMessage emptyMessage;
+
+    assert(emptyMessage.toJSONValue == parseJSON(`{}`));
+}
+
+unittest
+{
+    import std.json : parseJSON;
+
     struct Foo
     {
         @Proto(1) int a;
