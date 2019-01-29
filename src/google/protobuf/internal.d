@@ -466,11 +466,12 @@ auto emptySizedRange(T)()
 
 R takeLengthPrefixed(R)(ref R inputRange)
 {
+    import std.conv : to;
     import std.exception : enforce;
 
     long size = fromVarint(inputRange);
     enforce!ProtobufException(size >= 0, "Negative field length");
-    return inputRange.takeN(size);
+    return inputRange.takeN(size.to!size_t);
 }
 
 R takeN(R)(ref R inputRange, size_t size)

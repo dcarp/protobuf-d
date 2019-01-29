@@ -31,7 +31,7 @@ int main(string[] args)
 
     auto input = File(args[1], "rb");
     scope(exit) input.close;
-    ubyte[] inputBuffer = input.rawRead(new ubyte[input.size]);
+    ubyte[] inputBuffer = input.rawRead(new ubyte[input.size.to!size_t]);
     auto addressBook = inputBuffer.fromProtobuf!AddressBook;
     listPeople(addressBook);
 
