@@ -225,7 +225,7 @@ if (is(T == class) || is(T == struct))
     }
     else
     {
-        enum string jsonName(string fieldName) = {
+        enum jsonName(string fieldName) = {
             import std.algorithm : skipOver;
 
             string result = fieldName;

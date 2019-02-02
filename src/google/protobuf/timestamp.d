@@ -9,9 +9,12 @@ struct Timestamp
 {
     private struct _Message
     {
-      @Proto(1) long seconds = protoDefaultValue!long;
-      @Proto(2) int nanos = protoDefaultValue!int;
+      @Proto(1) long seconds = google.protobuf.common.protoDefaultValue!long;
+      @Proto(2) int nanos = google.protobuf.common.protoDefaultValue!int;
     }
+
+    // workaround LDC bug #2990
+    static immutable protoDefaultValue = Timestamp(SysTime(DateTime(1970, 1, 1, 0, 0, 0), UTC()));
 
     private static immutable defaultTimestampValue = SysTime(DateTime(1970, 1, 1, 0, 0, 0), UTC());
     SysTime timestamp = defaultTimestampValue;
