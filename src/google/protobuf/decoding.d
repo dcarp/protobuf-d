@@ -281,7 +281,7 @@ if (isInputRange!R && isArray!T && !is(T == string) && !is(T == bytes) && !proto
     static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
     static assert(validateProto!(proto, T));
 
-    auto newElement = protoDefaultValue!(ElementType!T);
+    ElementType!T newElement = protoDefaultValue!(ElementType!T);
     inputRange.fromProtobufByProto!proto(newElement);
     field ~= newElement;
 }

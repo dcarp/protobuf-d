@@ -27,7 +27,7 @@ struct Any
         import std.format : format;
 
         enforce!ProtobufException(isMessageType!T(urlPrefix),
-            "Incompatible target type `%s` for Any message fo type '%s'".format(messageTypeUrl!T(urlPrefix), typeUrl));
+            "Incompatible target type `%s` for Any message of type '%s'".format(messageTypeUrl!T(urlPrefix), typeUrl));
 
         if (valueIsJSON)
         {
