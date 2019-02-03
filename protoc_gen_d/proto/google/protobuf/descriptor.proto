@@ -355,7 +355,7 @@ message FileOptions {
 
   // Generated classes can be optimized for speed or code size.
   enum OptimizeMode {
-    UNKNOEN = 0;
+    UNKNOWN = 0;
     SPEED = 1;        // Generate complete code for parsing, serialization,
                       // etc.
     CODE_SIZE = 2;    // Use ReflectionOps to implement these methods.

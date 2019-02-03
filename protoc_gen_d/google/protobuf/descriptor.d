@@ -171,7 +171,7 @@ class FileOptions
 
     enum OptimizeMode
     {
-        UNKNOEN = 0,
+        UNKNOWN = 0,
         SPEED = 1,
         CODE_SIZE = 2,
         LITE_RUNTIME = 3,
