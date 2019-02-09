@@ -9,7 +9,10 @@ import tutorial.addressbook;
 /// This function fills in a Person message based on user input.
 Person promptForAddress()
 {
-    auto person = new Person;
+    static if (is(Person == class))
+        auto person = new Person;
+    else
+        Person person;
 
     write("Enter person ID number: ");
     readf("%d", &person.id);
@@ -23,7 +26,10 @@ Person promptForAddress()
 
     while (true)
     {
-        auto phoneNumber = new Person.PhoneNumber;
+        static if (is(Person.PhoneNumber == class))
+            auto phoneNumber = new Person.PhoneNumber;
+        else
+            Person.PhoneNumber phoneNumber;
         write("Enter a phone number (or leave blank to finish): ");
         phoneNumber.number = readln!string.strip;
         if (phoneNumber.number.empty)
@@ -57,7 +63,10 @@ int main(string[] args)
         return -1;
     }
 
-    auto addressBook = new AddressBook;
+    static if (is(AddressBook == class))
+        auto addressBook = new AddressBook;
+    else
+        AddressBook addressBook;
     try
     {
         auto input = File(args[1], "rb");
