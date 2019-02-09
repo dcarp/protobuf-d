@@ -35,13 +35,17 @@ class CodeGeneratorException : Exception
 class CodeGenerator
 {
     private enum indentSize = 4;
+    private bool makeStructs = false;
 
     CodeGeneratorResponse handle(CodeGeneratorRequest request)
     {
-        import std.algorithm : filter, map;
+        import std.algorithm : filter, map, canFind, splitter;
         import std.array : array;
         import std.conv : to;
         import std.format : format;
+
+        if (request.parameter.splitter(",").canFind("make-structs"))
+            makeStructs = true;
 
         if (request.compilerVersion) with (request.compilerVersion)
             protocVersion = format!"%d%03d%03d"(major, minor, patch);
@@ -146,9 +150,18 @@ class CodeGenerator
         if (messageType.isMap)
             return "";
 
+        auto strIndent = "%*s".format(indent, "");
+
         auto result = appender!string;
-        result ~= "\n%*s%sclass %s\n".format(indent, "", indent > 0 ? "static " : "", messageType.name.escapeKeywords);
-        result ~= "%*s{\n".format(indent, "");
+        result ~= "\n";
+        result ~= strIndent;
+        result ~= indent > 0 ? "static " : "";
+        result ~= makeStructs ? "struct" : "class";
+        result ~= " ";
+        result ~= messageType.name.escapeKeywords;
+        result ~= "\n";
+        result ~= strIndent;
+        result ~= "{\n";
 
         int[] generatedOneofs;
         foreach (field; messageType.fields.sort!((a, b) => a.number < b.number))
@@ -173,7 +186,8 @@ class CodeGenerator
         foreach (enumType; messageType.enumTypes)
             result ~= generateEnum(enumType, indent + indentSize);
 
-        result ~= "%*s}\n".format(indent, "");
+        result ~= strIndent;
+        result ~= "}\n";
 
         return result.data;
     }
