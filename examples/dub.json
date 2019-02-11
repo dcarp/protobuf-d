@@ -9,7 +9,7 @@
             "sourceFiles": ["tutorial/addressbook.d"],
             "sourcePaths": ["../src"],
             "mainSourceFile": "add_person.d",
-            "preBuildCommands": ["protoc $$PROTO_PATH --plugin=../build/protoc-gen-d --d_out=. addressbook.proto"]
+            "preBuildCommands": ["protoc $$PROTO_PATH --plugin=../build/protoc-gen-d --d_opt=message-as-struct --d_out=. addressbook.proto"]
         },
         {
             "name": "list_people",
@@ -18,7 +18,7 @@
             "sourceFiles": ["tutorial/addressbook.d"],
             "sourcePaths": ["../src"],
             "mainSourceFile": "list_people.d",
-            "preBuildCommands": ["protoc $$PROTO_PATH --plugin=../build/protoc-gen-d --d_out=. addressbook.proto"]
+            "preBuildCommands": ["protoc $$PROTO_PATH --plugin=../build/protoc-gen-d --d_opt=message-as-struct --d_out=. addressbook.proto"]
         },
     ]
 }
