@@ -35,7 +35,7 @@ class CodeGeneratorException : Exception
 class CodeGenerator
 {
     private enum indentSize = 4;
-    private bool makeStructs = false;
+    private bool messageAsStruct = false;
 
     CodeGeneratorResponse handle(CodeGeneratorRequest request)
     {
