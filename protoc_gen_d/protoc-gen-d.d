@@ -44,8 +44,8 @@ class CodeGenerator
         import std.conv : to;
         import std.format : format;
 
-        if (request.parameter.splitter(",").canFind("make-structs"))
-            makeStructs = true;
+        if (request.parameter.splitter(",").canFind("message-as-struct"))
+            messageAsStruct = true;
 
         if (request.compilerVersion) with (request.compilerVersion)
             protocVersion = format!"%d%03d%03d"(major, minor, patch);
@@ -154,13 +154,13 @@ class CodeGenerator
 
         auto result = appender!string;
         result ~= "\n";
-        result ~= strIndent;
+        result ~= indentation;
         result ~= indent > 0 ? "static " : "";
-        result ~= makeStructs ? "struct" : "class";
+        result ~= messageAsStruct ? "struct" : "class";
         result ~= " ";
         result ~= messageType.name.escapeKeywords;
         result ~= "\n";
-        result ~= strIndent;
+        result ~= indentation;
         result ~= "{\n";
 
         int[] generatedOneofs;
@@ -186,7 +186,7 @@ class CodeGenerator
         foreach (enumType; messageType.enumTypes)
             result ~= generateEnum(enumType, indent + indentSize);
 
-        result ~= strIndent;
+        result ~= indentation;
         result ~= "}\n";
 
         return result.data;

@@ -6,13 +6,16 @@ import std.string;
 import google.protobuf;
 import tutorial.addressbook;
 
+T make(T)()
+{
+    static if (is(T == class)) return new T;
+    else return T.init;
+}
+
 /// This function fills in a Person message based on user input.
 Person promptForAddress()
 {
-    static if (is(Person == class))
-        auto person = new Person;
-    else
-        Person person;
+    auto person = make!Person;
 
     write("Enter person ID number: ");
     readf("%d", &person.id);
@@ -26,10 +29,7 @@ Person promptForAddress()
 
     while (true)
     {
-        static if (is(Person.PhoneNumber == class))
-            auto phoneNumber = new Person.PhoneNumber;
-        else
-            Person.PhoneNumber phoneNumber;
+        auto phoneNumber = make!(Person.PhoneNumber);
         write("Enter a phone number (or leave blank to finish): ");
         phoneNumber.number = readln!string.strip;
         if (phoneNumber.number.empty)
@@ -63,10 +63,7 @@ int main(string[] args)
         return -1;
     }
 
-    static if (is(AddressBook == class))
-        auto addressBook = new AddressBook;
-    else
-        AddressBook addressBook;
+    auto addressBook = make!AddressBook;
     try
     {
         auto input = File(args[1], "rb");
