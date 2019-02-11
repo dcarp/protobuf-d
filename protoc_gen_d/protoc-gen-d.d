@@ -150,7 +150,7 @@ class CodeGenerator
         if (messageType.isMap)
             return "";
 
-        auto strIndent = "%*s".format(indent, "");
+        auto indentation = "%*s".format(indent, "");
 
         auto result = appender!string;
         result ~= "\n";
