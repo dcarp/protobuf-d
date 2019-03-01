@@ -12,7 +12,7 @@ void doTest(ConformanceRequest request, ConformanceResponse response)
 {
     TestAllTypesProto3 testMessage;
 
-    final switch (request.payloadCase)
+    switch (request.payloadCase)
     {
     case ConformanceRequest.PayloadCase.protobufPayload:
         try
@@ -51,9 +51,12 @@ void doTest(ConformanceRequest request, ConformanceResponse response)
     case ConformanceRequest.PayloadCase.payloadNotSet:
         response.runtimeError = "Request has no payload.";
         return;
+    default:
+        response.skipped = "Payload type not implemented";
+        return;
     }
 
-    final switch (request.requestedOutputFormat)
+    switch (request.requestedOutputFormat)
     {
     case WireFormat.UNSPECIFIED:
         response.runtimeError = "Unspecified output format";
@@ -72,6 +75,9 @@ void doTest(ConformanceRequest request, ConformanceResponse response)
             response.serializeError = serializeException.msg;
             return;
         }
+        break;
+    default:
+        response.skipped = "Request wire format not implemented";
         break;
     }
 }

@@ -39,6 +39,7 @@ struct FieldMask
 
 unittest
 {
+    assert(FieldMask([]).toJSONValue == JSONValue(""));
     assert(FieldMask(["foo"]).toJSONValue == JSONValue("foo"));
     assert(FieldMask(["foo", "bar_baz"]).toJSONValue == JSONValue("foo,barBaz"));
     assert(FieldMask(["foo", "bar_baz.qux"]).toJSONValue == JSONValue("foo,barBaz.qux"));
@@ -47,6 +48,8 @@ unittest
 unittest
 {
     FieldMask foo;
+    assert(FieldMask([]) == foo.fromJSONValue(JSONValue(null)));
+    assert(FieldMask([]) == foo.fromJSONValue(JSONValue("")));
     assert(FieldMask(["foo"]) == foo.fromJSONValue(JSONValue("foo")));
     assert(FieldMask(["foo", "bar_baz"]) == foo.fromJSONValue(JSONValue("foo,barBaz")));
     assert(FieldMask(["foo", "bar_baz.qux"]) == foo.fromJSONValue(JSONValue("foo,barBaz.qux")));
@@ -88,6 +91,7 @@ unittest
 {
     import std.exception : assertThrown;
 
+    assert("".toCamelCase == "");
     assert("foo".toCamelCase == "foo");
     assert("foo1".toCamelCase == "foo1");
     assert("foo_bar".toCamelCase == "fooBar");
