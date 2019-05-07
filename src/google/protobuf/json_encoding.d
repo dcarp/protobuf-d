@@ -67,7 +67,7 @@ unittest
     assert(toJSONValue(1.0) == JSONValue(1.0));
 
     auto jsonValue = toJSONValue(double.nan);
-    assert(toJSON(jsonValue) ==`"NaN"`);
+    assert(toJSON(jsonValue) == `"NaN"`);
     jsonValue = toJSONValue(float.infinity);
     assert(toJSON(jsonValue) == `"Infinity"`);
     jsonValue = toJSONValue(-double.infinity);

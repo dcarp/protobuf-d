@@ -5,6 +5,7 @@ import std.json;
 import std.stdio;
 import google.protobuf;
 import google.protobuf.json_encoding;
+import google.protobuf.text_encoding;
 import conformance.conformance;
 import protobuf_test_messages.proto3.test_messages_proto3;
 
@@ -75,6 +76,9 @@ void doTest(ConformanceRequest request, ConformanceResponse response)
             response.serializeError = serializeException.msg;
             return;
         }
+        break;
+    case WireFormat.TEXT_FORMAT:
+        response.textPayload = testMessage.toProtobufText;
         break;
     default:
         response.skipped = "Request wire format not implemented";
