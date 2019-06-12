@@ -34,22 +34,14 @@ if (isFloatingPoint!T)
 }
 
 string toProtobufText(T)(T value)
-if (is(T == string))
-{
-    import std.string : replace;
-
-    return `"` ~ value.replace(`"`, `\"`) ~ `"`;
-}
-
-string toProtobufText(T)(T value)
-if (is(T == bytes))
+if (is(T == string) || is(T == bytes))
 {
     import std.array : appender;
     import std.format : format;
 
     auto result = appender!string(`"`);
 
-    foreach (ubyte b; value) {
+    foreach (b; value) {
         switch (b) {
         case 9:
             result.put(`\t`);
@@ -70,10 +62,17 @@ if (is(T == bytes))
             result.put(`\\`);
             break;
         default:
-            if (32 <= b && b < 127)
-                result.put(b);
+            static if (is(T == bytes))
+            {
+                if (32 <= b && b < 127)
+                    result.put(b);
+                else
+                    result.put(b.format!"\\%03o");
+            }
             else
-                result.put(b.format!"%03o");
+            {
+                result.put(b);
+            }
             break;
         }
     }
@@ -97,8 +96,8 @@ unittest
     assert(toProtobufText(float.infinity) == "inf");
     assert(toProtobufText(-double.infinity) == "-inf");
 
-    assert(toProtobufText("foo\"") == `"foo\""`);
-    assert(toProtobufText(cast(bytes) "foo") == `"foo"`);
+    assert(toProtobufText(`abc"def`) == `"abc\"def"`);
+    assert(toProtobufText(cast(bytes) "foo\xba") == `"foo\272"`);
 }
 
 string toProtobufText(T)(T value, size_t indent = 0)

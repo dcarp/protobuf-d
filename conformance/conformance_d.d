@@ -4,7 +4,7 @@ import std.exception;
 import std.json;
 import std.stdio;
 import google.protobuf;
-import google.protobuf.json_encoding;
+import google.protobuf.text_decoding;
 import google.protobuf.text_encoding;
 import conformance.conformance;
 import protobuf_test_messages.proto3.test_messages_proto3;
@@ -42,6 +42,18 @@ void doTest(ConformanceRequest request, ConformanceResponse response)
         {
             response.parseError = decodeException.msg;
             return;
+        }
+        catch (ProtobufException decodeException)
+        {
+            response.parseError = decodeException.msg;
+            return;
+        }
+        break;
+    case ConformanceRequest.PayloadCase.textPayload:
+        try
+        {
+            auto payload = request.protobufPayload.save;
+            testMessage = payload.fromProtobufText!TestAllTypesProto3;
         }
         catch (ProtobufException decodeException)
         {

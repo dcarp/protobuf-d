@@ -1,148 +1,193 @@
 module google.protobuf.text_decoding;
 
-/*
-import std.json : JSONValue, JSON_TYPE;
 import std.traits : isArray, isAssociativeArray, isBoolean, isFloatingPoint, isIntegral, isSigned;
 import google.protobuf.common;
 
-T fromJSONValue(T)(JSONValue value)
-if (isBoolean!T)
+T fromProtobufText(T)(ref string input)
+if (isBoolean!T || isIntegral!T || isFloatingPoint!T)
 {
-    switch (value.type)
+    import std.format : formattedRead;
+    import std.string : stripLeft;
+
+    input = input.stripLeft;
+
+    T result;
+    if (input.formattedRead!"%s"(result))
     {
-    case JSON_TYPE.NULL:
-        return protoDefaultValue!T;
-    case JSON_TYPE.TRUE:
-        return true;
-    case JSON_TYPE.FALSE:
-        return false;
-    default:
-        throw new ProtobufException("JSON boolean expected");
+        return result;
     }
-}
-
-T fromJSONValue(T)(JSONValue value)
-if (isIntegral!T)
-{
-    import std.conv : ConvException, to;
-    import std.exception : enforce;
-    import std.traits : OriginalType;
-
-    try
+    else
     {
-        switch (value.type)
+        static if (isFloatingPoint!T)
         {
-        case JSON_TYPE.NULL:
-            return protoDefaultValue!T;
-        case JSON_TYPE.STRING:
-            return value.str.to!T;
-        case JSON_TYPE.INTEGER:
-            return cast(T) value.integer.to!(OriginalType!T);
-        case JSON_TYPE.UINTEGER:
-            return cast(T) value.uinteger.to!(OriginalType!T);
-        case JSON_TYPE.FLOAT:
-        {
-            import core.stdc.math : fabs, modf;
-
-            double integral;
-            double fractional = modf(value.floating, &integral);
-            double epsilon = double.epsilon * fabs(integral);
-
-            enforce!ProtobufException(fabs(fractional) <= epsilon, "JSON integer expected");
-
-            return value.floating.to!T;
-        }
-        default:
-            throw new ProtobufException("JSON integer expected");
-        }
-    }
-    catch (ConvException ConvException)
-    {
-        throw new ProtobufException("JSON integer expected");
-    }
-}
-
-T fromJSONValue(T)(JSONValue value)
-if (isFloatingPoint!T)
-{
-    import std.conv : ConvException, to;
-    import std.math : isInfinity, isNaN;
-
-    try
-    {
-        switch (value.type)
-        {
-        case JSON_TYPE.NULL:
-            return protoDefaultValue!T;
-        case JSON_TYPE.STRING:
-            switch (value.str)
+            string floatLiteral;
+            if (input.formattedRead!"%s"(floatLiteral))
             {
-            case "NaN":
-                return T.nan;
-            case "Infinity":
-                return T.infinity;
-            case "-Infinity":
-                return -T.infinity;
-            default:
-                return value.str.to!T;
+                switch (floatLiteral)
+                {
+                case "NaN":
+                    return T.nan;
+                case "inf":
+                    return T.infinity;
+                case "-inf":
+                    return -T.infinity;
+                default:
+                    break;
+                }
             }
-        case JSON_TYPE.INTEGER:
-            return value.integer.to!T;
-        case JSON_TYPE.UINTEGER:
-            return value.uinteger.to!T;
-        case JSON_TYPE.FLOAT:
-            return value.floating;
+        }
+        throw new ProtobufException(T.stringof ~ " expected");
+    }
+}
+
+T fromProtobufText(T)(ref string input)
+if (is(T == string) || is(T == bytes))
+{
+    import std.array : appender;
+    import std.exception : enforce;
+    import std.range : empty;
+    import std.string : stripLeft;
+
+    char peekNext()
+    {
+        if (input.empty)
+            return '\0';
+
+        return input[0];
+    }
+
+    char getNext()
+    {
+        if (input.empty)
+            return '\0';
+
+        auto result = input[0];
+        input = input[1 .. $];
+
+        return result;
+    }
+
+    input = input.stripLeft;
+    auto result = appender!T;
+
+    enforce!ProtobufException(getNext == '"', "Unquoted " ~ T.stringof ~ " value");
+
+    for (;;)
+    {
+        auto c = getNext;
+        switch(c)
+        {
+        case '\0':
+            throw new ProtobufException(T.stringof ~ " value has no ending quote");
+        case '\\':
+            {
+                auto escapedC = getNext;
+                switch (escapedC)
+                {
+                case 't':
+                    result.put('\t');
+                    break;
+                case 'n':
+                    result.put('\n');
+                    break;
+                case 'r':
+                    result.put('\r');
+                    break;
+                case '"':
+                    result.put('\"');
+                    break;
+                case '\'':
+                    result.put('\'');
+                    break;
+                case '\\':
+                    result.put('\\');
+                    break;
+                default:
+                    static if (is(T == bytes))
+                    {
+                        if ('0' <= escapedC && escapedC < '8')
+                        {
+                            short newByte = escapedC - '0';
+                            auto nextDigit = peekNext;
+                            if ('0' <= nextDigit && nextDigit < '8')
+                            {
+                                getNext;
+                                newByte <<= 3;
+                                newByte += nextDigit - '0';
+
+                                nextDigit = peekNext;
+                                if ('0' <= nextDigit && nextDigit < '8')
+                                {
+                                    getNext;
+                                    newByte <<= 3;
+                                    newByte += nextDigit - '0';
+                                }
+                            }
+                            if (0 <= newByte && newByte < 256)
+                                result.put(cast(ubyte) newByte);
+                            else
+                                throw new ProtobufException("Invalid octal encoding");
+                        }
+                        else
+                        {
+                            throw new ProtobufException("Invalid escape sequence \\" ~ escapedC);
+                        }
+                    }
+                    else
+                    {
+                        throw new ProtobufException("Invalid escape sequence \\" ~ escapedC);
+                    }
+                }
+                break;
+            }
+        case '"':
+            return result.data;
         default:
-            throw new ProtobufException("JSON float expected");
+            result.put(c);
+            break;
         }
     }
-    catch (ConvException ConvException)
-    {
-        throw new ProtobufException("JSON float expected");
-    }
+
+    assert(0, "Internal error");
 }
 
-T fromJSONValue(T)(JSONValue value)
-if (is(T == string))
+unittest
 {
-    import std.exception : enforce;
+    import std.math : isNaN;
+    import google.protobuf.text_encoding : toProtobufText;
 
-    if (value.isNull)
-        return protoDefaultValue!T;
+    auto buffer = true.toProtobufText;
+    assert(fromProtobufText!bool(buffer) == true);
+    buffer = false.toProtobufText;
+    assert(fromProtobufText!bool(buffer) == false);
+    buffer = 1.toProtobufText;
+    assert(fromProtobufText!int(buffer) == 1);
+    buffer = 1.toProtobufText;
+    assert(fromProtobufText!uint(buffer) == 1U);
+    buffer = 1.toProtobufText;
+    assert(fromProtobufText!long(buffer) == 1L);
+    buffer = 1.toProtobufText;
+    assert(fromProtobufText!ulong(buffer) == 1UL);
 
-    enforce!ProtobufException(value.type == JSON_TYPE.STRING, "JSON string expected");
-    return value.str;
+    buffer = (1.1).toProtobufText;
+    assert(fromProtobufText!float(buffer) == 1.1f);
+    buffer = (1.1).toProtobufText;
+    assert(fromProtobufText!double(buffer) == 1.1);
+    buffer = (double.nan).toProtobufText;
+    assert(fromProtobufText!double(buffer).isNaN);
+    buffer = (float.infinity).toProtobufText;
+    assert(fromProtobufText!float(buffer) == float.infinity);
+    buffer = (-double.infinity).toProtobufText;
+    assert(fromProtobufText!double(buffer) == -double.infinity);
+
+    buffer = `abc"def`.toProtobufText;
+    assert(fromProtobufText!string(buffer) == `abc"def`);
+
+    buffer = (cast(bytes) "foo\xba").toProtobufText;
+    assert(fromProtobufText!bytes(buffer) == ['f', 'o', 'o', '\xba']);
 }
 
-T fromJSONValue(T)(JSONValue value)
-if (is(T == bytes))
-{
-    import std.base64 : Base64;
-    import std.exception : enforce;
-    import std.json : JSON_TYPE;
-
-    if (value.isNull)
-        return protoDefaultValue!T;
-
-    enforce!ProtobufException(value.type == JSON_TYPE.STRING, "JSON base64 encoded binary expected");
-    return Base64.decode(value.str);
-}
-
-T fromJSONValue(T)(JSONValue value)
-if (isArray!T && !is(T == string) && !is(T == bytes))
-{
-    import std.algorithm : map;
-    import std.array : array;
-    import std.exception : enforce;
-    import std.range : ElementType;
-
-    if (value.isNull)
-        return protoDefaultValue!T;
-
-    enforce!ProtobufException(value.type == JSON_TYPE.ARRAY, "JSON array expected");
-    return value.array.map!(a => a.fromJSONValue!(ElementType!T)).array;
-}
-
+/*
 T fromJSONValue(T)(JSONValue value, T result = null)
 if (isAssociativeArray!T)
 {
@@ -204,8 +249,9 @@ unittest
     assertThrown!ProtobufException(fromJSONValue!(bool[int])(JSONValue(`{"1": false, "2": true}`)));
     assertThrown!ProtobufException(fromJSONValue!(bool[int])(parseJSON(`{"foo": false, "2": true}`)));
 }
+*/
 
-T fromJSONValue(T)(JSONValue value, T result = protoDefaultValue!T)
+T fromProtobufText(T)(ref string input, T result = protoDefaultValue!T)
 if (is(T == class) || is(T == struct))
 {
     import std.algorithm : findAmong;
@@ -220,13 +266,13 @@ if (is(T == class) || is(T == struct))
             result = new T;
     }
 
-    static if (hasMember!(T, "fromJSONValue"))
+    static if (hasMember!(T, "fromProtobufText"))
     {
-        return result.fromJSONValue(value);
+        return result.fromProtobufText(input);
     }
     else
     {
-        enum jsonName(string fieldName) = {
+        enum textFieldName(string fieldName) = {
             import std.algorithm : skipOver;
 
             string result = fieldName;
@@ -240,11 +286,37 @@ if (is(T == class) || is(T == struct))
             return result;
         }();
 
-        if (value.isNull)
-            return protoDefaultValue!T;
+        if (input.empty)
+            return result;
 
-        enforce!ProtobufException(value.type == JSON_TYPE.OBJECT, "JSON object expected");
+        bool expectingClosingBrace = false;
+        bool firstToken = true;
 
+        for (;;)
+        {
+            auto token = getNextToken(input);
+            switch (token)
+            {
+            case ":":
+                throw new ProtobufException("Unexpected ':' character");
+            case "{":
+                enforce!ProtobufException(firstToken, "Unexpected '{' character");
+                expectingClosingBrace = true;
+                break;
+            case "}":
+                enforce!ProtobufException(expectingClosingBrace, "Unexpected '}' character");
+                return result;
+            case "":
+                enforce!ProtobufException(!expectingClosingBrace, "Expected '}' character");
+                return result;
+            default:
+                enforce!ProtobufException(getNextToken(input) == ":", "Expected ':' after field identifier");
+            }
+            firstToken = false;
+        }
+
+        assert(0, "Internal error");
+/*
         JSONValue[string] members = value.object;
 
         foreach (fieldName; Message!T.fieldNames)
@@ -264,37 +336,35 @@ if (is(T == class) || is(T == struct))
                 mixin("result." ~ fieldName) = fromJSONValue!(typeof(mixin("T." ~ fieldName)))(*fieldValue);
             }
         }
-        return result;
+        */
     }
 }
 
 unittest
 {
     import std.exception : assertThrown;
-    import std.json : parseJSON;
+    import google.protobuf.text_encoding : toProtobufText;
 
-    struct Foo
+    static struct Foo
     {
         @Proto(1) int a;
         @Proto(3) string b;
         @Proto(4) bool c;
-
-        @Oneof("test")
-        union
-        {
-            @Proto(5) int _d;
-            @Proto(6) string _e;
-        }
     }
 
     auto foo = Foo(10, "abc", false);
 
-    assert(fromJSONValue!Foo(parseJSON(`{"a":10, "b":"abc"}`)) == Foo(10, "abc", false));
-    assert(fromJSONValue!Foo(parseJSON(`{"a": 10, "b": "abc", "c": false}`)) == Foo(10, "abc", false));
-    assertThrown!ProtobufException(fromJSONValue!Foo(parseJSON(`{"a":10, "b":100}`)));
-    assertThrown!ProtobufException(fromJSONValue!Foo(parseJSON(`{"d":10, "e":"abc"}`)));
-}
+    auto buffer = foo.toProtobufText;
+    //assert(fromProtobufText!Foo(buffer) == foo);
 
+    //buffer = `a:10 b:"abc"`;
+    //assert(fromProtobufText!Foo(buffer) == Foo(10, "abc", false));
+    //buffer = `a: 10 b: "abc" c: false`;
+    //assert(fromProtobufText!Foo(buffer) == Foo(10, "abc", false));
+    //buffer = `a:10 b:100`;
+    //assertThrown!ProtobufException(fromProtobufText!Foo(buffer));
+}
+/*
 unittest
 {
     import std.json : parseJSON;
@@ -303,10 +373,10 @@ unittest
     {
     }
 
-    assert(fromJSONValue!EmptyMessage(parseJSON(`{}`)) == EmptyMessage());
-    assert(fromJSONValue!EmptyMessage(parseJSON(`{"a":10, "b":"abc"}`)) == EmptyMessage());
-}
-
+    assert(fromJSONValue!EmptyMessage(parseJSON(``)) == EmptyMessage());
+    assert(fromJSONValue!EmptyMessage(parseJSON(`a:10 b:"abc"}`)) == EmptyMessage());
+}*/
+/*
 private template oneofs(T)
 {
     import std.meta : NoDuplicates, staticMap;
@@ -363,3 +433,53 @@ unittest
     static assert([otherOneofFieldNames!(Test, Test.bar2)] == ["bar1", "bar3"]);
 }
 */
+
+private string getNextToken(ref string input)
+{
+    import std.algorithm : findSkip, splitter;
+    import std.ascii : isAlpha, isAlphaNum;
+    import std.exception : enforce;
+    import std.range : empty;
+    import std.string : stripLeft;
+
+    input = input.stripLeft;
+    if (input.empty)
+        return "";
+
+    switch (input[0])
+    {
+    case ':':
+    case '{':
+    case '}':
+        auto result = input[0 .. 1];
+        input = input[1 .. $];
+        return result;
+    default:
+        enforce!ProtobufException(input[0].isAlpha, "Invalid identifier: " ~ input.splitter.front);
+    }
+
+    auto result = input;
+    auto index = input.findSkip!(a => a.isAlphaNum || a == '_');
+
+    return result[0 .. index];
+}
+
+unittest
+{
+    auto foo = " abc_123 : { };";
+
+    auto bar = getNextToken(foo);
+    auto baz = getNextToken(foo);
+    auto qux = getNextToken(foo);
+    auto quux = getNextToken(foo);
+
+    assert(bar == "abc_123");
+    assert(baz == ":");
+    assert(qux == "{");
+    assert(quux == "}");
+    assert(foo == ";");
+
+    foo = "\n\t ";
+    assert(getNextToken(foo) == "");
+    assert(foo == "");
+}
