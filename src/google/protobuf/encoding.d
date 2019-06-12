@@ -207,6 +207,24 @@ unittest
 
 unittest
 {
+    import std.array : array;
+    import std.typecons : Yes;
+
+    struct Foo
+    {
+        @Proto(1) int[] bar = protoDefaultValue!(int[]);
+        @Proto(2, Wire.none, Yes.packed) int[] baz = protoDefaultValue!(int[]);
+    }
+
+    Foo foo;
+    assert(foo.toProtobuf.empty);
+    foo.bar = [1, 2];
+    foo.baz = [3, 4];
+    assert(foo.toProtobuf.array == [0x08, 0x01, 0x08, 0x02, 0x12, 0x02, 0x03, 0x04]);
+}
+
+unittest
+{
     struct Foo
     {
         @Proto(1) int bar = protoDefaultValue!int;

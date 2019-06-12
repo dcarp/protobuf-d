@@ -229,6 +229,32 @@ unittest
     assert(buff.empty);
 }
 
+unittest
+{
+    import std.array : array;
+    import std.typecons : Yes;
+
+    import google.protobuf.encoding : toProtobuf;
+
+    struct Foo
+    {
+        @Proto(1) int[] bar = protoDefaultValue!(int[]);
+        @Proto(2, Wire.none, Yes.packed) int[] baz = protoDefaultValue!(int[]);
+    }
+
+    Foo foo;
+    foo.bar = [1, 2];
+    foo.baz = [3, 4];
+    auto buff = foo.toProtobuf.array;
+
+    foo = Foo.init;
+    assert(foo.bar.empty);
+    assert(foo.baz.empty);
+    foo = buff.fromProtobuf!Foo;
+    assert(foo.bar == [1, 2]);
+    assert(foo.baz == [3, 4]);
+}
+
 private static void fromProtobufByField(alias field, T, R)(ref R inputRange, ref T message)
 if (isInputRange!R)
 {
