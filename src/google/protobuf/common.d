@@ -1,5 +1,10 @@
 module google.protobuf.common;
 
+static import std.typecons;
+
+alias No = std.typecons.No;
+alias Yes = std.typecons.Yes;
+
 alias bytes = ubyte[];
 
 auto protoDefaultValue(T)()

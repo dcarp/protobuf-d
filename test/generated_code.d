@@ -134,6 +134,16 @@ class ForeignMessage
     @Proto(1) int c = protoDefaultValue!int;
 }
 
+class PackedRepeated
+{
+    @Proto(1) int[] defaultPackedInts = protoDefaultValue!(int[]);
+    @Proto(2, Wire.none, Yes.packed) int[] packedInts = protoDefaultValue!(int[]);
+    @Proto(3) int[] nonPackedInts = protoDefaultValue!(int[]);
+    @Proto(4) bool[] defaultPackedBools = protoDefaultValue!(bool[]);
+    @Proto(5, Wire.none, Yes.packed) bool[] packedBools = protoDefaultValue!(bool[]);
+    @Proto(6) bool[] nonPackedBools = protoDefaultValue!(bool[]);
+}
+
 enum ForeignEnum
 {
     FOREIGN_FOO = 0,

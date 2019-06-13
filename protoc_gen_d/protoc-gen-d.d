@@ -379,7 +379,15 @@ class CodeGenerator
         import std.conv : to;
         import std.range : join;
 
-        return [field.number.to!string, wireByField(field).toString].stripRight("").stripRight("Wire.none").join(", ");
+        static string packedByField(FieldDescriptorProto field)
+        {
+            return (field.options && field.options.packed) ? "Yes.packed" : "No.packed";
+        }
+
+        return [field.number.to!string, wireByField(field).toString, packedByField(field)]
+            .stripRight("No.packed")
+            .stripRight("Wire.none")
+            .join(", ");
     }
 
     private string fieldInitializer(FieldDescriptorProto field)

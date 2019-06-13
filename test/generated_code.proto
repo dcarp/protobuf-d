@@ -122,3 +122,13 @@ enum ForeignEnum {
   FOREIGN_BAR = 1;
   FOREIGN_BAZ = 2;
 }
+
+message PackedRepeated {
+  repeated int32 defaultPackedInts = 1;
+  repeated int32 packedInts = 2 [packed=true];
+  repeated int32 nonPackedInts = 3 [packed=false];
+
+  repeated bool defaultPackedBools = 4;
+  repeated bool packedBools = 5 [packed=true];
+  repeated bool nonPackedBools = 6 [packed=false];
+}
