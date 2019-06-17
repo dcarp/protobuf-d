@@ -119,6 +119,7 @@ unittest
     assert([false, false, true].toProtobuf.array == [0x03, 0x00, 0x00, 0x01]);
     assert([1, 2].toProtobuf!(Wire.fixed).array == [0x08, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00]);
     assert([1, 2].toProtobuf.array == [0x02, 0x01, 0x02]);
+    assert([-54L, 54L].toProtobuf!(Wire.zigzag).array == [0x02, 0x6b, 0x6c]);
 }
 
 auto toProtobuf(T)(T value)
@@ -213,14 +214,14 @@ unittest
     struct Foo
     {
         @Proto(1) int[] bar = protoDefaultValue!(int[]);
-        @Proto(2, Wire.none, Yes.packed) int[] baz = protoDefaultValue!(int[]);
+        @Proto(2, Wire.zigzag, Yes.packed) int[] baz = protoDefaultValue!(int[]);
     }
 
     Foo foo;
     assert(foo.toProtobuf.empty);
     foo.bar = [1, 2];
     foo.baz = [3, 4];
-    assert(foo.toProtobuf.array == [0x08, 0x01, 0x08, 0x02, 0x12, 0x02, 0x03, 0x04]);
+    assert(foo.toProtobuf.array == [0x08, 0x01, 0x08, 0x02, 0x12, 0x02, 0x06, 0x08]);
 }
 
 unittest
@@ -322,7 +323,14 @@ if (isBoolean!T ||
 {
     static assert(validateProto!(proto, T));
 
-    return chain(encodeTag!(proto, T), value.toProtobuf);
+    static if (proto.wire == Wire.none)
+    {
+        return chain(encodeTag!(proto, T), value.toProtobuf);
+    }
+    else
+    {
+        return chain(encodeTag!(proto, T), value.toProtobuf!(proto.wire));
+    }
 }
 
 private auto toProtobufByProto(Proto proto, T)(T value)

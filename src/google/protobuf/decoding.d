@@ -150,6 +150,21 @@ if (isInputRange!R && isArray!T && !is(T == string) && !is(T == bytes))
     return result.data;
 }
 
+unittest
+{
+    import std.array : array;
+    import google.protobuf.encoding : toProtobuf;
+
+    auto buffer = [false, false, true].toProtobuf.array;
+    assert(buffer.fromProtobuf!(bool[]) == [false, false, true]);
+    buffer = [1, 2].toProtobuf!(Wire.fixed).array;
+    assert(buffer.fromProtobuf!(int[], Wire.fixed) == [1, 2]);
+    buffer = [1, 2].toProtobuf.array;
+    assert(buffer.fromProtobuf!(int[]) == [1, 2]);
+    buffer = [-54L, 54L].toProtobuf!(Wire.zigzag).array;
+    assert(buffer.fromProtobuf!(long[], Wire.zigzag) == [-54L, 54L]);
+}
+
 T fromProtobuf(T, R)(ref R inputRange, T result = protoDefaultValue!T)
 if (isInputRange!R && (is(T == class) || is(T == struct)))
 {
@@ -239,7 +254,7 @@ unittest
     struct Foo
     {
         @Proto(1) int[] bar = protoDefaultValue!(int[]);
-        @Proto(2, Wire.none, Yes.packed) int[] baz = protoDefaultValue!(int[]);
+        @Proto(2, Wire.zigzag, Yes.packed) int[] baz = protoDefaultValue!(int[]);
     }
 
     Foo foo;
@@ -288,8 +303,7 @@ if (isInputRange!R && isIntegral!T)
     static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
     static assert(validateProto!(proto, T));
 
-    enum wire = proto.wire;
-    field = inputRange.fromProtobuf!(T, wire);
+    field = inputRange.fromProtobuf!(T, proto.wire);
 }
 
 private void fromProtobufByProto(Proto proto, T, R)(ref R inputRange, ref T field)
@@ -298,7 +312,7 @@ if (isInputRange!R && isArray!T && !is(T == string) && !is(T == bytes) && proto.
     static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
     static assert(validateProto!(proto, T));
 
-    field ~= inputRange.fromProtobuf!T;
+    field ~= inputRange.fromProtobuf!(T, proto.wire);
 }
 
 private void fromProtobufByProto(Proto proto, T, R)(ref R inputRange, ref T field)
@@ -346,8 +360,7 @@ if (isInputRange!R && isAssociativeArray!T)
             {
                 static assert(isIntegral!(KeyType!T), "Cannot specify wire format for non-integral map key");
 
-                enum wire = keyProto.wire;
-                key = fieldRange.fromProtobuf!(KeyType!T, wire);
+                key = fieldRange.fromProtobuf!(KeyType!T, keyProto.wire);
             }
             break;
         case MapFieldTag.value:
@@ -363,8 +376,7 @@ if (isInputRange!R && isAssociativeArray!T)
             {
                 static assert(isIntegral!(ValueType!T), "Cannot specify wire format for non-integral map value");
 
-                enum wire = valueProto.wire;
-                value = fieldRange.fromProtobuf!(ValueType!T, wire);
+                value = fieldRange.fromProtobuf!(ValueType!T, valueProto.wire);
             }
             break;
         default:
