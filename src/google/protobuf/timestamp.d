@@ -70,12 +70,12 @@ struct Timestamp
         import std.algorithm : skipOver;
         import std.conv : ConvException, to;
         import std.datetime : DateTime, DateTimeException, Month, SimpleTimeZone, UTC;
-        import std.json : JSON_TYPE;
+        import std.json : JSONType;
         import std.regex : matchAll, regex;
         import std.string : leftJustify;
         import google.protobuf.json_decoding : fromJSONValue;
 
-        if (value.type == JSON_TYPE.NULL)
+        if (value.type == JSONType.null_)
         {
             timestamp = defaultTimestampValue;
             return this;

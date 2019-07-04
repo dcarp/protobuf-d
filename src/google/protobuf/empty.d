@@ -26,15 +26,15 @@ struct Empty
     Empty fromJSONValue()(JSONValue value)
     {
         import std.exception : enforce;
-        import std.json : JSON_TYPE;
+        import std.json : JSONType;
         import std.range : empty;
 
-        if (value.type == JSON_TYPE.NULL)
+        if (value.type == JSONType.null_)
         {
             return this;
         }
 
-        enforce!ProtobufException(value.type == JSON_TYPE.OBJECT && value.object.empty,
+        enforce!ProtobufException(value.type == JSONType.object && value.object.empty,
             "Invalid google.protobuf.Empty JSON Encoding");
 
         return this;
@@ -53,9 +53,9 @@ unittest
 
 unittest
 {
-    import std.json : JSON_TYPE;
+    import std.json : JSONType;
     import std.range : empty;
 
-    assert(Empty().toJSONValue.type == JSON_TYPE.OBJECT);
+    assert(Empty().toJSONValue.type == JSONType.object);
     assert(Empty().toJSONValue.object.empty);
 }

@@ -60,12 +60,12 @@ struct Any
         import std.array : array;
         import std.exception : enforce;
         import std.format : format;
-        import std.json : JSON_TYPE;
+        import std.json : JSONType;
 
         if (valueIsJSON) {
             enforce!ProtobufException(typeUrl in messageTypes,
                     "Cannot handle 'Any' message: type '%s' is not registered".format(typeUrl));
-            enforce!ProtobufException(jsonValue.type == JSON_TYPE.OBJECT,
+            enforce!ProtobufException(jsonValue.type == JSONType.object,
                     "'Any' message JSON encoding must be an object");
 
             JSONValue jsonMapping;
@@ -102,7 +102,7 @@ struct Any
     {
         import std.format : format;
         import std.exception : enforce;
-        import std.json : JSON_TYPE;
+        import std.json : JSONType;
 
         if (!valueIsJSON) {
             enforce!ProtobufException(typeUrl in messageTypes,
@@ -118,13 +118,13 @@ struct Any
                 ]);
             }
 
-            enforce!ProtobufException(result.type == JSON_TYPE.OBJECT,
+            enforce!ProtobufException(result.type == JSONType.object,
                     "'Any' message of type '%s' with no special JSON mapping is not an JSON object".format(typeUrl));
             result.object["@type"] = typeUrl;
             return result;
         }
 
-        enforce!ProtobufException(jsonValue.type == JSON_TYPE.OBJECT, "'Any' message JSON encoding must be an object");
+        enforce!ProtobufException(jsonValue.type == JSONType.object, "'Any' message JSON encoding must be an object");
         jsonValue.object["@type"] = typeUrl;
 
         return jsonValue;
@@ -133,9 +133,9 @@ struct Any
     Any fromJSONValue()(JSONValue value)
     {
         import std.exception : enforce;
-        import std.json : JSON_TYPE;
+        import std.json : JSONType;
 
-        if (value.type == JSON_TYPE.NULL)
+        if (value.type == JSONType.null_)
         {
             typeUrl = "";
             protoValue = [];
@@ -144,9 +144,9 @@ struct Any
             return this;
         }
 
-        enforce!ProtobufException(value.type == JSON_TYPE.OBJECT, "Invalid 'Any' JSON encoding");
+        enforce!ProtobufException(value.type == JSONType.object, "Invalid 'Any' JSON encoding");
         enforce!ProtobufException("@type" in value.object, "No type specified for 'Any' JSON encoding");
-        enforce!ProtobufException(value.object["@type"].type == JSON_TYPE.STRING, "Any typeUrl should be a string");
+        enforce!ProtobufException(value.object["@type"].type == JSONType.string, "Any typeUrl should be a string");
 
         typeUrl = value.object["@type"].str;
         jsonValue = value;

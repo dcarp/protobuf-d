@@ -1,6 +1,6 @@
 module google.protobuf.json_decoding;
 
-import std.json : JSONValue, JSON_TYPE;
+import std.json : JSONValue, JSONType;
 import std.traits : isArray, isAssociativeArray, isBoolean, isFloatingPoint, isIntegral, isSigned;
 import google.protobuf.common;
 
@@ -9,11 +9,11 @@ if (isBoolean!T)
 {
     switch (value.type)
     {
-    case JSON_TYPE.NULL:
+    case JSONType.null_:
         return protoDefaultValue!T;
-    case JSON_TYPE.TRUE:
+    case JSONType.true_:
         return true;
-    case JSON_TYPE.FALSE:
+    case JSONType.false_:
         return false;
     default:
         throw new ProtobufException("JSON boolean expected");
@@ -31,15 +31,15 @@ if (isIntegral!T)
     {
         switch (value.type)
         {
-        case JSON_TYPE.NULL:
+        case JSONType.null_:
             return protoDefaultValue!T;
-        case JSON_TYPE.STRING:
+        case JSONType.string:
             return value.str.to!T;
-        case JSON_TYPE.INTEGER:
+        case JSONType.integer:
             return cast(T) value.integer.to!(OriginalType!T);
-        case JSON_TYPE.UINTEGER:
+        case JSONType.uinteger:
             return cast(T) value.uinteger.to!(OriginalType!T);
-        case JSON_TYPE.FLOAT:
+        case JSONType.float_:
         {
             import core.stdc.math : fabs, modf;
 
@@ -71,9 +71,9 @@ if (isFloatingPoint!T)
     {
         switch (value.type)
         {
-        case JSON_TYPE.NULL:
+        case JSONType.null_:
             return protoDefaultValue!T;
-        case JSON_TYPE.STRING:
+        case JSONType.string:
             switch (value.str)
             {
             case "NaN":
@@ -85,11 +85,11 @@ if (isFloatingPoint!T)
             default:
                 return value.str.to!T;
             }
-        case JSON_TYPE.INTEGER:
+        case JSONType.integer:
             return value.integer.to!T;
-        case JSON_TYPE.UINTEGER:
+        case JSONType.uinteger:
             return value.uinteger.to!T;
-        case JSON_TYPE.FLOAT:
+        case JSONType.float_:
             return value.floating;
         default:
             throw new ProtobufException("JSON float expected");
@@ -109,7 +109,7 @@ if (is(T == string))
     if (value.isNull)
         return protoDefaultValue!T;
 
-    enforce!ProtobufException(value.type == JSON_TYPE.STRING, "JSON string expected");
+    enforce!ProtobufException(value.type == JSONType.string, "JSON string expected");
     return value.str;
 }
 
@@ -118,12 +118,12 @@ if (is(T == bytes))
 {
     import std.base64 : Base64;
     import std.exception : enforce;
-    import std.json : JSON_TYPE;
+    import std.json : JSONType;
 
     if (value.isNull)
         return protoDefaultValue!T;
 
-    enforce!ProtobufException(value.type == JSON_TYPE.STRING, "JSON base64 encoded binary expected");
+    enforce!ProtobufException(value.type == JSONType.string, "JSON base64 encoded binary expected");
     return Base64.decode(value.str);
 }
 
@@ -138,7 +138,7 @@ if (isArray!T && !is(T == string) && !is(T == bytes))
     if (value.isNull)
         return protoDefaultValue!T;
 
-    enforce!ProtobufException(value.type == JSON_TYPE.ARRAY, "JSON array expected");
+    enforce!ProtobufException(value.type == JSONType.array, "JSON array expected");
     return value.array.map!(a => a.fromJSONValue!(ElementType!T)).array;
 }
 
@@ -152,7 +152,7 @@ if (isAssociativeArray!T)
     if (value.isNull)
         return protoDefaultValue!T;
 
-    enforce!ProtobufException(value.type == JSON_TYPE.OBJECT, "JSON object expected");
+    enforce!ProtobufException(value.type == JSONType.object, "JSON object expected");
     foreach (k, v; value.object)
     {
         try
@@ -242,7 +242,7 @@ if (is(T == class) || is(T == struct))
         if (value.isNull)
             return protoDefaultValue!T;
 
-        enforce!ProtobufException(value.type == JSON_TYPE.OBJECT, "JSON object expected");
+        enforce!ProtobufException(value.type == JSONType.object, "JSON object expected");
 
         JSONValue[string] members = value.object;
 

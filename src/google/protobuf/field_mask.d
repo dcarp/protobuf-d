@@ -21,15 +21,15 @@ struct FieldMask
         import std.algorithm : map, splitter;
         import std.array : array;
         import std.exception : enforce;
-        import std.json : JSON_TYPE;
+        import std.json : JSONType;
 
-        if (value.type == JSON_TYPE.NULL)
+        if (value.type == JSONType.null_)
         {
             paths = protoDefaultValue!(string[]);
             return this;
         }
 
-        enforce!ProtobufException(value.type == JSON_TYPE.STRING, "FieldMask JSON encoding must be a string");
+        enforce!ProtobufException(value.type == JSONType.string, "FieldMask JSON encoding must be a string");
 
         paths = value.str.splitter(",").map!(a => a.toSnakeCase).array;
 
