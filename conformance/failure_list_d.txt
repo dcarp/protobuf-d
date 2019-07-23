@@ -13,11 +13,6 @@ Required.Proto3.JsonInput.TimestampMaxValue.JsonOutput
 Required.Proto3.JsonInput.TimestampMaxValue.ProtobufOutput
 Required.Proto3.JsonInput.TimestampRepeatedValue.JsonOutput
 Required.Proto3.JsonInput.TimestampRepeatedValue.ProtobufOutput
-# See issue #3093
-Required.Proto3.JsonInput.TimestampWithNegativeOffset.JsonOutput
-Required.Proto3.JsonInput.TimestampWithNegativeOffset.ProtobufOutput
-Required.Proto3.JsonInput.TimestampWithPositiveOffset.JsonOutput
-Required.Proto3.JsonInput.TimestampWithPositiveOffset.ProtobufOutput
 
 # Unknown fields are dropped
 Required.Proto2.ProtobufInput.UnknownVarint.ProtobufOutput
@@ -40,3 +35,6 @@ Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.UINT64.ProtobufOutput
 # Empty FieldMask is the default value, therefore omitted
 Required.Proto3.JsonInput.EmptyFieldMask.JsonOutput
 Required.Proto3.JsonInput.EmptyFieldMask.ProtobufOutput
+
+# Top level null json is not rejected, it creates an empty message
+Required.Proto3.JsonInput.RejectTopLevelNull
