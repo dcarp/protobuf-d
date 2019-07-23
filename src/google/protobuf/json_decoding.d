@@ -278,11 +278,19 @@ unittest
         @Proto(3) string b;
         @Proto(4) bool c;
 
-        @Oneof("test")
-        union
+        enum TestCase
         {
-            @Proto(5) int _d;
-            @Proto(6) string _e;
+            testNotSet = 0,
+            d = 5,
+            e = 6,
+        }
+        TestCase _testCase = TestCase.testNotSet;
+        @property TestCase testCase() { return _testCase; }
+        void clearTest() { _testCase = TestCase.testNotSet; }
+        @Oneof("_testCase") union
+        {
+            @Proto(5) int _d = protoDefaultValue!int; mixin(oneofAccessors!_d);
+            @Proto(6) string _e; mixin(oneofAccessors!_e);
         }
     }
 
