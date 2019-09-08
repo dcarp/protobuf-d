@@ -26,7 +26,7 @@ struct WrappedValue(T, string messageTypeFullName_)
 
     auto toProtobuf()
     {
-        return _Message(value).toProtobuf;
+        return _Message(value.get).toProtobuf;
     }
 
     auto fromProtobuf(R)(ref R inputRange)
