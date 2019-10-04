@@ -28,9 +28,6 @@ Required.Proto3.JsonInput.Int32FieldLeadingZero
 Required.Proto3.JsonInput.Int32FieldNegativeWithLeadingZero
 
 # Last test value is 0; that being the default value is not sent
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED32.ProtobufOutput
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.FIXED64.ProtobufOutput
-Required.Proto2.ProtobufInput.RepeatedScalarSelectsLast.UINT64.ProtobufOutput
 
 # Empty FieldMask is the default value, therefore omitted
 Required.Proto3.JsonInput.EmptyFieldMask.JsonOutput

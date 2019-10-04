@@ -351,6 +351,30 @@ class CodeGenerator
         }
     }
 
+    private bool isBaseTypePackable(FieldDescriptorProto field)
+    {
+        import std.exception : enforce;
+
+        final switch (field.type) with (FieldDescriptorProto.Type)
+        {
+        case TYPE_BOOL:
+        case TYPE_INT32: case TYPE_SINT32: case TYPE_SFIXED32:
+        case TYPE_UINT32: case TYPE_FIXED32:
+        case TYPE_INT64: case TYPE_SINT64: case TYPE_SFIXED64:
+        case TYPE_UINT64: case TYPE_FIXED64:
+        case TYPE_FLOAT:
+        case TYPE_DOUBLE:
+            return true;
+        case TYPE_STRING:
+        case TYPE_BYTES:
+        case TYPE_MESSAGE:
+        case TYPE_ENUM:
+            return false;
+        case TYPE_GROUP: case TYPE_ERROR:
+            assert(0, "Invalid field type");
+        }
+    }
+
     string typeName(FieldDescriptorProto field)
     {
         import std.format : format;
@@ -379,9 +403,15 @@ class CodeGenerator
         import std.conv : to;
         import std.range : join;
 
-        static string packedByField(FieldDescriptorProto field)
+        string packedByField(FieldDescriptorProto field)
         {
-            return (field.options && field.options.packed) ? "Yes.packed" : "No.packed";
+            if (field.label != FieldDescriptorProto.Label.LABEL_REPEATED)
+                return "No.packed";
+
+            if (!isBaseTypePackable(field))
+                return "No.packed";
+
+            return (!field.options || field.options.packed) ? "Yes.packed" : "No.packed";
         }
 
         return [field.number.to!string, wireByField(field).toString, packedByField(field)]

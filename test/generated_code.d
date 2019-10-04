@@ -29,19 +29,19 @@ class TestAllTypes
     @Proto(21) NestedEnum optionalNestedEnum = protoDefaultValue!NestedEnum;
     @Proto(22) ForeignEnum optionalForeignEnum = protoDefaultValue!ForeignEnum;
     @Proto(27) TestAllTypes recursiveMessage = protoDefaultValue!TestAllTypes;
-    @Proto(31) int[] repeatedInt32 = protoDefaultValue!(int[]);
-    @Proto(32) long[] repeatedInt64 = protoDefaultValue!(long[]);
-    @Proto(33) uint[] repeatedUint32 = protoDefaultValue!(uint[]);
-    @Proto(34) ulong[] repeatedUint64 = protoDefaultValue!(ulong[]);
-    @Proto(35, Wire.zigzag) int[] repeatedSint32 = protoDefaultValue!(int[]);
-    @Proto(36, Wire.zigzag) long[] repeatedSint64 = protoDefaultValue!(long[]);
-    @Proto(37, Wire.fixed) uint[] repeatedFixed32 = protoDefaultValue!(uint[]);
-    @Proto(38, Wire.fixed) ulong[] repeatedFixed64 = protoDefaultValue!(ulong[]);
-    @Proto(39, Wire.fixed) int[] repeatedSfixed32 = protoDefaultValue!(int[]);
-    @Proto(40, Wire.fixed) long[] repeatedSfixed64 = protoDefaultValue!(long[]);
-    @Proto(41) float[] repeatedFloat = protoDefaultValue!(float[]);
-    @Proto(42) double[] repeatedDouble = protoDefaultValue!(double[]);
-    @Proto(43) bool[] repeatedBool = protoDefaultValue!(bool[]);
+    @Proto(31, Wire.none, Yes.packed) int[] repeatedInt32 = protoDefaultValue!(int[]);
+    @Proto(32, Wire.none, Yes.packed) long[] repeatedInt64 = protoDefaultValue!(long[]);
+    @Proto(33, Wire.none, Yes.packed) uint[] repeatedUint32 = protoDefaultValue!(uint[]);
+    @Proto(34, Wire.none, Yes.packed) ulong[] repeatedUint64 = protoDefaultValue!(ulong[]);
+    @Proto(35, Wire.zigzag, Yes.packed) int[] repeatedSint32 = protoDefaultValue!(int[]);
+    @Proto(36, Wire.zigzag, Yes.packed) long[] repeatedSint64 = protoDefaultValue!(long[]);
+    @Proto(37, Wire.fixed, Yes.packed) uint[] repeatedFixed32 = protoDefaultValue!(uint[]);
+    @Proto(38, Wire.fixed, Yes.packed) ulong[] repeatedFixed64 = protoDefaultValue!(ulong[]);
+    @Proto(39, Wire.fixed, Yes.packed) int[] repeatedSfixed32 = protoDefaultValue!(int[]);
+    @Proto(40, Wire.fixed, Yes.packed) long[] repeatedSfixed64 = protoDefaultValue!(long[]);
+    @Proto(41, Wire.none, Yes.packed) float[] repeatedFloat = protoDefaultValue!(float[]);
+    @Proto(42, Wire.none, Yes.packed) double[] repeatedDouble = protoDefaultValue!(double[]);
+    @Proto(43, Wire.none, Yes.packed) bool[] repeatedBool = protoDefaultValue!(bool[]);
     @Proto(44) string[] repeatedString = protoDefaultValue!(string[]);
     @Proto(45) bytes[] repeatedBytes = protoDefaultValue!(bytes[]);
     @Proto(48) NestedMessage[] repeatedNestedMessage = protoDefaultValue!(NestedMessage[]);
@@ -136,10 +136,10 @@ class ForeignMessage
 
 class PackedRepeated
 {
-    @Proto(1) int[] defaultPackedInts = protoDefaultValue!(int[]);
+    @Proto(1, Wire.none, Yes.packed) int[] defaultPackedInts = protoDefaultValue!(int[]);
     @Proto(2, Wire.none, Yes.packed) int[] packedInts = protoDefaultValue!(int[]);
     @Proto(3) int[] nonPackedInts = protoDefaultValue!(int[]);
-    @Proto(4) bool[] defaultPackedBools = protoDefaultValue!(bool[]);
+    @Proto(4, Wire.none, Yes.packed) bool[] defaultPackedBools = protoDefaultValue!(bool[]);
     @Proto(5, Wire.none, Yes.packed) bool[] packedBools = protoDefaultValue!(bool[]);
     @Proto(6) bool[] nonPackedBools = protoDefaultValue!(bool[]);
 }
