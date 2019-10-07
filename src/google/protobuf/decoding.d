@@ -1,7 +1,5 @@
 module google.protobuf.decoding;
 
-import std.algorithm : map;
-import std.exception : enforce;
 import std.range : ElementType, empty, isInputRange;
 import std.traits : isArray, isAssociativeArray, isBoolean, isFloatingPoint, isIntegral, KeyType, ValueType;
 import google.protobuf.common;
@@ -168,7 +166,9 @@ unittest
 T fromProtobuf(T, R)(ref R inputRange, T result = protoDefaultValue!T)
 if (isInputRange!R && (is(T == class) || is(T == struct)))
 {
+    import std.exception : enforce;
     import std.format : format;
+    import std.meta : Alias;
     import std.traits : hasMember;
 
     static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
@@ -187,7 +187,6 @@ if (isInputRange!R && (is(T == class) || is(T == struct)))
     {
         while (!inputRange.empty)
         {
-
             auto tagWire = inputRange.decodeTag;
 
             chooseFieldDecoder:
@@ -195,15 +194,50 @@ if (isInputRange!R && (is(T == class) || is(T == struct)))
             {
             foreach (fieldName; Message!T.fieldNames)
             {
-                case protoByField!(mixin("T." ~ fieldName)).tag:
+                alias field = Alias!(mixin("T." ~ fieldName));
+                case protoByField!field.tag:
                 {
-                    enum proto = protoByField!(mixin("T." ~ fieldName));
-                    enum wireTypeExpected = wireType!(proto, typeof(mixin("T." ~ fieldName)));
+                    enum proto = protoByField!field;
 
-                    enforce!ProtobufException(tagWire.wireType == wireTypeExpected,
-                        "Wrong wire format '%s' of field %s, expected '%s' "
-                            .format(tagWire.wireType, T.stringof ~ "." ~ fieldName, wireTypeExpected));
-                    inputRange.fromProtobufByField!(mixin("T." ~ fieldName))(result);
+                    static if (isFieldPackable!field)
+                    {
+                        if (tagWire.wireType == WireType.withLength)
+                        {
+                            enum proto2 = Proto(proto.tag, proto.wire, Yes.packed);
+                            enum wireTypeExpected = wireType!(proto2, typeof(field));
+                            enforce!ProtobufException(tagWire.wireType == wireTypeExpected,
+                                "Wrong wire format '%s' of field %s, expected '%s' "
+                                    .format(tagWire.wireType, T.stringof ~ "." ~ fieldName, wireTypeExpected));
+
+                            inputRange.fromProtobufByProto!proto2(mixin("result." ~ __traits(identifier, field)));
+                        }
+                        else
+                        {
+                            enum proto2 = Proto(proto.tag, proto.wire, No.packed);
+                            enum wireTypeExpected = wireType!(proto2, typeof(field));
+                            enforce!ProtobufException(tagWire.wireType == wireTypeExpected,
+                                "Wrong wire format '%s' of field %s, expected '%s' "
+                                    .format(tagWire.wireType, T.stringof ~ "." ~ fieldName, wireTypeExpected));
+
+                            inputRange.fromProtobufByProto!proto2(mixin("result." ~ __traits(identifier, field)));
+                        }
+                    }
+                    else {
+                        enum wireTypeExpected = wireType!(proto, typeof(field));
+                        enforce!ProtobufException(tagWire.wireType == wireTypeExpected,
+                            "Wrong wire format '%s' of field %s, expected '%s' "
+                                .format(tagWire.wireType, T.stringof ~ "." ~ fieldName, wireTypeExpected));
+
+                        inputRange.fromProtobufByProto!proto(mixin("result." ~ __traits(identifier, field)));
+                    }
+                    static if (isOneof!field)
+                    {
+                        enum oneofCase = "result." ~ oneofCaseFieldName!field;
+                        enum fieldCase = "T." ~ typeof(mixin(oneofCase)).stringof ~ "." ~ oneofAccessorName!field;
+
+                        mixin(oneofCase) = mixin(fieldCase);
+                    }
+
                     break chooseFieldDecoder;
                 }
             }
@@ -270,22 +304,26 @@ unittest
     assert(foo.baz == [3, 4]);
 }
 
-private static void fromProtobufByField(alias field, T, R)(ref R inputRange, ref T message)
-if (isInputRange!R)
+unittest
 {
-    static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
+    import std.typecons : Yes;
 
-    enum proto = protoByField!field;
-    static assert(validateProto!(proto, typeof(field)));
-
-    fromProtobufByProto!proto(inputRange, mixin("message." ~ __traits(identifier, field)));
-    static if (isOneof!field)
+    struct Foo
     {
-        enum oneofCase = "message." ~ oneofCaseFieldName!field;
-        enum fieldCase = "T." ~ typeof(mixin(oneofCase)).stringof ~ "." ~ oneofAccessorName!field;
-
-        mixin(oneofCase) = mixin(fieldCase);
+        @Proto(1) int[] bar = protoDefaultValue!(int[]);
+        @Proto(2, Wire.zigzag, Yes.packed) int[] baz = protoDefaultValue!(int[]);
     }
+
+    // support packed and unpacked decoding
+    // bar: 1
+    // bar: [2, 3]
+    // baz: [4, 5]
+    // baz: 6
+    ubyte[] buff = [0x08, 0x01, 0x0a, 0x02, 0x02, 0x03, 0x12, 0x02, 0x08, 0x0a, 0x10, 0x0c];
+
+    auto foo = buff.fromProtobuf!Foo;
+    assert(foo.bar == [1, 2, 3]);
+    assert(foo.baz == [4, 5, 6]);
 }
 
 private void fromProtobufByProto(Proto proto, T, R)(ref R inputRange, ref T field)
@@ -330,6 +368,7 @@ private void fromProtobufByProto(Proto proto, T, R)(ref R inputRange, ref T fiel
 if (isInputRange!R && isAssociativeArray!T)
 {
     import std.conv : to;
+    import std.exception : enforce;
 
     static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
     static assert(validateProto!(proto, T));
@@ -401,6 +440,8 @@ if (isInputRange!R && (is(T == class) || is(T == struct)))
 void skipUnknown(R)(ref R inputRange, WireType wireType)
 if (isInputRange!R)
 {
+    import std.exception : enforce;
+
     static assert(is(ElementType!R == ubyte), "Input range should be an ubyte range");
 
     switch (wireType) with (WireType)

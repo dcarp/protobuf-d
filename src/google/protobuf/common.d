@@ -178,6 +178,31 @@ unittest
     static assert(is(Message!EmptyMessage.protos == AliasSeq!()));
 }
 
+enum bool isFieldPackable(alias field) = {
+    import std.meta : AliasSeq, staticIndexOf;
+    import std.range : ElementType;
+    import std.traits : isArray;
+
+    return isArray!(typeof(field)) &&
+        staticIndexOf!(ElementType!(typeof(field)), AliasSeq!(bool, int, uint, long, ulong, float, double)) >= 0;
+}();
+
+unittest
+{
+    struct Foo
+    {
+        uint f1;
+        uint[] f2;
+        string f3;
+        string[] f4;
+    }
+
+    static assert(!isFieldPackable!(Foo.f1));
+    static assert(isFieldPackable!(Foo.f2));
+    static assert(!isFieldPackable!(Foo.f3));
+    static assert(!isFieldPackable!(Foo.f4));
+}
+
 template validateField(alias field)
 {
     import std.traits : getUDAs;
