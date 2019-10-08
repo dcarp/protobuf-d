@@ -27,8 +27,6 @@ Required.Proto3.JsonInput.FloatFieldTooSmall
 Required.Proto3.JsonInput.Int32FieldLeadingZero
 Required.Proto3.JsonInput.Int32FieldNegativeWithLeadingZero
 
-# Last test value is 0; that being the default value is not sent
-
 # Empty FieldMask is the default value, therefore omitted
 Required.Proto3.JsonInput.EmptyFieldMask.JsonOutput
 Required.Proto3.JsonInput.EmptyFieldMask.ProtobufOutput
