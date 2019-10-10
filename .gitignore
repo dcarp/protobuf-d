@@ -1,3 +1,7 @@
 .dub
+bazel-bin
+bazel-out
+bazel-protobuf-d
+bazel-testlogs
 build
 dub.selections.json
