@@ -2,7 +2,7 @@ module protoc_gen_d;
 
 import google.protobuf;
 import google.protobuf.compiler.plugin : CodeGeneratorRequest, CodeGeneratorResponse;
-import google.protobuf.descriptor : DescriptorProto, EnumDescriptorProto, FieldDescriptorProto, FileDescriptorProto,
+import google.protobuf.descriptor : DescriptorProto, EnumDescriptorProto, FieldDescriptorProto, FileDescriptorProto, ServiceDescriptorProto,
     OneofDescriptorProto;
 
 int main()
@@ -111,6 +111,9 @@ class CodeGenerator
         file.name = fileDescriptor.moduleName.replace(".", "/") ~ ".d";
         file.content = generateFile(fileDescriptor);
 
+        import std.file : write;
+        write("log", "writing " ~ fileDescriptor.moduleName ~ " \n");
+
         return file;
     }
 
@@ -124,6 +127,9 @@ class CodeGenerator
         result ~= "// source: %s\n\n".format(fileDescriptor.name);
         result ~= "module %s;\n\n".format(fileDescriptor.moduleName);
         result ~= "import google.protobuf;\n";
+        if(fileDescriptor.services.length != 0) {
+            result ~= "import google.rpc.status;\n";
+        }
 
         foreach (dependency; fileDescriptor.dependencies)
             result ~= "import %s;\n".format(dependency.moduleName);
@@ -131,11 +137,84 @@ class CodeGenerator
         if (!protocVersion.empty)
             result ~= "\nenum protocVersion = %s;\n".format(protocVersion);
 
+
+        import std.file : append;
+        append("log", "writing messages\n");
         foreach (messageType; fileDescriptor.messageTypes)
             result ~= generateMessage(messageType);
 
+        append("log", "writing enums\n");
         foreach (enumType; fileDescriptor.enumTypes)
             result ~= generateEnum(enumType);
+
+        append("log", "writing services\n");
+        foreach (serviceType; fileDescriptor.services)
+            result ~= generateService(serviceType, fileDescriptor);
+
+        return result.data;
+    }
+
+    private string generateService(ServiceDescriptorProto service, FileDescriptorProto fileDescriptor, size_t indent = 4) {
+        import std.array : appender, array;
+        import std.format : format;
+
+        auto indentation = "%*s".format(indent, "");
+        auto result = appender!string;
+        import std.file : append;
+        append("log", service.name ~ "\n");
+        result ~= "\n";
+        result ~= "interface " ~ service.name ~ "\n";
+        result ~= "{\n";
+
+        foreach(method; service.method) {
+            import std.array : split;
+            string input = method.inputType[1..$].split('.')[$ - 1];
+            string output = method.outputType[1..$].split('.')[$ - 1];
+            append("log", input ~ "\n");
+            append("log", output ~ "\n"); 
+
+            result ~= indentation ~ "@RPC(\"/";
+            if(fileDescriptor.package_ != "") { 
+                result ~= fileDescriptor.package_ ~ "."; 
+            }
+            result ~= service.name ~ "/" ~ method.name ~ "\")\n";
+
+            if(method.clientStreaming) {
+                result ~= indentation;
+                result ~= "@ClientStreaming\n";
+            }
+
+            if(method.serverStreaming) {
+                result ~= indentation;
+                result ~= "@ServerStreaming\n";
+            }
+            result ~= indentation;
+
+            if(method.options) {
+                if(method.options.deprecated_) {
+                    result ~= "deprecated ";
+                }
+            }
+
+            result ~= "Status " ~ method.name ~ "(";
+            if(method.clientStreaming) {
+                result ~= "Stream!(" ~ input ~ "), ";
+            }
+            else {
+                result ~= input ~ ", ";
+            }
+
+            if(method.serverStreaming) {
+                result ~= "Stream!(" ~ output ~ ")";
+            } else {
+                result ~= "ref " ~ output;
+            }
+            result ~= ");\n\n";
+
+        }
+
+        result ~= "}"; 
+        append("log", "writing ok");
 
         return result.data;
     }
