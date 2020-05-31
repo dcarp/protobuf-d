@@ -375,9 +375,8 @@ if (isInputRange!R && isAssociativeArray!T)
 
     enum keyProto = Proto(MapFieldTag.key, keyWireToWire(proto.wire));
     enum valueProto = Proto(MapFieldTag.value, valueWireToWire(proto.wire));
-    KeyType!T key;
-    ValueType!T value;
-    ubyte decodingState;
+    KeyType!T key = protoDefaultValue!(KeyType!T);
+    ValueType!T value = protoDefaultValue!(ValueType!T);
     R fieldRange = inputRange.takeLengthPrefixed;
 
     while (!fieldRange.empty)
@@ -387,8 +386,6 @@ if (isInputRange!R && isAssociativeArray!T)
         switch (tagWire.tag)
         {
         case MapFieldTag.key:
-            enforce!ProtobufException((decodingState & 0x01) == 0, "Double map key");
-            decodingState |= 0x01;
             enum wireTypeExpected = wireType!(keyProto, KeyType!T);
             enforce!ProtobufException(tagWire.wireType == wireTypeExpected, "Wrong wire format");
             static if (keyProto.wire == Wire.none)
@@ -403,8 +400,6 @@ if (isInputRange!R && isAssociativeArray!T)
             }
             break;
         case MapFieldTag.value:
-            enforce!ProtobufException((decodingState & 0x02) == 0, "Double map value");
-            decodingState |= 0x02;
             enum wireTypeExpected = wireType!(valueProto, KeyType!T);
             enforce!ProtobufException(tagWire.wireType == wireTypeExpected, "Wrong wire format");
             static if (valueProto.wire == Wire.none)
@@ -422,7 +417,6 @@ if (isInputRange!R && isAssociativeArray!T)
             throw new ProtobufException("Unexpected field tag " ~ tagWire.tag.to!string ~ " while decoding a map");
         }
     }
-    enforce!ProtobufException((decodingState & 0x03) == 0x03, "Incomplete map element");
     field[key] = value;
 }
 
