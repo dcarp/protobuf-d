@@ -388,30 +388,12 @@ if (isInputRange!R && isAssociativeArray!T)
         case MapFieldTag.key:
             enum wireTypeExpected = wireType!(keyProto, KeyType!T);
             enforce!ProtobufException(tagWire.wireType == wireTypeExpected, "Wrong wire format");
-            static if (keyProto.wire == Wire.none)
-            {
-                key = fieldRange.fromProtobuf!(KeyType!T);
-            }
-            else
-            {
-                static assert(isIntegral!(KeyType!T), "Cannot specify wire format for non-integral map key");
-
-                key = fieldRange.fromProtobuf!(KeyType!T, keyProto.wire);
-            }
+            fieldRange.fromProtobufByProto!keyProto(key);
             break;
         case MapFieldTag.value:
             enum wireTypeExpected = wireType!(valueProto, KeyType!T);
             enforce!ProtobufException(tagWire.wireType == wireTypeExpected, "Wrong wire format");
-            static if (valueProto.wire == Wire.none)
-            {
-                value = fieldRange.fromProtobuf!(ValueType!T);
-            }
-            else
-            {
-                static assert(isIntegral!(ValueType!T), "Cannot specify wire format for non-integral map value");
-
-                value = fieldRange.fromProtobuf!(ValueType!T, valueProto.wire);
-            }
+            fieldRange.fromProtobufByProto!valueProto(value);
             break;
         default:
             throw new ProtobufException("Unexpected field tag " ~ tagWire.tag.to!string ~ " while decoding a map");
