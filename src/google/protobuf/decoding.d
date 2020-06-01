@@ -391,7 +391,7 @@ if (isInputRange!R && isAssociativeArray!T)
             fieldRange.fromProtobufByProto!keyProto(key);
             break;
         case MapFieldTag.value:
-            enum wireTypeExpected = wireType!(valueProto, KeyType!T);
+            enum wireTypeExpected = wireType!(valueProto, ValueType!T);
             enforce!ProtobufException(tagWire.wireType == wireTypeExpected, "Wrong wire format");
             fieldRange.fromProtobufByProto!valueProto(value);
             break;
