@@ -412,7 +412,7 @@ if (isInputRange!R && (is(T == class) || is(T == struct)))
 
     R fieldRange = inputRange.takeLengthPrefixed;
 
-    field = fieldRange.fromProtobuf!T;
+    field = fieldRange.fromProtobuf!T(field);
 }
 
 void skipUnknown(R)(ref R inputRange, WireType wireType)

@@ -5,7 +5,7 @@ if cd protobuf >/dev/null 2>&1; then
 else
 	git clone https://github.com/google/protobuf.git && cd protobuf
 fi
-git checkout tags/v3.10.0 --detach
+git checkout tags/v3.12.2 --detach
 
 git submodule update --init --recursive
 
