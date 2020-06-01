@@ -37,7 +37,9 @@ if (isInputRange!R && isIntegral!T)
     }
     else static if (wire == Wire.zigzag)
     {
-        return cast(T) zagZig(cast(ulong) fromVarint(inputRange));
+        import std.traits : Unsigned;
+
+        return zagZig(cast(Unsigned!T) fromVarint(inputRange));
     }
     else
     {
