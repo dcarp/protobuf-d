@@ -181,10 +181,11 @@ unittest
 enum bool isFieldPackable(alias field) = {
     import std.meta : AliasSeq, staticIndexOf;
     import std.range : ElementType;
-    import std.traits : isArray;
+    import std.traits : isArray, OriginalType;
 
     return isArray!(typeof(field)) &&
-        staticIndexOf!(ElementType!(typeof(field)), AliasSeq!(bool, int, uint, long, ulong, float, double)) >= 0;
+        staticIndexOf!(OriginalType!(ElementType!(typeof(field))),
+            AliasSeq!(bool, int, uint, long, ulong, float, double)) >= 0;
 }();
 
 unittest

@@ -35,7 +35,6 @@ Required.Proto3.JsonInput.EmptyFieldMask.ProtobufOutput
 Required.Proto3.JsonInput.RejectTopLevelNull
 
 # To be analysed and eventually fixed
-Required.Proto2.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.BOOL[0].ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.DOUBLE[0].ProtobufOutput
@@ -54,5 +53,3 @@ Required.Proto2.ProtobufInput.ValidDataScalar.STRING[0].ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[0].ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[5].ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT64[0].ProtobufOutput
-Required.Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.JsonOutput
-Required.Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.ProtobufOutput
