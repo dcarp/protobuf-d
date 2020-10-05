@@ -103,8 +103,8 @@ class CodeGenerator
         import std.exception : enforce;
 
         enforce!CodeGeneratorException(fileDescriptor.syntax == "proto3",
-            "Can only generate D code for proto3 .proto files.\n" ~
-            "Please add 'syntax = \"proto3\";' to the top of your .proto file.\n");
+            fileDescriptor.name ~ ": Can only generate D code for proto3 .proto files.\n" ~
+            "Add 'syntax = \"proto3\";' at the top of the file.\n");
 
         auto file = new CodeGeneratorResponse.File;
 
