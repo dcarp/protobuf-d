@@ -69,7 +69,7 @@ class CodeGenerator
 
     private void collectMessageAndEnumTypes(CodeGeneratorRequest request)
     {
-        void collect(DescriptorProto messageType, string prefix)
+        void collect(DescriptorProto messageType, string prefix, string typePrefix)
         {
             auto absoluteName = prefix ~ "." ~ messageType.name;
 
@@ -77,9 +77,11 @@ class CodeGenerator
                 return;
 
             collectedMessageTypes[absoluteName] = messageType;
+            auto type = typePrefix == "" ? messageType.name : typePrefix ~ "." ~ messageType.name;
+            typeFromDescriptor[messageType] = type;
 
             foreach (nestedType; messageType.nestedTypes)
-                collect(nestedType, absoluteName);
+                collect(nestedType, absoluteName, type);
 
             foreach (enumType; messageType.enumTypes)
                 collectedEnumTypes[absoluteName ~ "." ~ enumType.name] = enumType;
@@ -88,10 +90,11 @@ class CodeGenerator
         foreach (file; request.protoFiles)
         {
             auto packagePrefix = file.package_ ? "." ~ file.package_ : "";
-            moduleFromFile[file.name] = moduleName(file);
+            auto dModule = moduleName(file);
+            moduleFromFile[file.name] = dModule;
 
             foreach (messageType; file.messageTypes)
-                collect(messageType, packagePrefix);
+                collect(messageType, packagePrefix, "");
 
             foreach (enumType; file.enumTypes)
                 collectedEnumTypes[packagePrefix ~ "." ~ enumType.name] = enumType;
@@ -338,7 +341,7 @@ class CodeGenerator
             auto fieldMessageType = messageType(field);
             enforce!CodeGeneratorException(fieldMessageType !is null, "Field '" ~ field.name ~
                 "' has unknown message type " ~ field.typeName ~ "`");
-            return fieldMessageType.name;
+            return typeFromDescriptor[fieldMessageType];
         }
         case TYPE_ENUM:
         {
@@ -427,16 +430,14 @@ class CodeGenerator
         import std.format : format;
 
         auto fieldTypeName = typeName(field);
-        if (fieldTypeName.endsWith("]"))
-            return " = protoDefaultValue!(%s)".format(fieldTypeName);
-        else
-            return " = protoDefaultValue!%s".format(fieldTypeName);
+        return " = protoDefaultValue!(%s)".format(fieldTypeName);
     }
 
     private string protocVersion;
     private DescriptorProto[string] collectedMessageTypes;
     private EnumDescriptorProto[string] collectedEnumTypes;
     private string[string] moduleFromFile;
+    private string[DescriptorProto] typeFromDescriptor;
 }
 
 private FieldDescriptorProto fieldByNumber(DescriptorProto messageType, int fieldNumber)
