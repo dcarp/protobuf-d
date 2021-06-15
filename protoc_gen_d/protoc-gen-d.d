@@ -88,6 +88,7 @@ class CodeGenerator
         foreach (file; request.protoFiles)
         {
             auto packagePrefix = file.package_ ? "." ~ file.package_ : "";
+            moduleFromFile[file.name] = moduleName(file);
 
             foreach (messageType; file.messageTypes)
                 collect(messageType, packagePrefix);
@@ -126,7 +127,7 @@ class CodeGenerator
         result ~= "import google.protobuf;\n";
 
         foreach (dependency; fileDescriptor.dependencies)
-            result ~= "import %s;\n".format(dependency.moduleName);
+            result ~= "import %s;\n".format(moduleFromFile[dependency]);
 
         if (!protocVersion.empty)
             result ~= "\nenum protocVersion = %s;\n".format(protocVersion);
@@ -435,6 +436,7 @@ class CodeGenerator
     private string protocVersion;
     private DescriptorProto[string] collectedMessageTypes;
     private EnumDescriptorProto[string] collectedEnumTypes;
+    private string[string] moduleFromFile;
 }
 
 private FieldDescriptorProto fieldByNumber(DescriptorProto messageType, int fieldNumber)
@@ -518,14 +520,6 @@ private string moduleName(FileDescriptorProto fileDescriptor)
         moduleName = fileDescriptor.package_ ~ "." ~ moduleName;
 
     return moduleName.escapeKeywords;
-}
-
-private string moduleName(string fileName)
-{
-    import std.array : replace;
-    import std.string : chomp;
-
-    return fileName.chomp(".proto").replace("/", ".").escapeKeywords;
 }
 
 private string underscoresToCamelCase(string input, bool capitalizeNextLetter)
