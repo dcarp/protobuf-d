@@ -90,8 +90,7 @@ class CodeGenerator
         foreach (file; request.protoFiles)
         {
             auto packagePrefix = file.package_ ? "." ~ file.package_ : "";
-            auto dModule = moduleName(file);
-            moduleFromFile[file.name] = dModule;
+            moduleFromFile[file.name] = moduleName(file);
 
             foreach (messageType; file.messageTypes)
                 collect(messageType, packagePrefix, "");
