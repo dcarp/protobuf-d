@@ -14,5 +14,6 @@ script:
   - dub test --compiler=${DC}
   - dub build :protoc-gen-d --compiler=${DC}
   - cd $TRAVIS_BUILD_DIR/conformance && ./run-conformance-test.sh
+  - cd $TRAVIS_BUILD_DIR/test && PATH=$TRAVIS_BUILD_DIR/conformance/protobuf/src:$PATH PROTO_PATH="-I. -I$TRAVIS_BUILD_DIR/conformance/protobuf/src" ./run.sh
   - cd $TRAVIS_BUILD_DIR/examples && PATH=$TRAVIS_BUILD_DIR/conformance/protobuf/src:$PATH PROTO_PATH="-I. -I$TRAVIS_BUILD_DIR/conformance/protobuf/src" dub build :add_person
   - cd $TRAVIS_BUILD_DIR/examples && PATH=$TRAVIS_BUILD_DIR/conformance/protobuf/src:$PATH PROTO_PATH="-I. -I$TRAVIS_BUILD_DIR/conformance/protobuf/src" dub build :list_people

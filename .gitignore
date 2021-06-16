@@ -1,3 +1,4 @@
 .dub
 build
 dub.selections.json
+test/generated
