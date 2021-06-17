@@ -24,7 +24,7 @@ class TestAllTypes
     @Proto(13) bool optionalBool = protoDefaultValue!bool;
     @Proto(14) string optionalString = protoDefaultValue!string;
     @Proto(15) bytes optionalBytes = protoDefaultValue!bytes;
-    @Proto(18) TestAllTypes.NestedMessage optionalNestedMessage = protoDefaultValue!(TestAllTypes.NestedMessage);
+    @Proto(18) NestedMessage optionalNestedMessage = protoDefaultValue!NestedMessage;
     @Proto(19) ForeignMessage optionalForeignMessage = protoDefaultValue!ForeignMessage;
     @Proto(21) NestedEnum optionalNestedEnum = protoDefaultValue!NestedEnum;
     @Proto(22) ForeignEnum optionalForeignEnum = protoDefaultValue!ForeignEnum;
@@ -44,7 +44,7 @@ class TestAllTypes
     @Proto(43, Wire.none, Yes.packed) bool[] repeatedBool = protoDefaultValue!(bool[]);
     @Proto(44) string[] repeatedString = protoDefaultValue!(string[]);
     @Proto(45) bytes[] repeatedBytes = protoDefaultValue!(bytes[]);
-    @Proto(48) TestAllTypes.NestedMessage[] repeatedNestedMessage = protoDefaultValue!(TestAllTypes.NestedMessage[]);
+    @Proto(48) NestedMessage[] repeatedNestedMessage = protoDefaultValue!(NestedMessage[]);
     @Proto(49) ForeignMessage[] repeatedForeignMessage = protoDefaultValue!(ForeignMessage[]);
     @Proto(51) NestedEnum[] repeatedNestedEnum = protoDefaultValue!(NestedEnum[]);
     @Proto(52) ForeignEnum[] repeatedForeignEnum = protoDefaultValue!(ForeignEnum[]);
@@ -63,7 +63,7 @@ class TestAllTypes
     @Proto(68) bool[bool] mapBoolBool = protoDefaultValue!(bool[bool]);
     @Proto(69) string[string] mapStringString = protoDefaultValue!(string[string]);
     @Proto(70) bytes[string] mapStringBytes = protoDefaultValue!(bytes[string]);
-    @Proto(71) TestAllTypes.NestedMessage[string] mapStringNestedMessage = protoDefaultValue!(TestAllTypes.NestedMessage[string]);
+    @Proto(71) NestedMessage[string] mapStringNestedMessage = protoDefaultValue!(NestedMessage[string]);
     @Proto(72) ForeignMessage[string] mapStringForeignMessage = protoDefaultValue!(ForeignMessage[string]);
     @Proto(73) NestedEnum[string] mapStringNestedEnum = protoDefaultValue!(NestedEnum[string]);
     @Proto(74) ForeignEnum[string] mapStringForeignEnum = protoDefaultValue!(ForeignEnum[string]);
@@ -86,7 +86,7 @@ class TestAllTypes
     @Oneof("_oneofFieldCase") union
     {
         @Proto(111) uint _oneofUint32 = protoDefaultValue!uint; mixin(oneofAccessors!_oneofUint32);
-        @Proto(112) TestAllTypes.NestedMessage _oneofNestedMessage; mixin(oneofAccessors!_oneofNestedMessage);
+        @Proto(112) NestedMessage _oneofNestedMessage; mixin(oneofAccessors!_oneofNestedMessage);
         @Proto(113) string _oneofString; mixin(oneofAccessors!_oneofString);
         @Proto(114) bytes _oneofBytes; mixin(oneofAccessors!_oneofBytes);
         @Proto(115) bool _oneofBool; mixin(oneofAccessors!_oneofBool);

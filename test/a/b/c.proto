@@ -10,5 +10,9 @@ message A {
 }
 
 message C {
-    A.B b = 1;
+  A.B b = 1;
+  oneof o {
+    A.B ob = 2;
+    int32 oi = 3;
+  }
 }

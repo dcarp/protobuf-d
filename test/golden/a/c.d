@@ -19,4 +19,18 @@ class A
 class C
 {
     @Proto(1) A.B b = protoDefaultValue!(A.B);
+    enum OCase
+    {
+        oNotSet = 0,
+        ob = 2,
+        oi = 3,
+    }
+    OCase _oCase = OCase.oNotSet;
+    @property OCase oCase() { return _oCase; }
+    void clearO() { _oCase = OCase.oNotSet; }
+    @Oneof("_oCase") union
+    {
+        @Proto(2) A.B _ob = protoDefaultValue!(A.B); mixin(oneofAccessors!_ob);
+        @Proto(3) int _oi; mixin(oneofAccessors!_oi);
+    }
 }
