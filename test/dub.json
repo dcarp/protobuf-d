@@ -1,0 +1,10 @@
+{
+    "name": "test",
+    "targetType": "library",
+    "targetName": "test",
+    "importPaths": ["golden"],
+    "sourcePaths": ["golden"],
+    "dependencies": {
+        "protobuf": { "path": ".." }
+    }
+}

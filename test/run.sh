@@ -9,6 +9,12 @@ cd -
 rm -rf generated
 mkdir generated
 
+dub test
+if [ $? -ne 0 ]; then
+    echo "ERROR: golden is invalid."
+    exit 1
+fi
+
 check() {
     protoc ${PROTO_PATH:-} --plugin=../build/protoc-gen-d "${1}" --d_out=generated
     # Ignore `enum protocVersion = ...;" line because it depends on the env.

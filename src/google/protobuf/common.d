@@ -130,13 +130,14 @@ enum string oneofAccessorName(alias field) = {
 
 enum string oneofAccessors(alias field) = {
     import std.string : format;
+    import std.traits : fullyQualifiedName;
 
     enum accessorName = oneofAccessorName!field;
 
     return "
         @property %1$s %2$s() { return %3$s == typeof(%3$s).%2$s ? _%2$s : protoDefaultValue!(%1$s); }
         @property void %2$s(%1$s _) { _%2$s = _; %3$s = typeof(%3$s).%2$s; }
-        ".format(typeof(field).stringof, accessorName, oneofCaseFieldName!field);
+        ".format(fullyQualifiedName!(typeof(field)), accessorName, oneofCaseFieldName!field);
 }();
 
 template Message(T)

@@ -202,7 +202,7 @@ class CodeGenerator
 
         auto type = typeName(field, parent);
         return "%*s@Proto(%s) %s %s%s;\n".format(indent, "", fieldProtoFields(field), type,
-            field.name.underscoresToCamelCase(false), fieldInitializer(field, type));
+            field.name.underscoresToCamelCase(false), fieldInitializer(type));
     }
 
     private string generateOneof(OneofDescriptorProto oneof, FieldDescriptorProto[] fields, size_t indent, DescriptorProto parent)
@@ -255,7 +255,7 @@ class CodeGenerator
         auto type = typeName(field, parent);
         return "%*s@Proto(%s) %s _%5$s%6$s; mixin(oneofAccessors!_%5$s);\n".format(indent, "", fieldProtoFields(field),
             type, field.name.underscoresToCamelCase(false),
-            printInitializer ? fieldInitializer(field, type) : "");
+            printInitializer ? fieldInitializer(type) : "");
     }
 
     private string generateEnum(EnumDescriptorProto enumType, size_t indent = 0)
@@ -417,7 +417,6 @@ class CodeGenerator
         return type;
     }
 
-
     private string fieldProtoFields(FieldDescriptorProto field)
     {
         import std.algorithm : stripRight;
@@ -441,7 +440,7 @@ class CodeGenerator
             .join(", ");
     }
 
-    private string fieldInitializer(FieldDescriptorProto field, string fieldTypeName)
+    private string fieldInitializer(string fieldTypeName)
     {
         import std.algorithm : canFind, endsWith;
         import std.format : format;
