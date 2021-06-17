@@ -9,26 +9,26 @@ enum protocVersion = 3005000;
 
 class TestAllTypes
 {
-    @Proto(1) int optionalInt32 = protoDefaultValue!(int);
-    @Proto(2) long optionalInt64 = protoDefaultValue!(long);
-    @Proto(3) uint optionalUint32 = protoDefaultValue!(uint);
-    @Proto(4) ulong optionalUint64 = protoDefaultValue!(ulong);
-    @Proto(5, Wire.zigzag) int optionalSint32 = protoDefaultValue!(int);
-    @Proto(6, Wire.zigzag) long optionalSint64 = protoDefaultValue!(long);
-    @Proto(7, Wire.fixed) uint optionalFixed32 = protoDefaultValue!(uint);
-    @Proto(8, Wire.fixed) ulong optionalFixed64 = protoDefaultValue!(ulong);
-    @Proto(9, Wire.fixed) int optionalSfixed32 = protoDefaultValue!(int);
-    @Proto(10, Wire.fixed) long optionalSfixed64 = protoDefaultValue!(long);
-    @Proto(11) float optionalFloat = protoDefaultValue!(float);
-    @Proto(12) double optionalDouble = protoDefaultValue!(double);
-    @Proto(13) bool optionalBool = protoDefaultValue!(bool);
-    @Proto(14) string optionalString = protoDefaultValue!(string);
-    @Proto(15) bytes optionalBytes = protoDefaultValue!(bytes);
+    @Proto(1) int optionalInt32 = protoDefaultValue!int;
+    @Proto(2) long optionalInt64 = protoDefaultValue!long;
+    @Proto(3) uint optionalUint32 = protoDefaultValue!uint;
+    @Proto(4) ulong optionalUint64 = protoDefaultValue!ulong;
+    @Proto(5, Wire.zigzag) int optionalSint32 = protoDefaultValue!int;
+    @Proto(6, Wire.zigzag) long optionalSint64 = protoDefaultValue!long;
+    @Proto(7, Wire.fixed) uint optionalFixed32 = protoDefaultValue!uint;
+    @Proto(8, Wire.fixed) ulong optionalFixed64 = protoDefaultValue!ulong;
+    @Proto(9, Wire.fixed) int optionalSfixed32 = protoDefaultValue!int;
+    @Proto(10, Wire.fixed) long optionalSfixed64 = protoDefaultValue!long;
+    @Proto(11) float optionalFloat = protoDefaultValue!float;
+    @Proto(12) double optionalDouble = protoDefaultValue!double;
+    @Proto(13) bool optionalBool = protoDefaultValue!bool;
+    @Proto(14) string optionalString = protoDefaultValue!string;
+    @Proto(15) bytes optionalBytes = protoDefaultValue!bytes;
     @Proto(18) TestAllTypes.NestedMessage optionalNestedMessage = protoDefaultValue!(TestAllTypes.NestedMessage);
-    @Proto(19) ForeignMessage optionalForeignMessage = protoDefaultValue!(ForeignMessage);
-    @Proto(21) NestedEnum optionalNestedEnum = protoDefaultValue!(NestedEnum);
-    @Proto(22) ForeignEnum optionalForeignEnum = protoDefaultValue!(ForeignEnum);
-    @Proto(27) TestAllTypes recursiveMessage = protoDefaultValue!(TestAllTypes);
+    @Proto(19) ForeignMessage optionalForeignMessage = protoDefaultValue!ForeignMessage;
+    @Proto(21) NestedEnum optionalNestedEnum = protoDefaultValue!NestedEnum;
+    @Proto(22) ForeignEnum optionalForeignEnum = protoDefaultValue!ForeignEnum;
+    @Proto(27) TestAllTypes recursiveMessage = protoDefaultValue!TestAllTypes;
     @Proto(31, Wire.none, Yes.packed) int[] repeatedInt32 = protoDefaultValue!(int[]);
     @Proto(32, Wire.none, Yes.packed) long[] repeatedInt64 = protoDefaultValue!(long[]);
     @Proto(33, Wire.none, Yes.packed) uint[] repeatedUint32 = protoDefaultValue!(uint[]);
@@ -85,7 +85,7 @@ class TestAllTypes
     void clearOneofField() { _oneofFieldCase = OneofFieldCase.oneofFieldNotSet; }
     @Oneof("_oneofFieldCase") union
     {
-        @Proto(111) uint _oneofUint32 = protoDefaultValue!(uint); mixin(oneofAccessors!_oneofUint32);
+        @Proto(111) uint _oneofUint32 = protoDefaultValue!uint; mixin(oneofAccessors!_oneofUint32);
         @Proto(112) TestAllTypes.NestedMessage _oneofNestedMessage; mixin(oneofAccessors!_oneofNestedMessage);
         @Proto(113) string _oneofString; mixin(oneofAccessors!_oneofString);
         @Proto(114) bytes _oneofBytes; mixin(oneofAccessors!_oneofBytes);
@@ -95,29 +95,29 @@ class TestAllTypes
         @Proto(118) double _oneofDouble; mixin(oneofAccessors!_oneofDouble);
         @Proto(119) NestedEnum _oneofEnum; mixin(oneofAccessors!_oneofEnum);
     }
-    @Proto(401) int fieldname1 = protoDefaultValue!(int);
-    @Proto(402) int fieldName2 = protoDefaultValue!(int);
-    @Proto(403) int FieldName3 = protoDefaultValue!(int);
-    @Proto(404) int fieldName4 = protoDefaultValue!(int);
-    @Proto(405) int field0name5 = protoDefaultValue!(int);
-    @Proto(406) int field0Name6 = protoDefaultValue!(int);
-    @Proto(407) int fieldName7 = protoDefaultValue!(int);
-    @Proto(408) int FieldName8 = protoDefaultValue!(int);
-    @Proto(409) int fieldName9 = protoDefaultValue!(int);
-    @Proto(410) int FieldName10 = protoDefaultValue!(int);
-    @Proto(411) int FIELDNAME11 = protoDefaultValue!(int);
-    @Proto(412) int FIELDName12 = protoDefaultValue!(int);
-    @Proto(413) int FieldName13 = protoDefaultValue!(int);
-    @Proto(414) int FieldName14 = protoDefaultValue!(int);
-    @Proto(415) int fieldName15 = protoDefaultValue!(int);
-    @Proto(416) int fieldName16 = protoDefaultValue!(int);
-    @Proto(417) int fieldName17 = protoDefaultValue!(int);
-    @Proto(418) int FieldName18 = protoDefaultValue!(int);
+    @Proto(401) int fieldname1 = protoDefaultValue!int;
+    @Proto(402) int fieldName2 = protoDefaultValue!int;
+    @Proto(403) int FieldName3 = protoDefaultValue!int;
+    @Proto(404) int fieldName4 = protoDefaultValue!int;
+    @Proto(405) int field0name5 = protoDefaultValue!int;
+    @Proto(406) int field0Name6 = protoDefaultValue!int;
+    @Proto(407) int fieldName7 = protoDefaultValue!int;
+    @Proto(408) int FieldName8 = protoDefaultValue!int;
+    @Proto(409) int fieldName9 = protoDefaultValue!int;
+    @Proto(410) int FieldName10 = protoDefaultValue!int;
+    @Proto(411) int FIELDNAME11 = protoDefaultValue!int;
+    @Proto(412) int FIELDName12 = protoDefaultValue!int;
+    @Proto(413) int FieldName13 = protoDefaultValue!int;
+    @Proto(414) int FieldName14 = protoDefaultValue!int;
+    @Proto(415) int fieldName15 = protoDefaultValue!int;
+    @Proto(416) int fieldName16 = protoDefaultValue!int;
+    @Proto(417) int fieldName17 = protoDefaultValue!int;
+    @Proto(418) int FieldName18 = protoDefaultValue!int;
 
     static class NestedMessage
     {
-        @Proto(1) int a = protoDefaultValue!(int);
-        @Proto(2) TestAllTypes corecursive = protoDefaultValue!(TestAllTypes);
+        @Proto(1) int a = protoDefaultValue!int;
+        @Proto(2) TestAllTypes corecursive = protoDefaultValue!TestAllTypes;
     }
 
     enum NestedEnum
@@ -131,7 +131,7 @@ class TestAllTypes
 
 class ForeignMessage
 {
-    @Proto(1) int c = protoDefaultValue!(int);
+    @Proto(1) int c = protoDefaultValue!int;
 }
 
 class PackedRepeated

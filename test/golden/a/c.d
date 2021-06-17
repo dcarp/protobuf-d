@@ -12,7 +12,7 @@ class A
 
     static class B
     {
-        @Proto(1) int i = protoDefaultValue!(int);
+        @Proto(1) int i = protoDefaultValue!int;
     }
 }
 

@@ -2,6 +2,10 @@
 # Test script for protoc-gen-d comparing generated/*.d with golden/*.d.
 set -u
 
+cd ..
+dub build :protoc-gen-d
+cd -
+
 rm -rf generated
 mkdir generated
 

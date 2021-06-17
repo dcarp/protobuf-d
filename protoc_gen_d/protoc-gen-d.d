@@ -425,11 +425,14 @@ class CodeGenerator
 
     private string fieldInitializer(FieldDescriptorProto field)
     {
-        import std.algorithm : endsWith;
+        import std.algorithm : canFind, endsWith;
         import std.format : format;
 
         auto fieldTypeName = typeName(field);
-        return " = protoDefaultValue!(%s)".format(fieldTypeName);
+        if (fieldTypeName.endsWith("]") || fieldTypeName.canFind('.'))
+            return " = protoDefaultValue!(%s)".format(fieldTypeName);
+        else
+            return " = protoDefaultValue!%s".format(fieldTypeName);
     }
 
     private string protocVersion;
