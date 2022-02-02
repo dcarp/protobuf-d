@@ -12,7 +12,7 @@ struct Varint
 
     this(long value)
     out { assert(_length > 0); }
-    body
+    do
     {
         size_t encodingLength(long value)
         {
@@ -45,7 +45,7 @@ struct Varint
 
     ubyte opIndex(size_t index) const
     in { assert(index < _length); }
-    body
+    do
     {
         auto result = value >>> (index * 7);
 
@@ -57,7 +57,7 @@ struct Varint
 
     @property size_t length() const
     in { assert(index <= _length); }
-    body
+    do
     {
         return _length - index;
     }
