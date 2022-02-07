@@ -6,8 +6,7 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: CMake Tests
+  build:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -33,13 +32,13 @@ jobs:
         run: |
           brew install automake
 
-      - name: Run conformance tests
+      - name: Run Conformance Tests
         run: |
           cd conformance && ./run-conformance-test.sh
           echo "$(pwd)/protobuf/src" >> $GITHUB_PATH
-          echo "PROTO_PATH=\"-I. -I$(pwd)/protobuf/src\"" >> $GITHUB_ENV
+          echo "PROTO_PATH=-I. -I$(pwd)/protobuf/src" >> $GITHUB_ENV
 
-      - name: Build protoc usage examples
+      - name: Run protoc-gen-d Examples
         run: |
           cd examples
           dub build :add_person --compiler=$DC
