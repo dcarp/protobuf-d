@@ -69,7 +69,7 @@ class CodeGenerator
 
     private void collectMessageAndEnumTypes(CodeGeneratorRequest request)
     {
-        void collect(DescriptorProto messageType, string prefix)
+        void collect(DescriptorProto messageType, string prefix, string typePrefix)
         {
             auto absoluteName = prefix ~ "." ~ messageType.name;
 
@@ -77,9 +77,11 @@ class CodeGenerator
                 return;
 
             collectedMessageTypes[absoluteName] = messageType;
+            auto type = typePrefix == "" ? messageType.name : typePrefix ~ "." ~ messageType.name;
+            typeFromDescriptor[messageType] = type;
 
             foreach (nestedType; messageType.nestedTypes)
-                collect(nestedType, absoluteName);
+                collect(nestedType, absoluteName, type);
 
             foreach (enumType; messageType.enumTypes)
                 collectedEnumTypes[absoluteName ~ "." ~ enumType.name] = enumType;
@@ -88,9 +90,10 @@ class CodeGenerator
         foreach (file; request.protoFiles)
         {
             auto packagePrefix = file.package_ ? "." ~ file.package_ : "";
+            moduleFromFile[file.name] = moduleName(file);
 
             foreach (messageType; file.messageTypes)
-                collect(messageType, packagePrefix);
+                collect(messageType, packagePrefix, "");
 
             foreach (enumType; file.enumTypes)
                 collectedEnumTypes[packagePrefix ~ "." ~ enumType.name] = enumType;
@@ -126,7 +129,7 @@ class CodeGenerator
         result ~= "import google.protobuf;\n";
 
         foreach (dependency; fileDescriptor.dependencies)
-            result ~= "import %s;\n".format(dependency.moduleName);
+            result ~= "import %s;\n".format(moduleFromFile[dependency]);
 
         if (!protocVersion.empty)
             result ~= "\nenum protocVersion = %s;\n".format(protocVersion);
@@ -168,7 +171,7 @@ class CodeGenerator
         {
             if (field.oneofIndex < 0)
             {
-                result ~= generateField(field, indent + indentSize);
+                result ~= generateField(field, indent + indentSize, messageType);
                 continue;
             }
 
@@ -176,7 +179,8 @@ class CodeGenerator
                 continue;
 
             result ~= generateOneof(messageType.oneofDecls[field.oneofIndex],
-                messageType.fields.filter!(a => a.oneofIndex == field.oneofIndex).array, indent + indentSize);
+                messageType.fields.filter!(a => a.oneofIndex == field.oneofIndex).array, indent + indentSize,
+                messageType);
             generatedOneofs ~= field.oneofIndex;
         }
 
@@ -192,17 +196,18 @@ class CodeGenerator
         return result.data;
     }
 
-    private string generateField(FieldDescriptorProto field, size_t indent, bool printInitializer = true)
+    private string generateField(FieldDescriptorProto field, size_t indent, DescriptorProto parent)
     {
         import std.format : format;
 
-        return "%*s@Proto(%s) %s %s%s;\n".format(indent, "", fieldProtoFields(field), typeName(field),
-            field.name.underscoresToCamelCase(false), printInitializer ? fieldInitializer(field) : "");
+        auto type = typeName(field, parent);
+        return "%*s@Proto(%s) %s %s%s;\n".format(indent, "", fieldProtoFields(field), type,
+            field.name.underscoresToCamelCase(false), fieldInitializer(type));
     }
 
-    private string generateOneof(OneofDescriptorProto oneof, FieldDescriptorProto[] fields, size_t indent)
+    private string generateOneof(OneofDescriptorProto oneof, FieldDescriptorProto[] fields, size_t indent, DescriptorProto parent)
     {
-        return generateOneofCaseEnum(oneof, fields, indent) ~ generateOneofUnion(oneof, fields, indent);
+        return generateOneofCaseEnum(oneof, fields, indent) ~ generateOneofUnion(oneof, fields, indent, parent);
     }
 
     private string generateOneofCaseEnum(OneofDescriptorProto oneof, FieldDescriptorProto[] fields, size_t indent)
@@ -228,7 +233,7 @@ class CodeGenerator
         return result.data;
     }
 
-    private string generateOneofUnion(OneofDescriptorProto oneof, FieldDescriptorProto[] fields, size_t indent)
+    private string generateOneofUnion(OneofDescriptorProto oneof, FieldDescriptorProto[] fields, size_t indent, DescriptorProto parent)
     {
         import std.format : format;
         import std.array : appender;
@@ -237,19 +242,20 @@ class CodeGenerator
         result ~= "%*s@Oneof(\"_%sCase\") union\n".format(indent, "", oneof.name.underscoresToCamelCase(false));
         result ~= "%*s{\n".format(indent, "");
         foreach (field; fields)
-            result ~= generateOneofField(field, indent + indentSize, field == fields[0]);
+            result ~= generateOneofField(field, indent + indentSize, field == fields[0], parent);
         result ~= "%*s}\n".format(indent, "");
 
         return result.data;
     }
 
-    private string generateOneofField(FieldDescriptorProto field, size_t indent, bool printInitializer)
+    private string generateOneofField(FieldDescriptorProto field, size_t indent, bool printInitializer, DescriptorProto parent)
     {
         import std.format : format;
 
+        auto type = typeName(field, parent);
         return "%*s@Proto(%s) %s _%5$s%6$s; mixin(oneofAccessors!_%5$s);\n".format(indent, "", fieldProtoFields(field),
-            typeName(field), field.name.underscoresToCamelCase(false),
-            printInitializer ? fieldInitializer(field) : "");
+            type, field.name.underscoresToCamelCase(false),
+            printInitializer ? fieldInitializer(type) : "");
     }
 
     private string generateEnum(EnumDescriptorProto enumType, size_t indent = 0)
@@ -337,7 +343,7 @@ class CodeGenerator
             auto fieldMessageType = messageType(field);
             enforce!CodeGeneratorException(fieldMessageType !is null, "Field '" ~ field.name ~
                 "' has unknown message type " ~ field.typeName ~ "`");
-            return fieldMessageType.name;
+            return typeFromDescriptor[fieldMessageType];
         }
         case TYPE_ENUM:
         {
@@ -397,6 +403,20 @@ class CodeGenerator
             return fieldBaseTypeName;
     }
 
+    string typeName(FieldDescriptorProto field, DescriptorProto parent)
+    {
+        import std.algorithm : startsWith;
+
+        auto type = typeName(field);
+
+        // Remove parent type prefix.
+        auto parentType = typeFromDescriptor[parent];
+        if (type.startsWith(parentType ~ ".")) {
+            return type[parentType.length + 1 .. $];
+        }
+        return type;
+    }
+
     private string fieldProtoFields(FieldDescriptorProto field)
     {
         import std.algorithm : stripRight;
@@ -420,13 +440,12 @@ class CodeGenerator
             .join(", ");
     }
 
-    private string fieldInitializer(FieldDescriptorProto field)
+    private string fieldInitializer(string fieldTypeName)
     {
-        import std.algorithm : endsWith;
+        import std.algorithm : canFind, endsWith;
         import std.format : format;
 
-        auto fieldTypeName = typeName(field);
-        if (fieldTypeName.endsWith("]"))
+        if (fieldTypeName.endsWith("]") || fieldTypeName.canFind('.'))
             return " = protoDefaultValue!(%s)".format(fieldTypeName);
         else
             return " = protoDefaultValue!%s".format(fieldTypeName);
@@ -435,6 +454,8 @@ class CodeGenerator
     private string protocVersion;
     private DescriptorProto[string] collectedMessageTypes;
     private EnumDescriptorProto[string] collectedEnumTypes;
+    private string[string] moduleFromFile;
+    private string[DescriptorProto] typeFromDescriptor;
 }
 
 private FieldDescriptorProto fieldByNumber(DescriptorProto messageType, int fieldNumber)
@@ -518,14 +539,6 @@ private string moduleName(FileDescriptorProto fileDescriptor)
         moduleName = fileDescriptor.package_ ~ "." ~ moduleName;
 
     return moduleName.escapeKeywords;
-}
-
-private string moduleName(string fileName)
-{
-    import std.array : replace;
-    import std.string : chomp;
-
-    return fileName.chomp(".proto").replace("/", ".").escapeKeywords;
 }
 
 private string underscoresToCamelCase(string input, bool capitalizeNextLetter)

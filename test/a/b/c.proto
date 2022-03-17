@@ -1,0 +1,18 @@
+// Test case for nested module and type (#33).
+syntax = "proto3";
+
+package a;
+
+message A {
+  message B {
+    int32 i = 1;
+  }
+}
+
+message C {
+  A.B b = 1;
+  oneof o {
+    A.B ob = 2;
+    int32 oi = 3;
+  }
+}

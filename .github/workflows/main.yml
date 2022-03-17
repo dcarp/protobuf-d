@@ -27,6 +27,11 @@ jobs:
           dub test --compiler=$DC
           dub build :protoc-gen-d --compiler=$DC
 
+      - name: Run Golden Tests
+        run: |
+          cd test
+          ./run.sh
+
       - name: Install automake
         if: runner.os == 'macOS'
         run: |
