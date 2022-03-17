@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dcarp/protobuf-d.svg?branch=master)](https://travis-ci.org/dcarp/protobuf-d)
+![Build Status](https://github.com/dcarp/protobuf-d/workflows/CI/badge.svg)
 
 D Support for Protocol Buffers
 ==============================
