@@ -41,7 +41,7 @@ if (isIntegral!T)
     }
 }
 
-unittest
+nothrow unittest
 {
     import std.array : array;
 
