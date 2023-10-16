@@ -1,23 +1,27 @@
 name: CI
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
+    branches: [master]
 
 jobs:
   build:
+    name: Conformace Tests
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
         dc: [dmd-latest, ldc-latest]
+        exclude:
+          - os: macos-latest
+            dc: dmd-latest
 
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
 
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2.0.0
         with:
           compiler: ${{ matrix.dc }}
 
