@@ -1,12 +1,9 @@
 name: CI
-on:
-  push:
-    branches:
-      - master
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   build:
+    name: Conformace Tests
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
