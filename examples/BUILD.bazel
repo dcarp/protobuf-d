@@ -1,0 +1,38 @@
+load("@rules_d//d:defs.bzl", "d_binary")
+
+genrule(
+    name = "addressbook_d_proto",
+    srcs = ["addressbook.proto"],
+    outs = ["tutorial/addressbook.d"],
+    cmd = "set -- $(locations @protobuf//:well_known_type_protos); " +
+          "WKT_ROOT=$${1%/google/protobuf/*}; " +
+          "$(location @protobuf//:protoc) " +
+          "--proto_path=examples " +
+          "--proto_path=$$WKT_ROOT " +
+          "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+          "--d_out=$(RULEDIR) " +
+          "$(location addressbook.proto)",
+    tools = [
+        "//protoc_gen_d:protoc-gen-d",
+        "@protobuf//:protoc",
+        "@protobuf//:well_known_type_protos",
+    ],
+)
+
+d_binary(
+    name = "add_person",
+    srcs = [
+        "add_person.d",
+        ":addressbook_d_proto",
+    ],
+    deps = ["//:protobuf"],
+)
+
+d_binary(
+    name = "list_people",
+    srcs = [
+        "list_people.d",
+        ":addressbook_d_proto",
+    ],
+    deps = ["//:protobuf"],
+)

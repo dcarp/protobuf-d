@@ -39,3 +39,16 @@ dub build :list_people
 Prerequisites:
  - `protoc` version 3.0 or newer
  - Protobuf well known types `.proto` files installed or accessible for `protoc`
+
+Bazel
+-----
+
+This repository also includes Bazel targets for the runtime library, unit
+tests, checked-in `.proto` files, and the `protoc-gen-d` plugin.
+
+Run following commands:
+```shell
+bazel build //:protobuf
+bazel test //:unittest
+bazel build //protoc_gen_d:protoc-gen-d
+```

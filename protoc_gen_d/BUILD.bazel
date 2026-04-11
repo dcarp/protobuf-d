@@ -1,0 +1,28 @@
+load("@rules_d//d:defs.bzl", "d_binary", "d_library")
+
+package(default_visibility = ["//visibility:public"])
+
+d_library(
+    name = "descriptor_support",
+    srcs = [
+        "google/protobuf/compiler/plugin.d",
+        "google/protobuf/descriptor.d",
+    ],
+    deps = ["//:protobuf"],
+    imports = ["."],
+)
+
+d_binary(
+    name = "protoc-gen-d",
+    srcs = ["protoc-gen-d.d"],
+    deps = [
+        ":descriptor_support",
+        "//:protobuf",
+    ],
+    imports = ["."],
+)
+
+filegroup(
+    name = "plugin_proto_sources",
+    srcs = glob(["proto/**/*.proto"]),
+)

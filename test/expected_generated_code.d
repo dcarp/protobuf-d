@@ -5,7 +5,7 @@ module generated_code;
 
 import google.protobuf;
 
-enum protocVersion = 3005000;
+enum protocVersion = 6030002;
 
 class TestAllTypes
 {
