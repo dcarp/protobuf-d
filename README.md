@@ -1,7 +1,6 @@
 ![Build Status](https://github.com/dcarp/protobuf-d/workflows/CI/badge.svg)
 
-D Support for Protocol Buffers
-==============================
+# D Support for Protocol Buffers
 
 This D package implements the Protocol Buffers encoding and decoding
 operations for both binary and JSON formats. The support library uses the
@@ -13,8 +12,7 @@ generated code is very simple and easy to read.
 :warning: `protoc-gen-d` plugin generates D code for **proto3** `.proto`
 files only.
 
-Installation
-------------
+## Installation
 
 The Protocol Buffers D support library is distributed as
 [DUB package](https://code.dlang.org/packages/protobuf). Use the instructions
@@ -26,27 +24,29 @@ plugin. In order to have the D code generation available (`--d_out` option)
 option. Please see the Protocol Buffers README about installing `protoc` on
 your system.
 
-Examples
---------
+## Examples
 
 Run following commands:
+
 ```shell
 dub build :protoc-gen-d
 cd examples
 dub build :add_person
 dub build :list_people
 ```
-Prerequisites:
- - `protoc` version 3.0 or newer
- - Protobuf well known types `.proto` files installed or accessible for `protoc`
 
-Bazel
------
+Prerequisites:
+
+- `protoc` version 3.0 or newer
+- Protobuf well known types `.proto` files installed or accessible for `protoc`
+
+## Bazel
 
 This repository also includes Bazel targets for the runtime library, unit
 tests, checked-in `.proto` files, and the `protoc-gen-d` plugin.
 
 Run following commands:
+
 ```shell
 bazel build //:protobuf
 bazel test //:unittest

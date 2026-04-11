@@ -1,24 +1,28 @@
 {
-    "name": "examples",
-    "targetType": "none",
-    "subPackages": [
-        {
-            "name": "add_person",
-            "targetType": "executable",
-            "targetName": "add_person",
-            "sourceFiles": ["tutorial/addressbook.d"],
-            "sourcePaths": ["../src"],
-            "mainSourceFile": "add_person.d",
-            "preBuildCommands": ["protoc $$PROTO_PATH --plugin=../build/protoc-gen-d --d_opt=message-as-struct --d_out=. addressbook.proto"]
-        },
-        {
-            "name": "list_people",
-            "targetType": "executable",
-            "targetName": "list_people",
-            "sourceFiles": ["tutorial/addressbook.d"],
-            "sourcePaths": ["../src"],
-            "mainSourceFile": "list_people.d",
-            "preBuildCommands": ["protoc $$PROTO_PATH --plugin=../build/protoc-gen-d --d_opt=message-as-struct --d_out=. addressbook.proto"]
-        },
-    ]
+  "name": "examples",
+  "targetType": "none",
+  "subPackages": [
+    {
+      "name": "add_person",
+      "targetType": "executable",
+      "targetName": "add_person",
+      "sourceFiles": ["tutorial/addressbook.d"],
+      "sourcePaths": ["../src"],
+      "mainSourceFile": "add_person.d",
+      "preBuildCommands": [
+        "protoc $$PROTO_PATH --plugin=../build/protoc-gen-d --d_opt=message-as-struct --d_out=. addressbook.proto"
+      ]
+    },
+    {
+      "name": "list_people",
+      "targetType": "executable",
+      "targetName": "list_people",
+      "sourceFiles": ["tutorial/addressbook.d"],
+      "sourcePaths": ["../src"],
+      "mainSourceFile": "list_people.d",
+      "preBuildCommands": [
+        "protoc $$PROTO_PATH --plugin=../build/protoc-gen-d --d_opt=message-as-struct --d_out=. addressbook.proto"
+      ]
+    }
+  ]
 }

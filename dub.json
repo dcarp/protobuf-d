@@ -1,25 +1,23 @@
 {
-    "name": "protobuf",
-    "description": "D runtime library for Google Protocol Buffers",
-    "authors": ["Dragoş Carp"],
-    "license": "https://github.com/dcarp/protobuf-d/blob/master/LICENSE.md",
-    "targetType": "library",
-    "targetPath": "build",
-    "workingDirectory": "build",
-    "configurations": [
-        {
-            "name": "protobuf",
-            "targetType": "library"
-        },
-        {
-            "name": "unittest",
-            "targetType": "executable",
-            "dflags": ["-main"],
-            "sourcePaths": ["test"],
-            "mainSourceFile": "test/basic.d"
-        }
-    ],
-    "subPackages": [
-        "./protoc_gen_d/"
-    ]
+  "name": "protobuf",
+  "description": "D runtime library for Google Protocol Buffers",
+  "authors": ["Dragoş Carp"],
+  "license": "https://github.com/dcarp/protobuf-d/blob/master/LICENSE.md",
+  "targetType": "library",
+  "targetPath": "build",
+  "workingDirectory": "build",
+  "configurations": [
+    {
+      "name": "protobuf",
+      "targetType": "library"
+    },
+    {
+      "name": "unittest",
+      "targetType": "executable",
+      "dflags": ["-main"],
+      "sourcePaths": ["test"],
+      "mainSourceFile": "test/basic.d"
+    }
+  ],
+  "subPackages": ["./protoc_gen_d/"]
 }
