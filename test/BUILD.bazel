@@ -1,0 +1,29 @@
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
+load("@rules_d//d:defs.bzl", "d_test")
+
+d_test(
+    name = "basic_test",
+    srcs = ["basic.d"],
+    deps = ["//:protobuf"],
+)
+
+genrule(
+    name = "generate_code",
+    srcs = ["generated_code.proto"],
+    outs = ["generated_code.d"],
+    cmd = "$(location @protobuf//:protoc) " +
+          "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+          "--proto_path=test " +
+          "--d_out=$(RULEDIR) " +
+          "$(location generated_code.proto)",
+    tools = [
+        "//protoc_gen_d:protoc-gen-d",
+        "@protobuf//:protoc",
+    ],
+)
+
+diff_test(
+    name = "generator_test",
+    file1 = ":generate_code",
+    file2 = "expected_generated_code.d",
+)

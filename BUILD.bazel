@@ -1,0 +1,14 @@
+load("@rules_d//d:defs.bzl", "d_library", "d_test")
+
+package(default_visibility = ["//visibility:public"])
+
+d_library(
+    name = "protobuf",
+    srcs = glob(["src/**/*.d"]),
+    imports = ["src"],
+)
+
+d_test(
+    name = "protobuf_test",
+    srcs = glob(["src/**/*.d"]),
+)
