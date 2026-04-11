@@ -103,7 +103,7 @@ unittest
     assertThrown!ProtobufException("foo_1".toCamelCase);
     assertThrown!ProtobufException("1_foo".toCamelCase);
     assertThrown!ProtobufException("_1_foo".toCamelCase);
-    
+
     assert("foo.bar".toCamelCase == "foo.bar");
     assert(".foo..bar.".toCamelCase == ".foo..bar.");
     assert("foo_bar.baz_qux".toCamelCase == "fooBar.bazQux");
@@ -145,7 +145,7 @@ unittest
     assert("fooBarBazQux".toSnakeCase == "foo_bar_baz_qux");
     assertThrown!ProtobufException("foo_Bar".toSnakeCase);
     assertThrown!ProtobufException("foo_Bar".toSnakeCase);
-    
+
     assert("foo.bar".toSnakeCase == "foo.bar");
     assert(".foo..bar.".toSnakeCase == ".foo..bar.");
     assert("fooBar.bazQux".toSnakeCase == "foo_bar.baz_qux");

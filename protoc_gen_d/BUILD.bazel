@@ -8,18 +8,18 @@ d_library(
         "google/protobuf/compiler/plugin.d",
         "google/protobuf/descriptor.d",
     ],
-    deps = ["//:protobuf"],
     imports = ["."],
+    deps = ["//:protobuf"],
 )
 
 d_binary(
     name = "protoc-gen-d",
     srcs = ["protoc-gen-d.d"],
+    imports = ["."],
     deps = [
         ":descriptor_support",
         "//:protobuf",
     ],
-    imports = ["."],
 )
 
 filegroup(
