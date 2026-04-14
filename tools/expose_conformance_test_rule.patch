@@ -1,0 +1,59 @@
+diff --git a/conformance/BUILD.bazel b/conformance/BUILD.bazel
+--- a/conformance/BUILD.bazel
++++ b/conformance/BUILD.bazel
+@@ -47,7 +47,9 @@ exports_files([
+     "text_format_failure_list_python.txt",
+     "text_format_failure_list_python_cpp.txt",
+     "text_format_failure_list_python_upb.txt",
+-])
++],
++    visibility = ["//visibility:public"],
++)
+ 
+ cc_proto_library(
+     name = "test_messages_proto2_proto_cc",
+diff --git a/conformance/defs.bzl b/conformance/defs.bzl
+--- a/conformance/defs.bzl
++++ b/conformance/defs.bzl
+@@ -4,6 +4,8 @@
+ """
+ 
+ load("@rules_shell//shell:sh_test.bzl", "sh_test")
++
++visibility("public")
+ 
+ def conformance_test(
+         name,
+@@ -35,9 +37,9 @@ def conformance_test(
+ 
+     sh_test(
+         name = name,
+-        srcs = ["//conformance:bazel_conformance_test_runner.sh"],
++        srcs = ["@protobuf//conformance:bazel_conformance_test_runner.sh"],
+         data = [testee] + failure_lists + [
+-            "//conformance:conformance_test_runner",
++            "@protobuf//conformance:conformance_test_runner",
+         ],
+         args = args,
+         deps = [
+@@ -49,5 +51,7 @@ def conformance_test(
+ 
+ def _strip_bazel(testee):
+     if testee.startswith("//"):
+-        testee = testee.replace("//", "com_google_protobuf/")
++        testee = testee.replace("//", "protobuf/")
++    elif testee.startswith("@"):
++        testee = testee[1:].replace("//", "/")
+     return testee.replace(":", "/")
+diff --git a/conformance/bazel_conformance_test_runner.sh b/conformance/bazel_conformance_test_runner.sh
+--- a/conformance/bazel_conformance_test_runner.sh
++++ b/conformance/bazel_conformance_test_runner.sh
+@@ -45,7 +45,7 @@ while [[ -n "$@" ]]; do
+   esac
+ done
+ 
+-conformance_test_runner=$(rlocation com_google_protobuf/conformance/conformance_test_runner)
++conformance_test_runner=$(rlocation protobuf/conformance/conformance_test_runner)
+ conformance_testee=$(rlocation $TESTEE)
+ args=(--enforce_recommended)
+ 

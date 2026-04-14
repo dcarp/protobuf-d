@@ -1,0 +1,28 @@
+diff --git a/conformance/BUILD.bazel b/conformance/BUILD.bazel
+--- a/conformance/BUILD.bazel
++++ b/conformance/BUILD.bazel
+@@ -22,6 +22,7 @@ load("//bazel:java_lite_proto_library.bzl", "java_lite_proto_library")
+ 
+ exports_files([
+     "bazel_conformance_test_runner.sh",
++    "conformance.proto",
+     "failure_list_cpp.txt",
+     "failure_list_csharp.txt",
+     "failure_list_java.txt",
+
+diff --git a/src/google/protobuf/BUILD.bazel b/src/google/protobuf/BUILD.bazel
+--- a/src/google/protobuf/BUILD.bazel
++++ b/src/google/protobuf/BUILD.bazel
+@@ -1117,6 +1117,12 @@
+     ],
+ )
+ 
++filegroup(
++    name = "test_messages_proto3_proto_src",
++    srcs = ["test_messages_proto3.proto"],
++    visibility = ["//visibility:public"],
++)
++
+ proto_library(
+     name = "test_messages_proto2_proto",
+     srcs = ["test_messages_proto2.proto"],

@@ -53,3 +53,239 @@ Required.Proto2.ProtobufInput.ValidDataScalar.STRING[0].ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[0].ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[5].ProtobufOutput
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT64[0].ProtobufOutput
+
+Recommended.Proto2.JsonInput.BoolFieldAllCapitalFalse # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.BoolFieldAllCapitalTrue # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.BoolFieldCamelCaseFalse # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.BoolFieldCamelCaseTrue # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.BytesFieldBase64Url.JsonOutput # Failed to parse input or produce output.
+Recommended.Proto2.JsonInput.BytesFieldBase64Url.ProtobufOutput # Failed to parse input or produce output.
+Recommended.Proto2.JsonInput.FieldNameExtension.Validator # JSON payload validation failed.
+Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Output was not equivalent to reference message: deleted: map_string_nested_enum[key1]: FOO
+Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInRepeatedPart.ProtobufOutput # Output was not equivalent to reference message: deleted: repeated_nested_enum[0]: FOOdeleted: repeated_nested_enum[1]: FOO
+Recommended.Proto2.JsonInput.Int64FieldBeString.Validator # JSON payload validation failed.
+Recommended.Proto2.JsonInput.MapFieldValueIsNull # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.OneofZeroBool.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bool: false
+Recommended.Proto2.JsonInput.OneofZeroBool.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_bool: false
+Recommended.Proto2.JsonInput.OneofZeroBytes.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
+Recommended.Proto2.JsonInput.OneofZeroBytes.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
+Recommended.Proto2.JsonInput.OneofZeroDouble.JsonOutput # Output was not equivalent to reference message: deleted: oneof_double: 0
+Recommended.Proto2.JsonInput.OneofZeroDouble.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_double: 0
+Recommended.Proto2.JsonInput.OneofZeroEnum.JsonOutput # Output was not equivalent to reference message: deleted: oneof_enum: FOO
+Recommended.Proto2.JsonInput.OneofZeroEnum.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_enum: FOO
+Recommended.Proto2.JsonInput.OneofZeroFloat.JsonOutput # Output was not equivalent to reference message: deleted: oneof_float: 0
+Recommended.Proto2.JsonInput.OneofZeroFloat.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_float: 0
+Recommended.Proto2.JsonInput.OneofZeroMessage.JsonOutput # Output was not equivalent to reference message: deleted: oneof_nested_message: { }
+Recommended.Proto2.JsonInput.OneofZeroMessage.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_nested_message: { }
+Recommended.Proto2.JsonInput.OneofZeroString.JsonOutput # Output was not equivalent to reference message: deleted: oneof_string: ""
+Recommended.Proto2.JsonInput.OneofZeroString.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_string: ""
+Recommended.Proto2.JsonInput.OneofZeroUint32.JsonOutput # Output was not equivalent to reference message: deleted: oneof_uint32: 0
+Recommended.Proto2.JsonInput.OneofZeroUint32.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_uint32: 0
+Recommended.Proto2.JsonInput.OneofZeroUint64.JsonOutput # Output was not equivalent to reference message: deleted: oneof_uint64: 0
+Recommended.Proto2.JsonInput.OneofZeroUint64.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_uint64: 0
+Recommended.Proto2.JsonInput.RejectUnknownEnumStringValueInMapValue # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.RejectUnknownEnumStringValueInOptionalField # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.RejectUnknownEnumStringValueInRepeatedField # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.RepeatedFieldMessageElementIsNull # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.RepeatedFieldPrimitiveElementIsNull # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.RepeatedFieldTrailingComma # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.RepeatedFieldTrailingCommaWithNewlines # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.RepeatedFieldTrailingCommaWithSpace # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.RepeatedFieldTrailingCommaWithSpaceCommaSpace # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.TrailingCommaInAnObject # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.TrailingCommaInAnObjectWithNewlines # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.TrailingCommaInAnObjectWithSpace # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.TrailingCommaInAnObjectWithSpaceCommaSpace # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.Uint64FieldBeString.Validator # JSON payload validation failed.
+Recommended.Proto2.ProtobufInput.OneofZeroMessage.JsonOutput # Output was not equivalent to reference message: deleted: oneof_nested_message.a: 0
+Recommended.Proto2.ProtobufInput.OneofZeroMessage.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_nested_message.a: 0
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.BOOL.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \330\002\000\330\002\001\330\002\001\330\002\001\330\002\001\330\002\001
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.BOOL.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \330\002\000\330\002\001\330\002\001\330\002\001\330\002\001\330\002\001
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.BOOL.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \330\002\000\330\002\001\330\002\001\330\002\001\330\002\001\330\002\001
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.BOOL.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \330\002\000\330\002\001\330\002\001\330\002\001\330\002\001\330\002\001
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.DOUBLE.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \321\002\000\000\000\000\000\000\000\000\321\002\232\231\231\231\231\231
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.DOUBLE.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \321\002\000\000\000\000\000\000\000\000\321\002\232\231\231\231\231\231
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.DOUBLE.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \321\002\000\000\000\000\000\000\000\000\321\002\232\231\231\231\231\231
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.DOUBLE.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \321\002\000\000\000\000\000\000\000\000\321\002\232\231\231\231\231\231
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \302\005\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \302\005\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FIXED32.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \255\002\000\000\000\000\255\002\071\060\000\000\255\002\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FIXED32.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \255\002\000\000\000\000\255\002\071\060\000\000\255\002\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FIXED32.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \255\002\000\000\000\000\255\002\071\060\000\000\255\002\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FIXED32.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \255\002\000\000\000\000\255\002\071\060\000\000\255\002\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \261\002\000\000\000\000\000\000\000\000\261\002\071\060\000\000\000\000
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \261\002\000\000\000\000\000\000\000\000\261\002\071\060\000\000\000\000
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \261\002\000\000\000\000\000\000\000\000\261\002\071\060\000\000\000\000
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FIXED64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \261\002\000\000\000\000\000\000\000\000\261\002\071\060\000\000\000\000
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FLOAT.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \315\002\000\000\000\000\315\002\315\314\314\075\315\002\055\044\252\003
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FLOAT.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \315\002\000\000\000\000\315\002\315\314\314\075\315\002\055\044\252\003
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FLOAT.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \315\002\000\000\000\000\315\002\315\314\314\075\315\002\055\044\252\003
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.FLOAT.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \315\002\000\000\000\000\315\002\315\314\314\075\315\002\055\044\252\003
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.INT32.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \370\001\000\370\001\271\140\370\001\271\140\370\001\271\140\370\001\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.INT32.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \370\001\000\370\001\271\140\370\001\271\140\370\001\271\140\370\001\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.INT32.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \370\001\000\370\001\271\140\370\001\271\140\370\001\271\140\370\001\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.INT32.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \370\001\000\370\001\271\140\370\001\271\140\370\001\271\140\370\001\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.INT64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \200\002\000\200\002\271\140\200\002\377\377\377\377\377\377\377\377\177
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.INT64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \200\002\000\200\002\271\140\200\002\377\377\377\377\377\377\377\377\177
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.INT64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \200\002\000\200\002\271\140\200\002\377\377\377\377\377\377\377\377\177
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.INT64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \200\002\000\200\002\271\140\200\002\377\377\377\377\377\377\377\377\177
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SFIXED32.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \275\002\000\000\000\000\275\002\071\060\000\000\275\002\377\377\377\177
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SFIXED32.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \275\002\000\000\000\000\275\002\071\060\000\000\275\002\377\377\377\177
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SFIXED32.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \275\002\000\000\000\000\275\002\071\060\000\000\275\002\377\377\377\177
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SFIXED32.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \275\002\000\000\000\000\275\002\071\060\000\000\275\002\377\377\377\177
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SFIXED64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \301\002\000\000\000\000\000\000\000\000\301\002\071\060\000\000\000\000
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SFIXED64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \301\002\000\000\000\000\000\000\000\000\301\002\071\060\000\000\000\000
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SFIXED64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \301\002\000\000\000\000\000\000\000\000\301\002\071\060\000\000\000\000
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SFIXED64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \301\002\000\000\000\000\000\000\000\000\301\002\071\060\000\000\000\000
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT32.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \230\002\000\230\002\362\300\001\230\002\376\377\377\377\017\230\002\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT32.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \230\002\000\230\002\362\300\001\230\002\376\377\377\377\017\230\002\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT32.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \230\002\000\230\002\362\300\001\230\002\376\377\377\377\017\230\002\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT32.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \230\002\000\230\002\362\300\001\230\002\376\377\377\377\017\230\002\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.SINT64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \240\002\000\240\002\362\300\001\240\002\376\377\377\377\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.UINT32.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \210\002\000\210\002\271\140\210\002\271\140\210\002\271\140\210\002\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.UINT32.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \210\002\000\210\002\271\140\210\002\271\140\210\002\271\140\210\002\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.UINT32.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \210\002\000\210\002\271\140\210\002\271\140\210\002\271\140\210\002\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.UINT32.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \210\002\000\210\002\271\140\210\002\271\140\210\002\271\140\210\002\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.UINT64.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \220\002\000\220\002\271\140\220\002\377\377\377\377\377\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.UINT64.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \220\002\000\220\002\271\140\220\002\377\377\377\377\377\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.UINT64.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \220\002\000\220\002\271\140\220\002\377\377\377\377\377\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataRepeated.UINT64.UnpackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \220\002\000\220\002\271\140\220\002\377\377\377\377\377\377\377\377\377
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.BOOL[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \150\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.BYTES[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \172\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.DOUBLE[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \141\000\000\000\000\000\000\000\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.ENUM[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \250\001\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.FIXED32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \075\000\000\000\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.FIXED64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \101\000\000\000\000\000\000\000\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.FLOAT[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \135\000\000\000\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.INT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \010\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.INT32[6].ProtobufOutput # Output was not equivalent to reference message: Expect: \010\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.INT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \020\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.SFIXED32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \115\000\000\000\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.SFIXED64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \121\000\000\000\000\000\000\000\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.SINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \050\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.SINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \060\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.STRING[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \162\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.UINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \030\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.UINT32[5].ProtobufOutput # Output was not equivalent to reference message: Expect: \030\000, but got: 
+Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.UINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \040\000, but got: 
+Recommended.Proto3.JsonInput.BoolFieldAllCapitalFalse # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.BoolFieldAllCapitalTrue # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.BoolFieldCamelCaseFalse # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.BoolFieldCamelCaseTrue # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.BytesFieldBase64Url.JsonOutput # Failed to parse input or produce output.
+Recommended.Proto3.JsonInput.BytesFieldBase64Url.ProtobufOutput # Failed to parse input or produce output.
+Recommended.Proto3.JsonInput.DurationHas9FractionalDigits.Validator # JSON payload validation failed.
+Recommended.Proto3.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Output was not equivalent to reference message: deleted: map_string_nested_enum[key1]: FOO
+Recommended.Proto3.JsonInput.IgnoreUnknownEnumStringValueInRepeatedPart.ProtobufOutput # Output was not equivalent to reference message: deleted: repeated_nested_enum[0]: FOOdeleted: repeated_nested_enum[1]: FOO
+Recommended.Proto3.JsonInput.Int64FieldBeString.Validator # JSON payload validation failed.
+Recommended.Proto3.JsonInput.MapFieldValueIsNull # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.NullValueInOtherOneofNewFormat.Validator # JSON payload validation failed.
+Recommended.Proto3.JsonInput.NullValueInOtherOneofOldFormat.Validator # JSON payload validation failed.
+Recommended.Proto3.JsonInput.OneofZeroBool.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bool: false
+Recommended.Proto3.JsonInput.OneofZeroBool.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_bool: false
+Recommended.Proto3.JsonInput.OneofZeroBytes.JsonOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
+Recommended.Proto3.JsonInput.OneofZeroBytes.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_bytes: ""
+Recommended.Proto3.JsonInput.OneofZeroDouble.JsonOutput # Output was not equivalent to reference message: deleted: oneof_double: 0
+Recommended.Proto3.JsonInput.OneofZeroDouble.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_double: 0
+Recommended.Proto3.JsonInput.OneofZeroEnum.JsonOutput # Output was not equivalent to reference message: deleted: oneof_enum: FOO
+Recommended.Proto3.JsonInput.OneofZeroEnum.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_enum: FOO
+Recommended.Proto3.JsonInput.OneofZeroFloat.JsonOutput # Output was not equivalent to reference message: deleted: oneof_float: 0
+Recommended.Proto3.JsonInput.OneofZeroFloat.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_float: 0
+Recommended.Proto3.JsonInput.OneofZeroMessage.JsonOutput # Output was not equivalent to reference message: deleted: oneof_nested_message: { }
+Recommended.Proto3.JsonInput.OneofZeroMessage.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_nested_message: { }
+Recommended.Proto3.JsonInput.OneofZeroString.JsonOutput # Output was not equivalent to reference message: deleted: oneof_string: ""
+Recommended.Proto3.JsonInput.OneofZeroString.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_string: ""
+Recommended.Proto3.JsonInput.OneofZeroUint32.JsonOutput # Output was not equivalent to reference message: deleted: oneof_uint32: 0
+Recommended.Proto3.JsonInput.OneofZeroUint32.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_uint32: 0
+Recommended.Proto3.JsonInput.OneofZeroUint64.JsonOutput # Output was not equivalent to reference message: deleted: oneof_uint64: 0
+Recommended.Proto3.JsonInput.OneofZeroUint64.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_uint64: 0
+Recommended.Proto3.JsonInput.RejectUnknownEnumStringValueInMapValue # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.RejectUnknownEnumStringValueInOptionalField # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.RejectUnknownEnumStringValueInRepeatedField # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.RepeatedFieldMessageElementIsNull # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.RepeatedFieldPrimitiveElementIsNull # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.RepeatedFieldTrailingComma # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.RepeatedFieldTrailingCommaWithNewlines # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.RepeatedFieldTrailingCommaWithSpace # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.RepeatedFieldTrailingCommaWithSpaceCommaSpace # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.TimestampHas9FractionalDigits.Validator # JSON payload validation failed.
+Recommended.Proto3.JsonInput.TimestampHasZeroFractionalDigit.Validator # JSON payload validation failed.
+Recommended.Proto3.JsonInput.TimestampZeroNormalized.Validator # JSON payload validation failed.
+Recommended.Proto3.JsonInput.TrailingCommaInAnObject # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.TrailingCommaInAnObjectWithNewlines # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.TrailingCommaInAnObjectWithSpace # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.TrailingCommaInAnObjectWithSpaceCommaSpace # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.Uint64FieldBeString.Validator # JSON payload validation failed.
+Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
+Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
+Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
+Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.UnpackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
+Recommended.Proto3.ValueRejectInfNumberValue.JsonOutput # Should have failed to serialize, but didn't.
+Recommended.Proto3.ValueRejectNanNumberValue.JsonOutput # Should have failed to serialize, but didn't.
+Required.Proto2.JsonInput.BoolFieldFalse.JsonOutput # Output was not equivalent to reference message: deleted: optional_bool: false
+Required.Proto2.JsonInput.BoolFieldFalse.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_bool: false
+Required.Proto2.JsonInput.DoubleFieldTooSmall # Should have failed to parse, but didn't.
+Required.Proto2.JsonInput.EnumField.JsonOutput # Output was not equivalent to reference message: deleted: optional_nested_enum: FOO
+Required.Proto2.JsonInput.EnumField.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_nested_enum: FOO
+Required.Proto2.JsonInput.EnumFieldNumericValueZero.JsonOutput # Output was not equivalent to reference message: deleted: optional_nested_enum: FOO
+Required.Proto2.JsonInput.EnumFieldNumericValueZero.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_nested_enum: FOO
+Required.Proto2.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
+Required.Proto2.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
+Required.Proto2.JsonInput.Int32FieldLeadingZero # Should have failed to parse, but didn't.
+Required.Proto2.JsonInput.Int32FieldNegativeWithLeadingZero # Should have failed to parse, but didn't.
+Required.Proto2.JsonInput.Int32FieldQuotedExponentialValue.JsonOutput # Failed to parse input or produce output.
+Required.Proto2.JsonInput.Int32FieldQuotedExponentialValue.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto2.JsonInput.Int32FieldStringValueZero.JsonOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
+Required.Proto2.JsonInput.Int32FieldStringValueZero.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
+Required.Proto2.JsonInput.OneofFieldNullFirst.JsonOutput # Failed to parse input or produce output.
+Required.Proto2.JsonInput.OneofFieldNullFirst.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto2.JsonInput.OneofFieldNullSecond.JsonOutput # Failed to parse input or produce output.
+Required.Proto2.JsonInput.OneofFieldNullSecond.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto2.JsonInput.OriginalProtoFieldName.JsonOutput # Output was not equivalent to reference message: deleted: field_name2: 2deleted: _field_name3: 3deleted: field__name4_: 4deleted:
+Required.Proto2.JsonInput.OriginalProtoFieldName.ProtobufOutput # Output was not equivalent to reference message: deleted: field_name2: 2deleted: _field_name3: 3deleted: field__name4_: 4deleted:
+Required.Proto2.JsonInput.RejectTopLevelNull # Should have failed to parse, but didn't.
+Required.Proto2.JsonInput.StoresDefaultPrimitive.Validator # JSON payload validation failed.
+Required.Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
+Required.Proto2.ProtobufInput.ValidDataScalar.BOOL[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bool: false
+Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
+Required.Proto2.ProtobufInput.ValidDataScalar.DOUBLE[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_double: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.ENUM[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_nested_enum: FOO
+Required.Proto2.ProtobufInput.ValidDataScalar.FIXED32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_fixed32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.FIXED64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_fixed64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.FLOAT[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_float: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.INT32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.INT32[6].JsonOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.INT64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_int64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.SFIXED32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_sfixed32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.SFIXED64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_sfixed64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.SINT32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_sint32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.SINT64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_sint64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.STRING[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_string: ""
+Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_uint32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[5].JsonOutput # Output was not equivalent to reference message: deleted: optional_uint32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.UINT64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_uint64: 0
+Required.Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.AnyWithNoType.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.AnyWktRepresentationWithBadType # Should have failed to parse, but didn't.
+Required.Proto3.JsonInput.AnyWktRepresentationWithEmptyTypeAndValue # Should have failed to parse, but didn't.
+Required.Proto3.JsonInput.Int32FieldQuotedExponentialValue.JsonOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.Int32FieldQuotedExponentialValue.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.OneofFieldNullFirst.JsonOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.OneofFieldNullFirst.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.OneofFieldNullSecond.JsonOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.OneofFieldNullSecond.ProtobufOutput # Failed to parse input or produce output.
+Required.Proto3.JsonInput.TimestampEpochValue.JsonOutput # Output was not equivalent to reference message: deleted: optional_timestamp: { }
+Required.Proto3.JsonInput.TimestampEpochValue.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_timestamp: { }
+Required.Proto3.JsonInput.TimestampLittleAfterEpochlValue.JsonOutput # Output was not equivalent to reference message: deleted: optional_timestamp.nanos: 1
+Required.Proto3.JsonInput.TimestampLittleAfterEpochlValue.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_timestamp.nanos: 1
+Required.Proto3.JsonInput.TimestampLittleBeforeEpochValue.JsonOutput # Output was not equivalent to reference message: modified: optional_timestamp.nanos: 999999999 -> 999999900
+Required.Proto3.JsonInput.TimestampLittleBeforeEpochValue.ProtobufOutput # Output was not equivalent to reference message: modified: optional_timestamp.seconds: -2 -> -1modified: optional_timestamp.nanos
+Required.Proto3.JsonInput.TimestampNanoAfterEpochlValue.JsonOutput # Output was not equivalent to reference message: deleted: optional_timestamp: { nanos: 1 }
+Required.Proto3.JsonInput.TimestampNanoAfterEpochlValue.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_timestamp: { nanos: 1 }
+Required.Proto3.JsonInput.TimestampNanoBeforeEpochValue.JsonOutput # Output was not equivalent to reference message: modified: optional_timestamp.nanos: 999999999 -> 999999900
+Required.Proto3.JsonInput.TimestampNanoBeforeEpochValue.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_timestamp.seconds: -1modified: optional_timestamp.nanos: 99999
+Required.Proto3.JsonInput.TimestampTenAndHalfSecondsBeforeEpochValue.ProtobufOutput # Output was not equivalent to reference message: modified: optional_timestamp.seconds: -11 -> -10modified: optional_timestamp.nan
+Required.Proto3.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch

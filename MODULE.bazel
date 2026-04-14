@@ -8,3 +8,17 @@ bazel_dep(name = "protobuf", version = "30.2")
 bazel_dep(name = "rules_d", version = "0.8.1")
 
 bazel_dep(name = "bazelrc-preset.bzl", version = "1.9.2", dev_dependency = True)
+bazel_dep(name = "rules_shell", version = "0.4.1", dev_dependency = True)
+
+# Patch protobuf so its Bazel conformance_test rule is available to this module.
+single_version_override(
+    module_name = "protobuf",
+    patch_strip = 1,
+    patches = [
+        "tools/ruby_compat.patch",
+        "tools/python_compat.patch",
+        "tools/expose_conformance_test_rule.patch",
+        "tools/expose_conformance_proto.patch",
+    ],
+    version = "30.2",
+)

@@ -1,0 +1,59 @@
+load("@protobuf//conformance:defs.bzl", "conformance_test")
+load("@rules_d//d:defs.bzl", "d_binary")
+
+# DON'T MAKE THIS VISIBLE. It is used to verify the conformance test only.
+# This BUILD file relies on patched protobuf to be able to access the conformance_test rule
+
+genrule(
+    name = "conformance_d_proto",
+    srcs = ["@protobuf//conformance:conformance.proto"],
+    outs = ["conformance/conformance.d"],
+    cmd = "PROTO=$(location @protobuf//conformance:conformance.proto); " +
+          "PROTO_ROOT=$${PROTO%/conformance/conformance.proto}; " +
+          "$(location @protobuf//:protoc) " +
+          "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+          "--proto_path=$$PROTO_ROOT " +
+          "--d_out=$(RULEDIR) " +
+          "$$PROTO",
+    tools = [
+        "//protoc_gen_d:protoc-gen-d",
+        "@protobuf//:protoc",
+    ],
+)
+
+genrule(
+    name = "test_messages_proto3_d_proto",
+    srcs = ["@protobuf//src/google/protobuf:test_messages_proto3_proto_src"],
+    outs = ["protobuf_test_messages/proto3/test_messages_proto3.d"],
+    cmd = "set -- $(locations @protobuf//:well_known_type_protos); " +
+          "WKT_ROOT=$${1%/google/protobuf/*}; " +
+          "PROTO=$(location @protobuf//src/google/protobuf:test_messages_proto3_proto_src); " +
+          "PROTO_ROOT=$${PROTO%/google/protobuf/test_messages_proto3.proto}; " +
+          "$(location @protobuf//:protoc) " +
+          "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+          "--proto_path=$$WKT_ROOT " +
+          "--proto_path=$$PROTO_ROOT " +
+          "--d_out=$(RULEDIR) " +
+          "$$PROTO",
+    tools = [
+        "//protoc_gen_d:protoc-gen-d",
+        "@protobuf//:protoc",
+        "@protobuf//:well_known_type_protos",
+    ],
+)
+
+d_binary(
+    name = "conformance_d",
+    srcs = [
+        "conformance_d.d",
+        ":conformance_d_proto",
+        ":test_messages_proto3_d_proto",
+    ],
+    deps = ["//:protobuf"],
+)
+
+conformance_test(
+    name = "conformance_test",
+    failure_list = "@protobuf_d//conformance:failure_list_d.txt",
+    testee = "@protobuf_d//conformance:conformance_d",
+)
