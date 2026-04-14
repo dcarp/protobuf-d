@@ -1,21 +1,20 @@
 #! /bin/sh
 
+set -euo pipefail
+
 if cd protobuf >/dev/null 2>&1; then
 	git fetch
 else
-	git clone https://github.com/google/protobuf.git && cd protobuf
+	git clone --depth 1 https://github.com/google/protobuf.git && cd protobuf
 fi
-git checkout tags/v3.12.2 --detach
+git checkout tags/v30.2 --detach
 
 git submodule update --init --recursive
 
-# due to a bug run autogen.sh twice
-./autogen.sh || ./autogen.sh && ./configure && make
+cmake -S . -B .build -Dprotobuf_BUILD_CONFORMANCE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -G Ninja 
+cmake --build .build
 
-cd conformance
-make
+cd ..
 
-cd ../..
-
-./protobuf/src/protoc --plugin=../build/protoc-gen-d --d_out=. -I. -Iprotobuf/src protobuf/conformance/conformance.proto protobuf/src/google/protobuf/test_messages_proto3.proto
-./protobuf/conformance/conformance-test-runner --failure_list failure_list_d.txt ./conformance-d
+./protobuf/protoc --plugin=../build/protoc-gen-d --d_out=. -I. -Iprotobuf/src protobuf/conformance/conformance.proto protobuf/src/google/protobuf/test_messages_proto3.proto
+./protobuf/conformance_test_runner --failure_list failure_list_d.txt ./conformance-d

@@ -1,0 +1,95 @@
+diff --git a/ruby/defs.bzl b/ruby/defs.bzl
+--- a/ruby/defs.bzl
++++ b/ruby/defs.bzl
+@@ -1,7 +1,7 @@
+ """Wrapper around internal_ruby_proto_library to supply our rules_ruby"""
+ 
+-load("@rules_ruby//ruby:defs.bzl", "ruby_library")
++load("@rules_ruby//ruby:defs.bzl", "rb_library")
+ load("//:protobuf.bzl", _internal_ruby_proto_library = "internal_ruby_proto_library")
+ 
+ def internal_ruby_proto_library(
+@@ -17,6 +17,6 @@ def internal_ruby_proto_library(
+     """
+     _internal_ruby_proto_library(
+         name,
+-        ruby_library,
++        rb_library,
+         **kwargs
+     )
+diff --git a/conformance/BUILD.bazel b/conformance/BUILD.bazel
+--- a/conformance/BUILD.bazel
++++ b/conformance/BUILD.bazel
+@@ -15,14 +15,12 @@ load(
+     "pkg_files",
+     "strip_prefix",
+ )
+-load("@rules_ruby//ruby:defs.bzl", "ruby_binary")
+-load("//:protobuf.bzl", "internal_csharp_proto_library", "internal_objc_proto_library", "internal_php_proto_library", "internal_py_proto_library", "internal_ruby_proto_library")
++load("//:protobuf.bzl", "internal_csharp_proto_library", "internal_objc_proto_library", "internal_php_proto_library", "internal_py_proto_library")
+ load("//bazel:cc_proto_library.bzl", "cc_proto_library")
+ load("//bazel:java_lite_proto_library.bzl", "java_lite_proto_library")
+ load("//bazel:java_proto_library.bzl", "java_proto_library")
+ load("//bazel:proto_library.bzl", "proto_library")
+ load("//build_defs:internal_shell.bzl", "inline_sh_binary")
+-load("//ruby:defs.bzl", "internal_ruby_proto_library")
+ 
+ exports_files([
+     "bazel_conformance_test_runner.sh",
+@@ -130,15 +128,6 @@ internal_php_proto_library(
+     ],
+ )
+ 
+-internal_ruby_proto_library(
+-    name = "conformance_ruby_proto",
+-    srcs = ["conformance.proto"],
+-    visibility = [
+-        "//conformance:__pkg__",
+-        "//ruby:__pkg__",
+-    ],
+-)
+-
+ cc_library(
+     name = "conformance_test",
+     testonly = 1,
+@@ -424,20 +413,6 @@ cc_binary(
+     deps = [":conformance_objc_lib"],
+ )
+ 
+-ruby_binary(
+-    name = "conformance_ruby",
+-    testonly = True,
+-    srcs = ["conformance_ruby.rb"],
+-    visibility = ["//ruby:__subpackages__"],
+-    deps = [
+-        ":conformance_ruby_proto",
+-        "//conformance/test_protos:test_messages_edition2023_ruby_proto",
+-        "//ruby:conformance_editions_test_ruby_proto",
+-        "//ruby:conformance_test_ruby_proto",
+-        "//ruby:protobuf",
+-    ],
+-)
+-
+ ################################################################################
+ # Distribution files
+ ################################################################################
+diff --git a/conformance/test_protos/BUILD.bazel b/conformance/test_protos/BUILD.bazel
+--- a/conformance/test_protos/BUILD.bazel
++++ b/conformance/test_protos/BUILD.bazel
+@@ -3,7 +3,6 @@ load("//bazel:cc_proto_library.bzl", "cc_proto_library")
+ load("//bazel:java_lite_proto_library.bzl", "java_lite_proto_library")
+ load("//bazel:java_proto_library.bzl", "java_proto_library")
+ load("//bazel:proto_library.bzl", "proto_library")
+-load("//ruby:defs.bzl", "internal_ruby_proto_library")
+ 
+ package(
+     default_testonly = True,
+@@ -46,8 +45,3 @@ internal_objc_proto_library(
+     name = "test_messages_edition2023_objc_proto",
+     srcs = ["test_messages_edition2023.proto"],
+ )
+-
+-internal_ruby_proto_library(
+-    name = "test_messages_edition2023_ruby_proto",
+-    srcs = ["test_messages_edition2023.proto"],
+-)
