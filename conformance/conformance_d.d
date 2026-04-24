@@ -29,7 +29,8 @@ void doTest(ConformanceRequest request, ConformanceResponse response)
         try
         {
             auto payload = request.jsonPayload.save;
-            testMessage = parseJSON(payload).fromJSONValue!TestAllTypesProto3;
+            testMessage = parseJSON(payload, JSONOptions.strictParsing)
+                .fromJSONValue!TestAllTypesProto3;
         }
         catch (Base64Exception decodeException)
         {
@@ -121,6 +122,7 @@ bool doTestIo()
 void main()
 {
     import google.protobuf.any : Any;
+
     Any.registerMessageType!TestAllTypesProto3;
 
     while (doTestIo)

@@ -23,10 +23,6 @@ Required.Proto3.JsonInput.DoubleFieldTooSmall
 Required.Proto3.JsonInput.FloatFieldTooLarge
 Required.Proto3.JsonInput.FloatFieldTooSmall
 
-# std.json parser is more forgiving removing the leading zeros
-Required.Proto3.JsonInput.Int32FieldLeadingZero
-Required.Proto3.JsonInput.Int32FieldNegativeWithLeadingZero
-
 # Empty FieldMask is the default value, therefore omitted
 Required.Proto3.JsonInput.EmptyFieldMask.JsonOutput
 Required.Proto3.JsonInput.EmptyFieldMask.ProtobufOutput
@@ -35,29 +31,6 @@ Required.Proto3.JsonInput.EmptyFieldMask.ProtobufOutput
 Required.Proto3.JsonInput.RejectTopLevelNull
 
 # To be analysed and eventually fixed
-Required.Proto2.ProtobufInput.ValidDataScalar.BOOL[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.DOUBLE[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.ENUM[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.FIXED32[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.FIXED64[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.FLOAT[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.INT32[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.INT32[6].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.INT64[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.SFIXED32[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.SFIXED64[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.SINT32[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.SINT64[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.STRING[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[0].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[5].ProtobufOutput
-Required.Proto2.ProtobufInput.ValidDataScalar.UINT64[0].ProtobufOutput
-
-Recommended.Proto2.JsonInput.BoolFieldAllCapitalFalse # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.BoolFieldAllCapitalTrue # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.BoolFieldCamelCaseFalse # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.BoolFieldCamelCaseTrue # Should have failed to parse, but didn't.
 Recommended.Proto2.JsonInput.BytesFieldBase64Url.JsonOutput # Failed to parse input or produce output.
 Recommended.Proto2.JsonInput.BytesFieldBase64Url.ProtobufOutput # Failed to parse input or produce output.
 Recommended.Proto2.JsonInput.FieldNameExtension.Validator # JSON payload validation failed.
@@ -88,14 +61,6 @@ Recommended.Proto2.JsonInput.RejectUnknownEnumStringValueInOptionalField # Shoul
 Recommended.Proto2.JsonInput.RejectUnknownEnumStringValueInRepeatedField # Should have failed to parse, but didn't.
 Recommended.Proto2.JsonInput.RepeatedFieldMessageElementIsNull # Should have failed to parse, but didn't.
 Recommended.Proto2.JsonInput.RepeatedFieldPrimitiveElementIsNull # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.RepeatedFieldTrailingComma # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.RepeatedFieldTrailingCommaWithNewlines # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.RepeatedFieldTrailingCommaWithSpace # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.RepeatedFieldTrailingCommaWithSpaceCommaSpace # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.TrailingCommaInAnObject # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.TrailingCommaInAnObjectWithNewlines # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.TrailingCommaInAnObjectWithSpace # Should have failed to parse, but didn't.
-Recommended.Proto2.JsonInput.TrailingCommaInAnObjectWithSpaceCommaSpace # Should have failed to parse, but didn't.
 Recommended.Proto2.JsonInput.Uint64FieldBeString.Validator # JSON payload validation failed.
 Recommended.Proto2.ProtobufInput.OneofZeroMessage.JsonOutput # Output was not equivalent to reference message: deleted: oneof_nested_message.a: 0
 Recommended.Proto2.ProtobufInput.OneofZeroMessage.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_nested_message.a: 0
@@ -171,10 +136,6 @@ Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.STRING[0].ProtobufOutput 
 Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.UINT32[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \030\000, but got: 
 Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.UINT32[5].ProtobufOutput # Output was not equivalent to reference message: Expect: \030\000, but got: 
 Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.UINT64[0].ProtobufOutput # Output was not equivalent to reference message: Expect: \040\000, but got: 
-Recommended.Proto3.JsonInput.BoolFieldAllCapitalFalse # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.BoolFieldAllCapitalTrue # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.BoolFieldCamelCaseFalse # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.BoolFieldCamelCaseTrue # Should have failed to parse, but didn't.
 Recommended.Proto3.JsonInput.BytesFieldBase64Url.JsonOutput # Failed to parse input or produce output.
 Recommended.Proto3.JsonInput.BytesFieldBase64Url.ProtobufOutput # Failed to parse input or produce output.
 Recommended.Proto3.JsonInput.DurationHas9FractionalDigits.Validator # JSON payload validation failed.
@@ -207,17 +168,9 @@ Recommended.Proto3.JsonInput.RejectUnknownEnumStringValueInOptionalField # Shoul
 Recommended.Proto3.JsonInput.RejectUnknownEnumStringValueInRepeatedField # Should have failed to parse, but didn't.
 Recommended.Proto3.JsonInput.RepeatedFieldMessageElementIsNull # Should have failed to parse, but didn't.
 Recommended.Proto3.JsonInput.RepeatedFieldPrimitiveElementIsNull # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.RepeatedFieldTrailingComma # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.RepeatedFieldTrailingCommaWithNewlines # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.RepeatedFieldTrailingCommaWithSpace # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.RepeatedFieldTrailingCommaWithSpaceCommaSpace # Should have failed to parse, but didn't.
 Recommended.Proto3.JsonInput.TimestampHas9FractionalDigits.Validator # JSON payload validation failed.
 Recommended.Proto3.JsonInput.TimestampHasZeroFractionalDigit.Validator # JSON payload validation failed.
 Recommended.Proto3.JsonInput.TimestampZeroNormalized.Validator # JSON payload validation failed.
-Recommended.Proto3.JsonInput.TrailingCommaInAnObject # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.TrailingCommaInAnObjectWithNewlines # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.TrailingCommaInAnObjectWithSpace # Should have failed to parse, but didn't.
-Recommended.Proto3.JsonInput.TrailingCommaInAnObjectWithSpaceCommaSpace # Should have failed to parse, but didn't.
 Recommended.Proto3.JsonInput.Uint64FieldBeString.Validator # JSON payload validation failed.
 Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
 Recommended.Proto3.ProtobufInput.ValidDataRepeated.ENUM.PackedInput.PackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \232\003\030\000\001\002\377\377\377\377\377\377\377\377\377\001\377\377
@@ -234,8 +187,6 @@ Required.Proto2.JsonInput.EnumFieldNumericValueZero.JsonOutput # Output was not 
 Required.Proto2.JsonInput.EnumFieldNumericValueZero.ProtobufOutput # Output was not equivalent to reference message: deleted: optional_nested_enum: FOO
 Required.Proto2.JsonInput.FloatFieldTooLarge # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.FloatFieldTooSmall # Should have failed to parse, but didn't.
-Required.Proto2.JsonInput.Int32FieldLeadingZero # Should have failed to parse, but didn't.
-Required.Proto2.JsonInput.Int32FieldNegativeWithLeadingZero # Should have failed to parse, but didn't.
 Required.Proto2.JsonInput.Int32FieldQuotedExponentialValue.JsonOutput # Failed to parse input or produce output.
 Required.Proto2.JsonInput.Int32FieldQuotedExponentialValue.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto2.JsonInput.Int32FieldStringValueZero.JsonOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
@@ -250,23 +201,41 @@ Required.Proto2.JsonInput.RejectTopLevelNull # Should have failed to parse, but 
 Required.Proto2.JsonInput.StoresDefaultPrimitive.Validator # JSON payload validation failed.
 Required.Proto2.ProtobufInput.UnknownOrdering.ProtobufOutput # Unknown field mismatch
 Required.Proto2.ProtobufInput.ValidDataScalar.BOOL[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bool: false
+Required.Proto2.ProtobufInput.ValidDataScalar.BOOL[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_bool: false
 Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
+Required.Proto2.ProtobufInput.ValidDataScalar.BYTES[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_bytes: ""
 Required.Proto2.ProtobufInput.ValidDataScalar.DOUBLE[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_double: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.DOUBLE[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_double: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.ENUM[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_nested_enum: FOO
+Required.Proto2.ProtobufInput.ValidDataScalar.ENUM[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_nested_enum: FOO
 Required.Proto2.ProtobufInput.ValidDataScalar.FIXED32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_fixed32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.FIXED32[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_fixed32: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.FIXED64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_fixed64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.FIXED64[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_fixed64: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.FLOAT[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_float: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.FLOAT[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_float: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.INT32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.INT32[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.INT32[6].JsonOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.INT32[6].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_int32: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.INT64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_int64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.INT64[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_int64: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.SFIXED32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_sfixed32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.SFIXED32[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_sfixed32: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.SFIXED64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_sfixed64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.SFIXED64[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_sfixed64: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.SINT32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_sint32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.SINT32[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_sint32: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.SINT64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_sint64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.SINT64[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_sint64: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.STRING[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_string: ""
+Required.Proto2.ProtobufInput.ValidDataScalar.STRING[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_string: ""
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_uint32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_uint32: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[5].JsonOutput # Output was not equivalent to reference message: deleted: optional_uint32: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.UINT32[5].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_uint32: 0
 Required.Proto2.ProtobufInput.ValidDataScalar.UINT64[0].JsonOutput # Output was not equivalent to reference message: deleted: optional_uint64: 0
+Required.Proto2.ProtobufInput.ValidDataScalar.UINT64[0].ProtobufOutput # Output was not equivalent to reference message: deleted: optional_uint64: 0
 Required.Proto3.JsonInput.AnyWithNoType.JsonOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.AnyWithNoType.ProtobufOutput # Failed to parse input or produce output.
 Required.Proto3.JsonInput.AnyWktRepresentationWithBadType # Should have failed to parse, but didn't.
