@@ -244,7 +244,7 @@ if (isInputRange!R && (is(T == class) || is(T == struct)))
                 }
             }
             default:
-                skipUnknown(inputRange, tagWire.wireType);
+                skipUnknown(inputRange, tagWire.tag, tagWire.wireType);
                 break;
             }
         }
@@ -415,7 +415,7 @@ if (isInputRange!R && (is(T == class) || is(T == struct)))
     field = fieldRange.fromProtobuf!T(field);
 }
 
-void skipUnknown(R)(ref R inputRange, WireType wireType)
+void skipUnknown(R)(ref R inputRange, uint tag, WireType wireType)
 if (isInputRange!R)
 {
     import std.exception : enforce;
@@ -433,6 +433,22 @@ if (isInputRange!R)
     case withLength:
         inputRange.takeLengthPrefixed;
         break;
+    case startGroup:
+        while (!inputRange.empty)
+        {
+            auto tagWire = inputRange.decodeTag;
+            if (tagWire.wireType == WireType.endGroup)
+            {
+                enforce!ProtobufException(tagWire.tag == tag, "Mismatched end group tag");
+                return;
+            }
+            skipUnknown(inputRange, tagWire.tag, tagWire.wireType);
+        }
+        enforce!ProtobufException(false, "Unterminated group");
+        break;
+    case endGroup:
+        enforce!ProtobufException(false, "Unexpected end group");
+        break;
     case bits32:
         inputRange.takeN(4);
         break;
@@ -440,4 +456,27 @@ if (isInputRange!R)
         enforce!ProtobufException(false, "Unknown wire format");
         break;
     }
+}
+
+void skipUnknown(R)(ref R inputRange, WireType wireType)
+if (isInputRange!R)
+{
+    skipUnknown(inputRange, 0, wireType);
+}
+
+unittest
+{
+    static class EmptyMessage
+    {
+    }
+
+    ubyte[] buff = [
+        0xe3, 0x3e, // field 1004, start group
+        0x08, 0xc1, 0x02, // field 1, varint 321
+        0xe4, 0x3e, // field 1004, end group
+    ];
+    auto message = buff.fromProtobuf!EmptyMessage;
+
+    assert(message !is null);
+    assert(buff.empty);
 }

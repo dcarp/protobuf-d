@@ -228,6 +228,8 @@ enum WireType : ubyte
     varint = 0,
     bits64 = 1,
     withLength = 2,
+    startGroup = 3,
+    endGroup = 4,
     bits32 = 5,
 }
 
