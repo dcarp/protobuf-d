@@ -4,8 +4,9 @@ module(
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.8.2")
+bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "protobuf", version = "30.2")
-bazel_dep(name = "rules_d", version = "0.8.1")
+bazel_dep(name = "rules_d", version = "0.8.2")
 
 bazel_dep(name = "bazelrc-preset.bzl", version = "1.9.2", dev_dependency = True)
 bazel_dep(name = "rules_shell", version = "0.4.1", dev_dependency = True)
@@ -22,3 +23,10 @@ single_version_override(
     ],
     version = "30.2",
 )
+
+d = use_extension("@rules_d//d:extensions.bzl", "d")
+d.toolchain(d_version = "dmd-2.112.0")
+d.toolchain(d_version = "ldc-1.41.0")
+use_repo(d, "d_toolchains")
+
+register_toolchains("@d_toolchains//:all")

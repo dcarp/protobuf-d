@@ -22,6 +22,7 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
+        exclude: \.patch$
   # Check formatting and lint for starlark code
   - repo: https://github.com/keith/pre-commit-buildifier
     rev: 8.5.1
@@ -47,3 +48,4 @@ repos:
     rev: v1.46.0
     hooks:
       - id: typos
+        exclude: ^conformance/failure_list_d\.txt$

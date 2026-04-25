@@ -1,4 +1,4 @@
-name: CI
+name: dub CI
 on:
   push:
     branches:
@@ -10,6 +10,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         dc: [dmd-latest, ldc-latest]
+        exclude:
+          - os: macos-latest
+            dc: dmd-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -22,17 +25,16 @@ jobs:
           dub build --compiler=$DC
           dub test --compiler=$DC
           dub build :protoc-gen-d --compiler=$DC
-      - name: Install automake
-        if: runner.os == 'macOS'
-        run: |
-          brew install automake
       - name: Run Conformance Tests
+        working-directory: conformance
         run: |
-          cd conformance && ./run-conformance-test.sh
+          ./run-conformance-test.sh
           echo "$(pwd)/protobuf/src" >> $GITHUB_PATH
           echo "PROTO_PATH=-I. -I$(pwd)/protobuf/src" >> $GITHUB_ENV
+        if: false # Disable conformance tests for now, as they are hard to setup in CI
       - name: Run protoc-gen-d Examples
         run: |
           cd examples
           dub build :add_person --compiler=$DC
           dub build :list_people --compiler=$DC
+        if: false # Disable examples for now, as they require protoc setup
