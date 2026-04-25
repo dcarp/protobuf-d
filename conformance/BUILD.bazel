@@ -55,5 +55,6 @@ d_binary(
 conformance_test(
     name = "conformance_test",
     failure_list = "@protobuf_d//conformance:failure_list_d.txt",
+    target_compatible_with = ["@platforms//os:linux"],  # MacOS fails for some float tests
     testee = "@protobuf_d//conformance:conformance_d",
 )

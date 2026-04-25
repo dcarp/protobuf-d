@@ -1,17 +1,17 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
 set -euo pipefail
 
 if cd protobuf >/dev/null 2>&1; then
-	git fetch
+	git fetch --depth 1 origin tag v30.2
+	git checkout v30.2 --detach
 else
-	git clone --depth 1 https://github.com/google/protobuf.git && cd protobuf
+	git clone --depth 1 --branch v30.2 https://github.com/google/protobuf.git && cd protobuf
 fi
-git checkout tags/v30.2 --detach
 
 git submodule update --init --recursive
 
-cmake -S . -B .build -Dprotobuf_BUILD_CONFORMANCE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -G Ninja 
+cmake -S . -B .build -Dprotobuf_BUILD_CONFORMANCE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -G Ninja
 cmake --build .build
 
 cd ..

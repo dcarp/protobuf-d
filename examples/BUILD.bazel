@@ -1,3 +1,4 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
 load("@rules_d//d:defs.bzl", "d_binary")
 
 genrule(
@@ -35,4 +36,12 @@ d_binary(
         ":addressbook_d_proto",
     ],
     deps = ["//:protobuf"],
+)
+
+build_test(
+    name = "examples_test",
+    targets = [
+        ":add_person",
+        ":list_people",
+    ],
 )
