@@ -47,6 +47,6 @@ Run following commands:
 
 ```shell
 bazel build //:protobuf
-bazel test //:unittest
 bazel build //protoc_gen_d:protoc-gen-d
+bazel test //...
 ```
