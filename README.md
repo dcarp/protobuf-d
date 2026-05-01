@@ -1,5 +1,3 @@
-![Build Status](https://github.com/dcarp/protobuf-d/workflows/CI/badge.svg)
-
 # D Support for Protocol Buffers
 
 This D package implements the Protocol Buffers encoding and decoding
