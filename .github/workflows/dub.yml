@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
       - name: Install D compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@0a7469b93f791d83f30932c6fd105796c6966e20 # v2.0.0
         with:
           compiler: ${{ matrix.dc }}
       - name: Build & Test
