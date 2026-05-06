@@ -10,7 +10,7 @@ struct Varint
     private ubyte index;
     private ubyte _length;
 
-    this(long value)
+    this(long value) nothrow
     out { assert(_length > 0); }
     do
     {
@@ -39,11 +39,11 @@ struct Varint
         this._length = cast(ubyte) encodingLength(value);
     }
 
-    @property bool empty() const { return index >= _length; }
-    @property ubyte front() const { return opIndex(index); }
-    void popFront() { ++index; }
+    @property bool empty() nothrow const { return index >= _length; }
+    @property ubyte front() nothrow const { return opIndex(index); }
+    void popFront() nothrow { ++index; }
 
-    ubyte opIndex(size_t index) const
+    ubyte opIndex(size_t index) nothrow const
     in { assert(index < _length); }
     do
     {
@@ -55,7 +55,7 @@ struct Varint
             return result & 0x7F;
     }
 
-    @property size_t length() const
+    @property size_t length() nothrow const
     in { assert(index <= _length); }
     do
     {
