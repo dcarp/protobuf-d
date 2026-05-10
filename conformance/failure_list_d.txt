@@ -15,11 +15,16 @@ Required.Proto3.JsonInput.TimestampRepeatedValue.JsonOutput
 Required.Proto3.JsonInput.TimestampRepeatedValue.ProtobufOutput
 
 # Unknown fields are dropped
+Required.Proto2.ProtobufInput.MessageSetEncoding.UnknownExtension.ProtobufOutput
 Required.Proto2.ProtobufInput.UnknownVarint.ProtobufOutput
+Required.Proto2.ProtobufInput.ValidMessageSetEncoding.OutOfOrderGroupsEntries.ProtobufOutput
+Required.Proto2.ProtobufInput.ValidMessageSetEncoding.ProtobufOutput
 Required.Proto3.ProtobufInput.UnknownVarint.ProtobufOutput
 
 # std.json parser is more forgiving "rounding" to +-Infinity
+Required.Proto2.JsonInput.DoubleFieldTooLarge
 Required.Proto3.JsonInput.DoubleFieldTooSmall
+Required.Proto3.JsonInput.DoubleFieldTooLarge
 Required.Proto3.JsonInput.FloatFieldTooLarge
 Required.Proto3.JsonInput.FloatFieldTooSmall
 
@@ -33,6 +38,9 @@ Required.Proto3.JsonInput.RejectTopLevelNull
 # To be analysed and eventually fixed
 Recommended.Proto2.JsonInput.BytesFieldBase64Url.JsonOutput # Failed to parse input or produce output.
 Recommended.Proto2.JsonInput.BytesFieldBase64Url.ProtobufOutput # Failed to parse input or produce output.
+Recommended.Proto2.JsonInput.FieldNameDuplicate # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.FieldNameDuplicateDifferentCasing1 # Should have failed to parse, but didn't.
+Recommended.Proto2.JsonInput.FieldNameDuplicateDifferentCasing2 # Should have failed to parse, but didn't.
 Recommended.Proto2.JsonInput.FieldNameExtension.Validator # JSON payload validation failed.
 Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Output was not equivalent to reference message: deleted: map_string_nested_enum[key1]: FOO
 Recommended.Proto2.JsonInput.IgnoreUnknownEnumStringValueInRepeatedPart.ProtobufOutput # Output was not equivalent to reference message: deleted: repeated_nested_enum[0]: FOOdeleted: repeated_nested_enum[1]: FOO
@@ -64,6 +72,8 @@ Recommended.Proto2.JsonInput.RepeatedFieldPrimitiveElementIsNull # Should have f
 Recommended.Proto2.JsonInput.Uint64FieldBeString.Validator # JSON payload validation failed.
 Recommended.Proto2.ProtobufInput.OneofZeroMessage.JsonOutput # Output was not equivalent to reference message: deleted: oneof_nested_message.a: 0
 Recommended.Proto2.ProtobufInput.OneofZeroMessage.ProtobufOutput # Output was not equivalent to reference message: deleted: oneof_nested_message.a: 0
+Recommended.Proto2.ProtobufInput.ValidMessageSetEncoding.SubmessageEncoding.NotUnknown.ProtobufOutput
+Recommended.Proto2.ProtobufInput.ValidMessageSetEncoding.SubmessageEncoding.ProtobufOutput
 Recommended.Proto2.ProtobufInput.ValidDataRepeated.BOOL.PackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \330\002\000\330\002\001\330\002\001\330\002\001\330\002\001\330\002\001
 Recommended.Proto2.ProtobufInput.ValidDataRepeated.BOOL.PackedInput.UnpackedOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \330\002\000\330\002\001\330\002\001\330\002\001\330\002\001\330\002\001
 Recommended.Proto2.ProtobufInput.ValidDataRepeated.BOOL.UnpackedInput.DefaultOutput.ProtobufOutput # Output was not equivalent to reference message: Expect: \330\002\000\330\002\001\330\002\001\330\002\001\330\002\001\330\002\001
@@ -139,6 +149,9 @@ Recommended.Proto2.ProtobufInput.ValidDataScalarBinary.UINT64[0].ProtobufOutput 
 Recommended.Proto3.JsonInput.BytesFieldBase64Url.JsonOutput # Failed to parse input or produce output.
 Recommended.Proto3.JsonInput.BytesFieldBase64Url.ProtobufOutput # Failed to parse input or produce output.
 Recommended.Proto3.JsonInput.DurationHas9FractionalDigits.Validator # JSON payload validation failed.
+Recommended.Proto3.JsonInput.FieldNameDuplicate # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.FieldNameDuplicateDifferentCasing1 # Should have failed to parse, but didn't.
+Recommended.Proto3.JsonInput.FieldNameDuplicateDifferentCasing2 # Should have failed to parse, but didn't.
 Recommended.Proto3.JsonInput.IgnoreUnknownEnumStringValueInMapPart.ProtobufOutput # Output was not equivalent to reference message: deleted: map_string_nested_enum[key1]: FOO
 Recommended.Proto3.JsonInput.IgnoreUnknownEnumStringValueInRepeatedPart.ProtobufOutput # Output was not equivalent to reference message: deleted: repeated_nested_enum[0]: FOOdeleted: repeated_nested_enum[1]: FOO
 Recommended.Proto3.JsonInput.Int64FieldBeString.Validator # JSON payload validation failed.
