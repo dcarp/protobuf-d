@@ -1,17 +1,17 @@
-diff --git a/conformance/BUILD.bazel b/conformance/BUILD.bazel
---- a/conformance/BUILD.bazel
-+++ b/conformance/BUILD.bazel
-@@ -47,7 +47,9 @@ exports_files([
+diff --git a/conformance/BUILD b/conformance/BUILD
+--- a/conformance/BUILD
++++ b/conformance/BUILD
+@@ -48,7 +48,9 @@ exports_files([
+     "text_format_failure_list_php.txt",
+     "text_format_failure_list_php_c.txt",
      "text_format_failure_list_python.txt",
-     "text_format_failure_list_python_cpp.txt",
-     "text_format_failure_list_python_upb.txt",
 -])
 +],
 +    visibility = ["//visibility:public"],
 +)
  
- cc_proto_library(
-     name = "test_messages_proto2_proto_cc",
+ cc_library(
+     name = "conformance_test_lib",
 diff --git a/conformance/defs.bzl b/conformance/defs.bzl
 --- a/conformance/defs.bzl
 +++ b/conformance/defs.bzl
@@ -36,15 +36,6 @@ diff --git a/conformance/defs.bzl b/conformance/defs.bzl
          ],
          args = args,
          deps = [
-@@ -49,5 +51,7 @@ def conformance_test(
- 
- def _strip_bazel(testee):
-     if testee.startswith("//"):
--        testee = testee.replace("//", "com_google_protobuf/")
-+        testee = testee.replace("//", "protobuf/")
-+    elif testee.startswith("@"):
-+        testee = testee[1:].replace("//", "/")
-     return testee.replace(":", "/")
 diff --git a/conformance/bazel_conformance_test_runner.sh b/conformance/bazel_conformance_test_runner.sh
 --- a/conformance/bazel_conformance_test_runner.sh
 +++ b/conformance/bazel_conformance_test_runner.sh
@@ -54,6 +45,6 @@ diff --git a/conformance/bazel_conformance_test_runner.sh b/conformance/bazel_co
  
 -conformance_test_runner=$(rlocation com_google_protobuf/conformance/conformance_test_runner)
 +conformance_test_runner=$(rlocation protobuf/conformance/conformance_test_runner)
- conformance_testee=$(rlocation $TESTEE)
+ conformance_testee=$TESTEE
  args=(--enforce_recommended)
  

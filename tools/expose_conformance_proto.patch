@@ -1,7 +1,7 @@
-diff --git a/conformance/BUILD.bazel b/conformance/BUILD.bazel
---- a/conformance/BUILD.bazel
-+++ b/conformance/BUILD.bazel
-@@ -22,6 +22,7 @@ load("//bazel:java_lite_proto_library.bzl", "java_lite_proto_library")
+diff --git a/conformance/BUILD b/conformance/BUILD
+--- a/conformance/BUILD
++++ b/conformance/BUILD
+@@ -30,6 +30,7 @@ load("//build_defs:internal_shell.bzl", "inline_sh_binary")
  
  exports_files([
      "bazel_conformance_test_runner.sh",
