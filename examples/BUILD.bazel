@@ -13,6 +13,14 @@ genrule(
           "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
           "--d_out=$(RULEDIR) " +
           "$(location addressbook.proto)",
+    cmd_bat = "for /f \"tokens=1\" %F in (\"$(locations @protobuf//:well_known_type_protos)\") do set WKT=%F&& " +
+              "set WKT_ROOT=!WKT:\\google\\protobuf\\any.proto=!&& " +
+              "$(location @protobuf//:protoc) " +
+              "--proto_path=examples " +
+              "--proto_path=!WKT_ROOT! " +
+              "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+              "--d_out=$(RULEDIR) " +
+              "$(location addressbook.proto)",
     tools = [
         "//protoc_gen_d:protoc-gen-d",
         "@protobuf//:protoc",
