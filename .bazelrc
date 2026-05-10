@@ -1,4 +1,7 @@
 import %workspace%/tools/preset.bazelrc
 
+# Protobuf 32.0 requires an explicit opt-in when building with MSVC under Bazel.
+common:windows --define=protobuf_allow_msvc=true
+
 # Load user-specific settings, if any
 try-import %workspace%/user.bazelrc
