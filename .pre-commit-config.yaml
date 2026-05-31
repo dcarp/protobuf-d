@@ -46,7 +46,7 @@ repos:
       - id: typos
         exclude: ^conformance/failure_list_d\.txt$
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 43.205.0
+    rev: 43.205.2
     hooks:
       - id: renovate-config-validator
         args: [--strict]
