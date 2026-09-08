@@ -56,6 +56,7 @@ class CodeGenerator
         {
             collectMessageAndEnumTypes(request);
             response.files = request.protoFiles
+                .filter!(a => request.filesToGenerate.canFind(a.name))
                 .filter!(a => a.package_ != "google.protobuf") // don't generate the well known types
                 .map!(a => generate(a)).array;
         }
