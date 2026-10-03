@@ -8,20 +8,20 @@ genrule(
     name = "conformance_d_proto",
     srcs = ["@protobuf//conformance:conformance.proto"],
     outs = ["conformance/conformance.d"],
-    cmd = "PROTO=$(location @protobuf//conformance:conformance.proto); " +
+    cmd = "PROTO=$(execpath @protobuf//conformance:conformance.proto); " +
           "PROTO_ROOT=$${PROTO%/conformance/conformance.proto}; " +
-          "$(location @protobuf//:protoc) " +
-          "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+          "$(execpath @protobuf//:protoc) " +
+          "--plugin=protoc-gen-d=$(execpath //protoc_gen_d:protoc-gen-d) " +
           "--proto_path=$$PROTO_ROOT " +
           "--d_out=$(RULEDIR) " +
           "$$PROTO",
-    cmd_bat = "set PROTO=$(location @protobuf//conformance:conformance.proto)&& " +
+    cmd_bat = "set PROTO=$(execpath @protobuf//conformance:conformance.proto)&& " +
               "set PROTO_ROOT=!PROTO:\\conformance\\conformance.proto=!&& " +
-              "$(location @protobuf//:protoc) " +
-              "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+              "$(execpath @protobuf//:protoc) " +
+              "--plugin=protoc-gen-d=$(execpath //protoc_gen_d:protoc-gen-d) " +
               "--proto_path=!PROTO_ROOT! " +
               "--d_out=$(RULEDIR) " +
-              "$(location @protobuf//conformance:conformance.proto)",
+              "$(execpath @protobuf//conformance:conformance.proto)",
     tools = [
         "//protoc_gen_d:protoc-gen-d",
         "@protobuf//:protoc",
@@ -32,26 +32,26 @@ genrule(
     name = "test_messages_proto3_d_proto",
     srcs = ["@protobuf//src/google/protobuf:test_messages_proto3_proto_src"],
     outs = ["protobuf_test_messages/proto3/test_messages_proto3.d"],
-    cmd = "set -- $(locations @protobuf//:well_known_type_protos); " +
+    cmd = "set -- $(execpaths @protobuf//:well_known_type_protos); " +
           "WKT_ROOT=$${1%/google/protobuf/*}; " +
-          "PROTO=$(location @protobuf//src/google/protobuf:test_messages_proto3_proto_src); " +
+          "PROTO=$(execpath @protobuf//src/google/protobuf:test_messages_proto3_proto_src); " +
           "PROTO_ROOT=$${PROTO%/google/protobuf/test_messages_proto3.proto}; " +
-          "$(location @protobuf//:protoc) " +
-          "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+          "$(execpath @protobuf//:protoc) " +
+          "--plugin=protoc-gen-d=$(execpath //protoc_gen_d:protoc-gen-d) " +
           "--proto_path=$$WKT_ROOT " +
           "--proto_path=$$PROTO_ROOT " +
           "--d_out=$(RULEDIR) " +
           "$$PROTO",
-    cmd_bat = "for /f \"tokens=1\" %F in (\"$(locations @protobuf//:well_known_type_protos)\") do set WKT=%F&& " +
+    cmd_bat = "for /f \"tokens=1\" %F in (\"$(execpaths @protobuf//:well_known_type_protos)\") do set WKT=%F&& " +
               "set WKT_ROOT=!WKT:\\google\\protobuf\\any.proto=!&& " +
-              "set PROTO=$(location @protobuf//src/google/protobuf:test_messages_proto3_proto_src)&& " +
+              "set PROTO=$(execpath @protobuf//src/google/protobuf:test_messages_proto3_proto_src)&& " +
               "set PROTO_ROOT=!PROTO:\\google\\protobuf\\test_messages_proto3.proto=!&& " +
-              "$(location @protobuf//:protoc) " +
-              "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+              "$(execpath @protobuf//:protoc) " +
+              "--plugin=protoc-gen-d=$(execpath //protoc_gen_d:protoc-gen-d) " +
               "--proto_path=!WKT_ROOT! " +
               "--proto_path=!PROTO_ROOT! " +
               "--d_out=$(RULEDIR) " +
-              "$(location @protobuf//src/google/protobuf:test_messages_proto3_proto_src)",
+              "$(execpath @protobuf//src/google/protobuf:test_messages_proto3_proto_src)",
     tools = [
         "//protoc_gen_d:protoc-gen-d",
         "@protobuf//:protoc",

@@ -11,11 +11,11 @@ genrule(
     name = "generate_code",
     srcs = ["generated_code.proto"],
     outs = ["generated_code.d"],
-    cmd = "$(location @protobuf//:protoc) " +
-          "--plugin=protoc-gen-d=$(location //protoc_gen_d:protoc-gen-d) " +
+    cmd = "$(execpath @protobuf//:protoc) " +
+          "--plugin=protoc-gen-d=$(execpath //protoc_gen_d:protoc-gen-d) " +
           "--proto_path=test " +
           "--d_out=$(RULEDIR) " +
-          "$(location generated_code.proto)",
+          "$(execpath generated_code.proto)",
     tools = [
         "//protoc_gen_d:protoc-gen-d",
         "@protobuf//:protoc",
